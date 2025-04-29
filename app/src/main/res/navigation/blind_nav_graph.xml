@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/blind_nav_graph"
+    app:startDestination="@id/homeBlindFragment">
+
+    <fragment
+        android:id="@+id/homeBlindFragment"
+        android:name="com.yousef.mysight00.ui.HomeBlindFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_blind">
+        <action
+            android:id="@+id/action_home_to_notification"
+            app:destination="@id/notificationBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_profile"
+            app:destination="@id/profileBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_gps"
+            app:destination="@id/gpsBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_audio_call"
+            app:destination="@id/audioCallBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_video_call"
+            app:destination="@id/videoCallBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_tasks"
+            app:destination="@id/tasksBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/historyBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gpsBlindFragment"
+        android:name="com.yousef.mysight00.ui.GpsBlindFragment"
+        android:label="GPS"
+        tools:layout="@layout/fragment_gps_blind">
+        <action
+            android:id="@+id/action_gps_to_notification"
+            app:destination="@id/notificationBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_profile"
+            app:destination="@id/profileBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_audio_call"
+            app:destination="@id/audioCallBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_home"
+            app:destination="@id/homeBlindFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_gps_to_history"
+            app:destination="@id/historyBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tasksBlindFragment"
+        android:name="com.yousef.mysight00.ui.TasksFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_tasks_to_notification"
+            app:destination="@id/notificationBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationBlindFragment"
+        android:name="com.yousef.mysight00.ui.NotificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification">
+        <action
+            android:id="@+id/action_notification_to_tasks"
+            app:destination="@id/tasksBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/audioCallBlindFragment"
+        android:name="com.yousef.mysight00.ui.AudioCallFragment"
+        android:label="Audio Call"
+        tools:layout="@layout/fragment_audio_call" />
+
+    <fragment
+        android:id="@+id/videoCallBlindFragment"
+        android:name="com.yousef.mysight00.ui.VideoCallFragment"
+        android:label="Video Call"
+        tools:layout="@layout/fragment_video_call" />
+
+    <fragment
+        android:id="@+id/historyBlindFragment"
+        android:name="com.yousef.mysight00.ui.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_history_to_home"
+            app:destination="@id/homeBlindFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_history_to_audio_call"
+            app:destination="@id/audioCallBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_history_to_gps"
+            app:destination="@id/gpsBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileBlindFragment"
+        android:name="com.yousef.mysight00.ui.ProfileBlindFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile_blind">
+        <action
+            android:id="@+id/action_profile_to_edit_profile"
+            app:destination="@id/editProfileBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileBlindFragment"
+        android:name="com.yousef.mysight00.ui.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_edit_profile_to_profile"
+            app:destination="@id/profileBlindFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+</navigation> 

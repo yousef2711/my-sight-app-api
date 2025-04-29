@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alzheimer_nav_graph"
+    app:startDestination="@id/homeAlzheimerFragment">
+
+    <!-- الشاشة الرئيسية لمريض الزهايمر -->
+    <fragment
+        android:id="@+id/homeAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.HomeAlzheimerFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_alzheimer">
+        <action
+            android:id="@+id/action_home_to_notification"
+            app:destination="@id/notificationAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_profile"
+            app:destination="@id/profileAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_gps"
+            app:destination="@id/gpsAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_audio_call"
+            app:destination="@id/audioCallAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_video_call"
+            app:destination="@id/videoCallAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_tasks"
+            app:destination="@id/tasksAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/historyAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة GPS -->
+    <fragment
+        android:id="@+id/gpsAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.GpsAlzheimerFragment"
+        android:label="GPS"
+        tools:layout="@layout/fragment_gps_alzheimer">
+        <action
+            android:id="@+id/action_gps_to_notification"
+            app:destination="@id/notificationAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_profile"
+            app:destination="@id/profileAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_audio_call"
+            app:destination="@id/audioCallAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_home"
+            app:destination="@id/homeAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_gps_to_history"
+            app:destination="@id/historyAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_tasks"
+            app:destination="@id/tasksAlzheimerFragment" />
+    </fragment>
+
+    <!-- شاشة المهام -->
+    <fragment
+        android:id="@+id/tasksAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.TasksFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_tasks_to_notification"
+            app:destination="@id/notificationAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة الإشعارات -->
+    <fragment
+        android:id="@+id/notificationAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.NotificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification">
+        <action
+            android:id="@+id/action_notification_to_tasks"
+            app:destination="@id/tasksAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة المكالمة الصوتية -->
+    <fragment
+        android:id="@+id/audioCallAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.AudioCallFragment"
+        android:label="Audio Call"
+        tools:layout="@layout/fragment_audio_call" />
+
+    <!-- شاشة المكالمة المرئية -->
+    <fragment
+        android:id="@+id/videoCallAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.VideoCallFragment"
+        android:label="Video Call"
+        tools:layout="@layout/fragment_video_call" />
+
+    <!-- شاشة السجل -->
+    <fragment
+        android:id="@+id/historyAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_history_to_home"
+            app:destination="@id/homeAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_history_to_audio_call"
+            app:destination="@id/audioCallAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_history_to_gps"
+            app:destination="@id/gpsAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة الملف الشخصي -->
+    <fragment
+        android:id="@+id/profileAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.ProfileAlzheimerFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile_alzheimer">
+        <action
+            android:id="@+id/action_profile_to_edit_profile"
+            app:destination="@id/editProfileAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة تعديل الملف الشخصي -->
+    <fragment
+        android:id="@+id/editProfileAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_edit_profile_to_profile"
+            app:destination="@id/profileAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+</navigation> 

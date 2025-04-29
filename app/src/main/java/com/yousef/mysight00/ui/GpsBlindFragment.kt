@@ -28,9 +28,27 @@ class GpsBlindFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.logoProfileHomeComp.setOnClickListener {
-            findNavController().navigate(R.id.action_gps_to_profile)
+        binding.apply {
+
+            logoProfileHomeComp.setOnClickListener {
+                findNavController().navigate(R.id.action_gps_to_profile)
+            }
+
+            bottomNavigationView.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.nav_home -> {
+                        navigateTo(R.id.action_gps_to_home)
+                        true
+                    }
+                    else -> false
+                }
+            }
         }
+    }
+
+    private fun navigateTo(actionId: Int): Boolean {
+        findNavController().navigate(actionId)
+        return true
     }
 
     override fun onDestroyView() {

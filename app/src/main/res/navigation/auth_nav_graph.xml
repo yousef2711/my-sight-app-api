@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- شاشة البداية -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.yousef.mysight00.ui.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splash_to_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة تسجيل الدخول -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.yousef.mysight00.ui.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_forget_password"
+            app:destination="@id/forgetPassFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_login_to_companion"
+            app:destination="@id/companion_nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/auth_nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_alzheimer"
+            app:destination="@id/alzheimer_nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/auth_nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_blind"
+            app:destination="@id/blind_nav_graph"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- شاشة التسجيل -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.yousef.mysight00.ui.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_register_to_form"
+            app:destination="@id/formCompFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة نموذج التسجيل -->
+    <fragment
+        android:id="@+id/formCompFragment"
+        android:name="com.yousef.mysight00.ui.FormCompFragment"
+        android:label="Registration Form"
+        tools:layout="@layout/fragment_form_comp">
+        <action
+            android:id="@+id/action_form_to_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة نسيان كلمة المرور -->
+    <fragment
+        android:id="@+id/forgetPassFragment"
+        android:name="com.yousef.mysight00.ui.ForgetPassFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forget_pass">
+        <action
+            android:id="@+id/action_forget_password_to_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_forget_password_to_new_password"
+            app:destination="@id/newPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة كلمة المرور الجديدة -->
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.yousef.mysight00.ui.NewPasswordFragment"
+        android:label="New Password"
+        tools:layout="@layout/fragment_new_password">
+        <action
+            android:id="@+id/action_new_password_to_forget_password"
+            app:destination="@id/forgetPassFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_new_password_to_login"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+    <include app:graph="@navigation/blind_nav_graph" />
+    <include app:graph="@navigation/alzheimer_nav_graph" />
+    <include app:graph="@navigation/companion_nav_graph" />
+
+</navigation> 

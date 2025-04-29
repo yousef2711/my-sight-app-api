@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.LoginFragment">
+    tools:context=".ui.VideoCallFragment">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -25,43 +25,50 @@
             android:src="@drawable/bg_call"
             android:contentDescription="bg_call_desc"/>
 
+        <TextureView
+            android:id="@+id/local_video_view"
+            android:layout_width="@dimen/local_video_width"
+            android:layout_height="@dimen/local_video_height"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/local_video_margin"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:padding="16dp"
+            android:padding="@dimen/call_info_padding"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvNameCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/call_text_margin"
                 android:background="#80000000"
-                android:padding="8dp"
+                android:padding="@dimen/call_text_padding"
                 android:text="name call"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/call_name_text_size" />
 
             <TextView
                 android:id="@+id/tv_timer_call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="@dimen/call_text_margin"
+                android:layout_marginTop="@dimen/call_text_margin"
                 android:background="#80000000"
-                android:padding="8dp"
+                android:padding="@dimen/call_text_padding"
                 android:text="time"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="@dimen/call_time_text_size" />
         </LinearLayout>
     </FrameLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/containerCalls"
         android:layout_width="0dp"
-        android:layout_height="205dp"
-        app:cardElevation="8dp"
+        android:layout_height="@dimen/call_controls_height"
+        app:cardElevation="@dimen/call_controls_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -75,32 +82,32 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="@dimen/call_controls_margin">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_change"
-                    android:layout_width="150dp"
-                    android:layout_height="65dp"
-                    android:layout_marginStart="16dp"
-                    android:padding="16dp"
+                    android:layout_width="@dimen/call_button_width"
+                    android:layout_height="@dimen/call_button_height"
+                    android:layout_marginStart="@dimen/call_button_margin"
+                    android:padding="@dimen/call_button_padding"
                     android:text="change"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/call_button_text_size"
                     app:backgroundTint="@color/dark"
-                    app:cornerRadius="18dp"
+                    app:cornerRadius="@dimen/call_button_radius"
                     app:icon="@drawable/ic_change_camera"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_mice"
-                    android:layout_width="150dp"
-                    android:layout_height="65dp"
-                    android:layout_marginEnd="16dp"
-                    android:padding="16dp"
+                    android:layout_width="@dimen/call_button_width"
+                    android:layout_height="@dimen/call_button_height"
+                    android:layout_marginEnd="@dimen/call_button_margin"
+                    android:padding="@dimen/call_button_padding"
                     android:text="Mute"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/call_button_text_size"
                     app:backgroundTint="@color/dark"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="@dimen/call_button_radius"
                     app:icon="@drawable/ic_mice"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -110,34 +117,34 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp">
+                android:layout_marginTop="@dimen/call_controls_margin">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_camera"
-                    android:layout_width="150dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="28dp"
-                    android:padding="16dp"
+                    android:layout_width="@dimen/call_button_width"
+                    android:layout_height="@dimen/call_button_height"
+                    android:layout_marginStart="@dimen/call_button_margin"
+                    android:layout_marginEnd="@dimen/call_button_margin"
+                    android:padding="@dimen/call_button_padding"
                     android:text="camera off"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/call_button_text_size"
                     app:backgroundTint="@color/dark"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="@dimen/call_button_radius"
                     app:icon="@drawable/ic_camera_video"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_speaker"
-                    android:layout_width="150dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginEnd="16dp"
-                    android:padding="16dp"
+                    android:layout_width="@dimen/call_button_width"
+                    android:layout_height="@dimen/call_button_height"
+                    android:layout_marginStart="@dimen/call_button_margin"
+                    android:layout_marginEnd="@dimen/call_button_margin"
+                    android:padding="@dimen/call_button_padding"
                     android:text="speaker"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/call_button_text_size"
                     app:backgroundTint="@color/dark"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="@dimen/call_button_radius"
                     app:icon="@drawable/ic_speaker"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -146,21 +153,20 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_end_call"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
+                android:layout_height="@dimen/call_end_button_height"
                 android:text="End Call"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginHorizontal="@dimen/call_end_button_margin"
                 android:textColor="@android:color/white"
-                android:textSize="16dp"
+                android:textSize="@dimen/call_end_button_text_size"
                 app:backgroundTint="@color/red"
-                app:cornerRadius="15dp"
+                app:cornerRadius="@dimen/call_button_radius"
                 app:icon="@drawable/ic_call_end"
                 app:iconGravity="textStart"
-                app:iconSize="28dp"
+                app:iconSize="@dimen/call_end_button_icon_size"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-
 
         </LinearLayout>
 

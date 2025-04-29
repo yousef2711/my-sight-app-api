@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Video View Dimensions -->
+    <dimen name="local_video_width">120dp</dimen>
+    <dimen name="local_video_height">160dp</dimen>
+    <dimen name="local_video_margin">16dp</dimen>
+
+    <!-- Call Info Dimensions -->
+    <dimen name="call_info_padding">16dp</dimen>
+    <dimen name="call_text_margin">8dp</dimen>
+    <dimen name="call_text_padding">8dp</dimen>
+    <dimen name="call_name_text_size">18sp</dimen>
+    <dimen name="call_time_text_size">14sp</dimen>
+
+    <!-- Call Controls Dimensions -->
+    <dimen name="call_controls_height">205dp</dimen>
+    <dimen name="call_controls_elevation">8dp</dimen>
+    <dimen name="call_controls_margin">8dp</dimen>
+
+    <!-- Button Dimensions -->
+    <dimen name="call_button_width">150dp</dimen>
+    <dimen name="call_button_height">65dp</dimen>
+    <dimen name="call_button_margin">16dp</dimen>
+    <dimen name="call_button_padding">16dp</dimen>
+    <dimen name="call_button_text_size">12sp</dimen>
+    <dimen name="call_button_radius">15dp</dimen>
+
+    <!-- End Call Button Dimensions -->
+    <dimen name="call_end_button_height">58dp</dimen>
+    <dimen name="call_end_button_margin">8dp</dimen>
+    <dimen name="call_end_button_text_size">16sp</dimen>
+    <dimen name="call_end_button_icon_size">28dp</dimen>
+</resources> 

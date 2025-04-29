@@ -73,6 +73,10 @@ class HomeCompanionFragment : Fragment() {
                         findNavController().navigate(R.id.action_home_to_tasks)
                         true
                     }
+                    R.id.nav_history -> {
+                        findNavController().navigate(R.id.action_home_to_history)
+                        true
+                    }
                     else -> false
                 }
             }

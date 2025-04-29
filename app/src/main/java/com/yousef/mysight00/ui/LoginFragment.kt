@@ -72,7 +72,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun authenticateUser(email: String, password: String) {
-        // بدل من استخدام try-catch، نستخدم منطق بسيط هنا
         when {
             email == "companion@gmail.com" && password == "123456" -> {
                 findNavController().navigate(R.id.action_login_to_companion)

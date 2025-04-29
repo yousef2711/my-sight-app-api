@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
             hideSystemUI()
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
-
-            // نعرض شاشة الاسبلاش و ننتقل لشاشة اللوج ان بعد فترة
             setupNavigation()
 
         } catch (e: Exception) {
@@ -38,13 +36,11 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
-        // تبدأ الـ Navigation مع شاشة الـ SplashFragment
         navController.setGraph(R.navigation.auth_nav_graph)
 
-        // الانتقال إلى شاشة اللوج ان بعد فترة
         Handler(Looper.getMainLooper()).postDelayed({
             navController.navigate(R.id.action_splash_to_login)
-        }, 2000)  // التأخير 2 ثانية (يمكنك تعديلها حسب ما يناسبك)
+        }, 2000)
     }
 
     private fun hideSystemUI() {

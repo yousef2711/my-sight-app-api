@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/companion_nav_graph"
+    app:startDestination="@id/homeCompanionFragment">
+
+    <!-- الشاشة الرئيسية للمرافق -->
+    <fragment
+        android:id="@+id/homeCompanionFragment"
+        android:name="com.yousef.mysight00.ui.HomeCompanionFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_companion">
+        <action
+            android:id="@+id/action_home_to_notification"
+            app:destination="@id/notificationCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_profile"
+            app:destination="@id/profileCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_gps"
+            app:destination="@id/gpsCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_audio_call"
+            app:destination="@id/audioCallCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_video_call"
+            app:destination="@id/videoCallCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_tasks"
+            app:destination="@id/tasksCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/historyCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة GPS -->
+    <fragment
+        android:id="@+id/gpsCompanionFragment"
+        android:name="com.yousef.mysight00.ui.GpsCompanionFragment"
+        android:label="GPS"
+        tools:layout="@layout/fragment_gps_companion">
+        <action
+            android:id="@+id/action_gps_to_notification"
+            app:destination="@id/notificationCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_profile"
+            app:destination="@id/profileCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_audio_call"
+            app:destination="@id/audioCallCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_gps_to_home"
+            app:destination="@id/homeCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_gps_to_history"
+            app:destination="@id/historyCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة المهام -->
+    <fragment
+        android:id="@+id/tasksCompanionFragment"
+        android:name="com.yousef.mysight00.ui.TasksFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_tasks_to_notification"
+            app:destination="@id/notificationCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_tasks_to_create_task"
+            app:destination="@id/createTaskCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_tasks_to_home"
+            app:destination="@id/homeCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <!-- شاشة الإشعارات -->
+    <fragment
+        android:id="@+id/notificationCompanionFragment"
+        android:name="com.yousef.mysight00.ui.NotificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification">
+        <action
+            android:id="@+id/action_notification_to_tasks"
+            app:destination="@id/tasksCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_notification_to_home"
+            app:destination="@id/homeCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <!-- شاشة إنشاء مهمة -->
+    <fragment
+        android:id="@+id/createTaskCompanionFragment"
+        android:name="com.yousef.mysight00.ui.CreateTaskFragment"
+        android:label="Create Task"
+        tools:layout="@layout/fragment_create_task">
+        <action
+            android:id="@+id/action_create_task_to_tasks"
+            app:destination="@id/tasksCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة الملف الشخصي -->
+    <fragment
+        android:id="@+id/profileCompanionFragment"
+        android:name="com.yousef.mysight00.ui.ProfileCompanionFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile_companion">
+        <action
+            android:id="@+id/action_profile_to_edit_profile"
+            app:destination="@id/editProfileCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_profile_to_home"
+            app:destination="@id/homeCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة تعديل الملف الشخصي -->
+    <fragment
+        android:id="@+id/editProfileCompanionFragment"
+        android:name="com.yousef.mysight00.ui.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_edit_profile_to_profile"
+            app:destination="@id/profileCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/profileCompanionFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <!-- شاشة المكالمة الصوتية -->
+    <fragment
+        android:id="@+id/audioCallCompanionFragment"
+        android:name="com.yousef.mysight00.ui.AudioCallFragment"
+        android:label="Audio Call"
+        tools:layout="@layout/fragment_audio_call">
+        <action
+            android:id="@+id/action_audio_call_to_home"
+            app:destination="@id/homeCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة المكالمة المرئية -->
+    <fragment
+        android:id="@+id/videoCallCompanionFragment"
+        android:name="com.yousef.mysight00.ui.VideoCallFragment"
+        android:label="Video Call"
+        tools:layout="@layout/fragment_video_call">
+        <action
+            android:id="@+id/action_video_call_to_home"
+            app:destination="@id/homeCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة السجل -->
+    <fragment
+        android:id="@+id/historyCompanionFragment"
+        android:name="com.yousef.mysight00.ui.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_history_to_home"
+            app:destination="@id/homeCompanionFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_history_to_audio_call"
+            app:destination="@id/audioCallCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_history_to_gps"
+            app:destination="@id/gpsCompanionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+</navigation> 

@@ -42,14 +42,16 @@ class TasksFragment : Fragment() {
         setupDaysRecyclerView()
         setupTasksRecyclerView()
 
-        // التنقل إلى Notifications
         binding.btnNotifications.setOnClickListener {
             findNavController().navigate(R.id.action_tasks_to_notification)
         }
 
-        // التنقل لإنشاء مهمة جديدة
         binding.btnAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_tasks_to_create_task)
+        }
+
+        binding.arrowBack.setOnClickListener {
+            findNavController().navigate(R.id.action_tasks_to_home)
         }
     }
 

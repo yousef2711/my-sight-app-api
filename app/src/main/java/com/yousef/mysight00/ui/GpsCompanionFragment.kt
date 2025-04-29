@@ -47,9 +47,24 @@ class GpsCompanionFragment : Fragment() {
             securityPopup.setOnClickListener {
                 securityPopup.visibility = View.GONE
             }
+
+            bottomNavigationView.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.nav_home -> {navigateTo(R.id.action_gps_to_home)
+                        true }
+                    R.id.nav_calls -> { navigateTo(R.id.action_gps_to_audio_call)
+                        true }
+                    R.id.nav_history -> { navigateTo(R.id.action_gps_to_history)
+                        true }
+                    else -> false
+                }
+            }
         }
     }
-
+    private fun navigateTo(actionId: Int): Boolean {
+        findNavController().navigate(actionId)
+        return true
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
