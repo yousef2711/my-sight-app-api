@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <!-- NavHost Fragment -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="&lt;com.google.android.material.floatingactionbutton.FloatingActionButton&#xA;    android:id=&quot;@+id/fab_sos&quot;&#xA;    android:layout_width=&quot;90dp&quot;&#xA;    android:layout_height=&quot;90dp&quot;&#xA;    android:layout_alignParentBottom=&quot;true&quot;&#xA;    android:layout_centerHorizontal=&quot;true&quot;&#xA;    android:layout_marginBottom=&quot;60dp&quot;&#xA;    android:backgroundTint=&quot;@android:color/white&quot;&#xA;    android:contentDescription=&quot;SOS emergency button&quot;&#xA;    android:elevation=&quot;10dp&quot;&#xA;    android:src=&quot;@drawable/ic_sos&quot;&#xA;    android:scaleType=&quot;fitXY&quot;         &lt;!-- مهم جداً لتكبير الصورة -->&#xA;    app:fabCustomSize=&quot;90dp&quot;&#xA;    app:useCompatPadding=&quot;false&quot;&#xA;    app:tint=&quot;@null&quot; />&#xA;" />
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -15,40 +23,45 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/auth_nav_graph" />
 
-    <RelativeLayout
+    <!-- Bottom Navigation + SOS button container -->
+    <FrameLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_gravity="bottom"
+        android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <!-- Bottom Navigation Bar -->
+        android:layout_gravity="bottom">
+
+        <!-- BottomNavigationView -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             android:background="@color/dark"
+            app:menu="@menu/bottom_nav_menu_companion"
             app:itemIconTint="@color/bottom_nav_item_color"
-            app:itemTextColor="@color/bottom_nav_item_color"
-            app:menu="@menu/bottom_nav_menu_companion" />
+            app:itemTextColor="@color/bottom_nav_item_color"/>
 
-        <!-- زر SOS في المنتصف -->
+        <!-- SOS Button (فوق الـ Bottom Bar) -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_sos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dp"
-            android:backgroundTint="@color/white"
+            android:layout_marginBottom="50dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@android:color/white"
             android:contentDescription="SOS emergency button"
             android:elevation="10dp"
             android:src="@drawable/ic_sos"
+            android:scaleType="fitXY"
             app:elevation="10dp"
-            app:maxImageSize="57dp"
+            app:fabCustomSize="100dp"
+            app:maxImageSize="100dp"
+            app:useCompatPadding="false"
             app:tint="@null" />
 
-    </RelativeLayout>
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
