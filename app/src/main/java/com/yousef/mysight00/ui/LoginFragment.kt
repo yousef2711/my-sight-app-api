@@ -1,14 +1,19 @@
 package com.yousef.mysight00.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
+import com.yousef.mysight00.RetrofitInstance
 import com.yousef.mysight00.databinding.FragmentLoginBinding
+import com.yousef.mysight00.model.loginRequest
 import com.yousef.mysight00.utils.showToast
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
@@ -26,6 +31,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+
     }
 
     private fun setupClickListeners() {
@@ -63,29 +69,43 @@ class LoginFragment : Fragment() {
                 requireContext().showToast("يرجى إدخال كلمة المرور")
                 false
             }
-            !email.contains("@") -> {
-                requireContext().showToast("البريد الإلكتروني غير صحيح")
-                false
-            }
+            //commented for testing only
+//            !email.contains("@") -> {
+//                requireContext().showToast("البريد الإلكتروني غير صحيح")
+//                false
+//            }
             else -> true
         }
     }
 
     private fun authenticateUser(email: String, password: String) {
-        val userType = when {
-            email == "companion@gmail.com" && password == "123456" -> "companion"
-            email == "alzhaimer@gmail.com" && password == "123456" -> "alzhaimer"
-            email == "blind@gmail.com" && password == "123456" -> "blind"
-            else -> null
-        }
 
-        if (userType != null) {
-            val intent = requireActivity().intent
-            intent.putExtra("user_type", userType)
-            requireActivity().recreate()
-        } else {
-            requireContext().showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة")
-        }
+//            when {
+//            email == "companion@gmail.com" && password == "123456" -> "companion"
+//            email == "alzhaimer@gmail.com" && password == "123456" -> "alzhaimer"
+//            email == "blind@gmail.com" && password == "123456" -> "blind"
+//            else -> null
+//        }
+            Log.i("LoginFragment", "Email: $email, Password: $password")
+            lifecycleScope.launch {
+                val response = RetrofitInstance.api.loginUser(loginRequest(email, password))
+                if (response.isSuccessful) {
+                    val userType =if ( response.body()?.user?.account_type == "patients") {
+                     "blind"
+                    } else {
+                        "companion"
+                    }
+                    Log.i("LoginFragment", "User type: $userType")
+                    val intent = requireActivity().intent
+                    intent.putExtra("user_type", userType)
+                    requireActivity().recreate()
+                } else {
+                    Log.i("LoginFragment", "Login failed: ${response.code()}")
+//            requireContext().showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة")
+                }
+            }
+
+
     }
 
     override fun onDestroyView() {
