@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    private var isCompanionSelected = false
+    private var selectedUserType: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,24 +33,24 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupValidation()
+        setupUserTypeSelection()
         setupNavigation()
-        selectCompanion()
     }
 
     private fun setupValidation() {
-        val textWatcher = object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                validateFields()
-            }
+        val watcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) = validateFields()
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }
 
-        binding.nameRegisComp.addTextChangedListener(textWatcher)
-        binding.emailRegisComp.addTextChangedListener(textWatcher)
-        binding.passwordRegisComp.addTextChangedListener(textWatcher)
-        binding.ageRegisComp.addTextChangedListener(textWatcher)
-        binding.phNumRegisComp.addTextChangedListener(textWatcher)
+        binding.apply {
+            nameRegisComp.addTextChangedListener(watcher)
+            emailRegisComp.addTextChangedListener(watcher)
+            passwordRegisComp.addTextChangedListener(watcher)
+            ageRegisComp.addTextChangedListener(watcher)
+            phNumRegisComp.addTextChangedListener(watcher)
+        }
     }
 
     private fun validateFields() {
@@ -59,81 +60,106 @@ class RegisterFragment : Fragment() {
         val age = binding.ageRegisComp.text.toString().trim()
         val phone = binding.phNumRegisComp.text.toString().trim()
 
-        val isNotEmpty = name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && age.isNotEmpty() && phone.isNotEmpty()
+        val validName = name.isNotEmpty() && name.length >= 3
+        val validEmail = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        val validPassword = password.isNotEmpty() && password.length >= 6
+        val validAge = age.isNotEmpty() && age.toIntOrNull()?.let { it > 0 } == true
+        val validPhone = phone.isNotEmpty() && phone.length >= 10 && phone.all { it.isDigit() }
 
-        val isNameValid = name.split(" ").size >= 2
-        val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val isPasswordValid = password.length >= 6
-        val isAgeValid = age.isNotEmpty() && age.toIntOrNull() != null && age.toInt() > 0
-        val isPhoneValid = phone.length == 11 && phone.all { it.isDigit() }
+        val isFormValid = validName && validEmail && validPassword && validAge && validPhone && selectedUserType != null
 
-        val isFormValid = isNotEmpty && isNameValid && isEmailValid && isPasswordValid && isAgeValid && isPhoneValid
+        Log.d("RegisterFragment", "Form validation: validName=$validName, validEmail=$validEmail, " +
+                "validPassword=$validPassword, validAge=$validAge, validPhone=$validPhone, " +
+                "selectedUserType=$selectedUserType, isFormValid=$isFormValid")
 
         binding.btnRegisComp.isEnabled = isFormValid
+
+        binding.apply {
+            nameRegisComp.error = if (!validName) "Please enter a valid name" else null
+            emailRegisComp.error = if (!validEmail) "Please enter a valid email" else null
+            passwordRegisComp.error = if (!validPassword) "Password must be at least 6 characters" else null
+            ageRegisComp.error = if (!validAge) "Please enter a valid age" else null
+            phNumRegisComp.error = if (!validPhone) "Please enter a valid phone number" else null
+        }
+    }
+
+    private fun setupUserTypeSelection() {
+        resetUserTypeButtons()
+
+        binding.apply {
+            btnblindRegisComp.setOnClickListener { if (selectedUserType != "Blind") selectUserType("Blind") }
+            btnalzheimerRegisComp.setOnClickListener { if (selectedUserType != "Alzheimer") selectUserType("Alzheimer") }
+            btncompanionRegisComp.setOnClickListener { if (selectedUserType != "Companion") selectUserType("Companion") }
+        }
+    }
+
+    private fun selectUserType(type: String) {
+        selectedUserType = type
+        resetUserTypeButtons()
+
+        when (type) {
+            "Blind" -> {
+                binding.btnblindRegisComp.setChipBackgroundColorResource(R.color.primary_blue)
+                binding.btnblindRegisComp.setTextColor(Color.WHITE)
+            }
+            "Alzheimer" -> {
+                binding.btnalzheimerRegisComp.setChipBackgroundColorResource(R.color.primary_blue)
+                binding.btnalzheimerRegisComp.setTextColor(Color.WHITE)
+            }
+            "Companion" -> {
+                binding.btncompanionRegisComp.setChipBackgroundColorResource(R.color.primary_blue)
+                binding.btncompanionRegisComp.setTextColor(Color.WHITE)
+            }
+        }
+
+        validateFields()
+    }
+
+    private fun resetUserTypeButtons() {
+        binding.apply {
+            btnblindRegisComp.setChipBackgroundColorResource(R.color.gray_lite)
+            btnblindRegisComp.setTextColor(Color.BLACK)
+
+            btnalzheimerRegisComp.setChipBackgroundColorResource(R.color.gray_lite)
+            btnalzheimerRegisComp.setTextColor(Color.BLACK)
+
+            btncompanionRegisComp.setChipBackgroundColorResource(R.color.gray_lite)
+            btncompanionRegisComp.setTextColor(Color.BLACK)
+        }
     }
 
     private fun setupNavigation() {
-        binding.btnblindRegisComp.setOnClickListener {
-            selectBlind()
-        }
-
-        binding.btnalzheimerRegisComp.setOnClickListener {
-            selectAlzheimer()
-        }
-
-        binding.btncompanionRegisComp.setOnClickListener {
-            selectCompanion()
-        }
-
         binding.btnRegisComp.setOnClickListener {
-            if (isCompanionSelected) {
-                findNavController().navigate(R.id.action_register_to_form)
+            Log.d("RegisterFragment", "Register button clicked")
+            Log.d("RegisterFragment", "Selected user type: $selectedUserType")
+
+            if (binding.btnRegisComp.isEnabled) {
+                when (selectedUserType) {
+                    "Companion" -> {
+                        Log.d("RegisterFragment", "Navigating to form")
+                        findNavController().navigate(R.id.action_register_to_form)
+                    }
+                    else -> {
+                        Log.d("RegisterFragment", "Navigating to login")
+                        findNavController().navigate(R.id.action_register_to_login)
+                    }
+                }
             } else {
-                findNavController().navigate(R.id.action_register_to_login)
+                Log.d("RegisterFragment", "Button is disabled, form is not valid")
             }
+        }
+
+        binding.arrowBackRegisComp.setOnClickListener {
+            findNavController().navigate(R.id.action_register_to_login)
         }
 
         binding.btnLoginRegisComp.setOnClickListener {
             findNavController().navigate(R.id.action_register_to_login)
         }
-        binding.arrowBackRegisComp.setOnClickListener {
-            findNavController().navigate(R.id.action_register_to_login)
-        }
+
         binding.logTextRegisComp.setOnClickListener {
             findNavController().navigate(R.id.action_register_to_login)
         }
-    }
-
-    private fun selectBlind() {
-        resetButtons()
-        binding.btnblindRegisComp.setBackgroundColor(Color.parseColor("#007AFF"))
-        binding.btnblindRegisComp.setTextColor(Color.WHITE)
-        isCompanionSelected = false
-    }
-
-    private fun selectAlzheimer() {
-        resetButtons()
-        binding.btnalzheimerRegisComp.setBackgroundColor(Color.parseColor("#007AFF"))
-        binding.btnalzheimerRegisComp.setTextColor(Color.WHITE)
-        isCompanionSelected = false
-    }
-
-    private fun selectCompanion() {
-        resetButtons()
-        binding.btncompanionRegisComp.setBackgroundColor(Color.parseColor("#007AFF"))
-        binding.btncompanionRegisComp.setTextColor(Color.WHITE)
-        isCompanionSelected = true
-    }
-
-    private fun resetButtons() {
-        binding.btnblindRegisComp.setBackgroundColor(Color.WHITE)
-        binding.btnblindRegisComp.setTextColor(Color.BLACK)
-
-        binding.btnalzheimerRegisComp.setBackgroundColor(Color.WHITE)
-        binding.btnalzheimerRegisComp.setTextColor(Color.BLACK)
-
-        binding.btncompanionRegisComp.setBackgroundColor(Color.WHITE)
-        binding.btncompanionRegisComp.setTextColor(Color.BLACK)
     }
 
     override fun onDestroyView() {

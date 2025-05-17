@@ -7,160 +7,132 @@
     android:background="@color/white"
     tools:context=".ui.LoginFragment">
 
+    <!-- Background Image -->
     <ImageView
         android:id="@+id/bg_create_task"
-        android:layout_width="412dp"
-        android:layout_height="395dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/pg_create_task"
+        android:src="@drawable/bg_create_task"
         app:layout_constraintDimensionRatio="1:1.2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="match_parent"
-        android:layout_height="105dp"
-        android:orientation="horizontal"
+    <!-- Header Section -->
+    <ImageView
+        android:id="@+id/arrow_back"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/ic_back_black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/arrow_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_back_black" />
-
-        <TextView
-            android:layout_width="252dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Create Task"
-            android:textColor="@color/white"
-            android:textSize="28dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/titleText_create_task"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:text="Create Task"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/arrow_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
+    <!-- Name Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginHorizontal="16dp"
+        android:hint="Name"
+        app:boxBackgroundMode="none"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_create_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:hint="Name"
-            app:boxBackgroundMode="none"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+            android:background="@drawable/btn_text_rounded"
+            android:padding="12dp"
+            android:textSize="18sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name_create_task"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_text_rounded"
-                android:padding="12dp"
-                android:textSize="18sp"/>
-        </com.google.android.material.textfield.TextInputLayout>
+    <!-- Date Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dateInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:hint="Date"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        app:boxBackgroundMode="none"
+        app:layout_constraintTop_toBottomOf="@id/nameInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9">
 
-
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/date_create_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:hint="Date"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            app:boxBackgroundMode="none">
+            android:background="@drawable/btn_text_rounded"
+            android:padding="12dp"
+            android:textSize="18sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/date_create_task"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_text_rounded"
-                android:padding="12dp"
-                android:textSize="18sp"/>
-        </com.google.android.material.textfield.TextInputLayout>
+    <!-- Main Content Section -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_create_task"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="24dp"
+        android:radius="24dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateInputLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_percent="1">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/containerForget_patient_form"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="554dp"
-            android:layout_marginTop="20dp"
-            app:cardElevation="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleText_patient_form">
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_rounded_white_up"
+            android:orientation="vertical"
+            android:padding="24dp">
 
+            <!-- Time Section -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_rounded_large"
-                android:orientation="vertical"
-                android:padding="24dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                        android:layout_width="0dp"
-                        android:layout_height="65dp"
-                        android:layout_margin="24dp"
-                        android:layout_weight="1"
-                        android:hint="start time"
-                        app:boxBackgroundMode="none">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/startTime_create_task"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/btn_text_rounded"
-                            android:padding="12dp"
-                            android:textSize="18sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                        android:layout_width="0dp"
-                        android:layout_height="65dp"
-                        android:layout_margin="24dp"
-                        android:layout_weight="1"
-                        android:hint="end time"
-
-                        app:boxBackgroundMode="none">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/end_time_create_task"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/btn_text_rounded"
-                            android:padding="12dp"
-                            android:textSize="18sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                </LinearLayout>
-
+                <!-- Start Time Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:hint="Description"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:hint="Start Time"
                     app:boxBackgroundMode="none">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Description_create_task"
+                        android:id="@+id/startTime_create_task"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/btn_text_rounded"
@@ -168,43 +140,77 @@
                         android:textSize="18sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- End Time Input -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:hint="End Time"
+                    app:boxBackgroundMode="none">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_create_task"
-                        android:layout_width="0dp"
-                        android:layout_height="65dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/primary_blue"
-                        android:text="Create Task"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="24dp" />
-
-                    <View
-                        android:layout_width="8dp"
-                        android:layout_height="match_parent" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSend_taskNow"
-                        android:layout_width="0dp"
-                        android:layout_height="65dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/green"
-                        android:text="Send Now"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="24dp" />
-                </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/end_time_create_task"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_text_rounded"
+                        android:padding="12dp"
+                        android:textSize="18sp" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+            <!-- Description Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="Description"
+                app:boxBackgroundMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Description_create_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_text_rounded"
+                    android:padding="12dp"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_create_task"
+                    android:layout_width="0dp"
+                    android:layout_height="65dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/primary_blue"
+                    android:text="Create Task"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="10dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSend_taskNow"
+                    android:layout_width="0dp"
+                    android:layout_height="65dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/green"
+                    android:text="Send Now"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="10dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

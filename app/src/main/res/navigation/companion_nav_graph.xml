@@ -218,4 +218,4 @@
             app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
-</navigation> 
+</navigation>

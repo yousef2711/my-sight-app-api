@@ -41,11 +41,6 @@
             app:destination="@id/tasksBlindFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_home_to_history"
-            app:destination="@id/historyBlindFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -73,11 +68,6 @@
             app:destination="@id/homeBlindFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_gps_to_history"
-            app:destination="@id/historyBlindFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
@@ -90,6 +80,16 @@
             app:destination="@id/notificationBlindFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_tasks_to_create_task"
+            app:destination="@id/createTaskBlindFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_tasks_to_home"
+            app:destination="@id/homeBlindFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -117,28 +117,6 @@
         tools:layout="@layout/fragment_video_call" />
 
     <fragment
-        android:id="@+id/historyBlindFragment"
-        android:name="com.yousef.mysight00.ui.HistoryFragment"
-        android:label="History"
-        tools:layout="@layout/fragment_history">
-        <action
-            android:id="@+id/action_history_to_home"
-            app:destination="@id/homeBlindFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_history_to_audio_call"
-            app:destination="@id/audioCallBlindFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_history_to_gps"
-            app:destination="@id/gpsBlindFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-    </fragment>
-
-    <fragment
         android:id="@+id/profileBlindFragment"
         android:name="com.yousef.mysight00.ui.ProfileBlindFragment"
         android:label="Profile"
@@ -158,6 +136,18 @@
         <action
             android:id="@+id/action_edit_profile_to_profile"
             app:destination="@id/profileBlindFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createTaskBlindFragment"
+        android:name="com.yousef.mysight00.ui.CreateTaskFragment"
+        android:label="Create Task"
+        tools:layout="@layout/fragment_create_task">
+        <action
+            android:id="@+id/action_create_task_to_tasks"
+            app:destination="@id/tasksBlindFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>

@@ -42,11 +42,6 @@
             app:destination="@id/tasksAlzheimerFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_home_to_history"
-            app:destination="@id/historyAlzheimerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <!-- شاشة GPS -->
@@ -76,11 +71,6 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_gps_to_history"
-            app:destination="@id/historyAlzheimerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-        <action
             android:id="@+id/action_gps_to_tasks"
             app:destination="@id/tasksAlzheimerFragment" />
     </fragment>
@@ -96,6 +86,16 @@
             app:destination="@id/notificationAlzheimerFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_tasks_to_create_task"
+            app:destination="@id/createTaskAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_tasks_to_home"
+            app:destination="@id/homeAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
     <!-- شاشة الإشعارات -->
@@ -126,27 +126,6 @@
         tools:layout="@layout/fragment_video_call" />
 
     <!-- شاشة السجل -->
-    <fragment
-        android:id="@+id/historyAlzheimerFragment"
-        android:name="com.yousef.mysight00.ui.HistoryFragment"
-        android:label="History"
-        tools:layout="@layout/fragment_history">
-        <action
-            android:id="@+id/action_history_to_home"
-            app:destination="@id/homeAlzheimerFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_history_to_audio_call"
-            app:destination="@id/audioCallAlzheimerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_history_to_gps"
-            app:destination="@id/gpsAlzheimerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-    </fragment>
 
     <!-- شاشة الملف الشخصي -->
     <fragment
@@ -170,6 +149,18 @@
         <action
             android:id="@+id/action_edit_profile_to_profile"
             app:destination="@id/profileAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createTaskAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.CreateTaskFragment"
+        android:label="Create Task"
+        tools:layout="@layout/fragment_create_task">
+        <action
+            android:id="@+id/action_create_task_to_tasks"
+            app:destination="@id/tasksAlzheimerFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>

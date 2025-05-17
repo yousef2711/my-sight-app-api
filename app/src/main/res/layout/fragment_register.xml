@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.LoginFragment">
+    tools:context=".ui.RegisterFragment">
 
     <ImageView
         android:id="@+id/bg_regis_comp"
@@ -14,132 +14,124 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/image_background"
-        app:layout_constraintDimensionRatio="1:1.2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/arrow_back_regis_comp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="36dp"
-        android:layout_marginBottom="14dp"
         android:src="@drawable/arrow_back"
-        app:layout_constraintBottom_toTopOf="@+id/titleText_regis_comp"
-        app:layout_constraintStart_toStartOf="@+id/titleText_regis_comp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/titleText_regis_comp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="84dp"
         android:text="Register"
         android:textColor="@android:color/white"
-        android:textSize="36dp"
+        android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/bg_regis_comp"
-        app:layout_constraintTop_toTopOf="@+id/bg_regis_comp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9" />
 
     <LinearLayout
         android:id="@+id/layout"
-        android:layout_width="373dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/container_regis_comp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="@+id/titleText_regis_comp"
-        app:layout_constraintTop_toBottomOf="@+id/titleText_regis_comp">
+        app:layout_constraintTop_toBottomOf="@id/titleText_regis_comp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp">
 
         <TextView
-            android:id="@+id/subText_regis_comp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:text="Already have an account?"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/titleText_regis_comp"
-            app:layout_constraintTop_toBottomOf="@+id/titleText_regis_comp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/log_Text_regis_comp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="4dp"
             android:text="Log In"
             android:textColor="@color/primary_blue"
             android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/titleText_regis_comp"
-            app:layout_constraintTop_toBottomOf="@+id/titleText_regis_comp" />
-
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/container_regis_comp"
-        android:layout_width="410dp"
-        android:layout_height="708dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
         android:radius="24dp"
-        app:cardBackgroundColor="@color/material_dynamic_neutral0"
+        app:cardBackgroundColor="@android:color/white"
         app:cardElevation="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="0.75">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_rounded_white_up"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:background="@drawable/bg_rounded_white_up">
 
-                <Button
-                    android:id="@+id/btnLogin_regis_comp"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/white"
-                    android:text="Log In"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
 
-                <Button
-                    android:id="@+id/btnSignup_regis_comp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/primary_blue"
-                    android:text="Sign Up"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"/>
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/btnLogin_regis_comp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:text="Log In"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
 
+                    <Button
+                        android:id="@+id/btnSignup_regis_comp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primary_blue"
+                        android:text="Sign Up"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:orientation="vertical">
-
+                <!-- Inputs -->
                 <EditText
                     android:id="@+id/name_regis_comp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/btn_text_rounded"
-                    android:hint="full name"
+                    android:hint="Full Name"
                     android:padding="12dp"
                     android:textSize="16sp" />
 
@@ -147,7 +139,7 @@
                     android:id="@+id/email_regis_comp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/btn_text_rounded"
                     android:hint="Email"
                     android:padding="12dp"
@@ -157,7 +149,7 @@
                     android:id="@+id/password_regis_comp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/btn_text_rounded"
                     android:hint="Password"
                     android:padding="12dp"
@@ -167,9 +159,9 @@
                     android:id="@+id/age_regis_comp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/btn_text_rounded"
-                    android:hint="age"
+                    android:hint="Age"
                     android:padding="12dp"
                     android:textSize="16sp" />
 
@@ -177,70 +169,74 @@
                     android:id="@+id/ph_num_regis_comp"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:background="@drawable/btn_text_rounded"
-                    android:hint="phone number"
+                    android:hint="Phone Number"
                     android:padding="12dp"
                     android:textSize="16sp" />
 
-
-                <LinearLayout
+                <!-- Chip Group -->
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="24dp">
 
-                    <Button
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/btnblind_regis_comp"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:minHeight="60dp"
                         android:text="Blind"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btncompanion_regis_comp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.32" />
 
-                    <Button
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/btncompanion_regis_comp"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/primary_blue"
-                        android:text="compnion"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:textStyle="bold"/>
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:minHeight="60dp"
+                        android:text="Companion"
+                        app:layout_constraintStart_toEndOf="@id/btnblind_regis_comp"
+                        app:layout_constraintEnd_toStartOf="@id/btnalzheimer_regis_comp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.32" />
 
-                    <Button
+                    <com.google.android.material.chip.Chip
                         android:id="@+id/btnalzheimer_regis_comp"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:minHeight="60dp"
                         android:text="Alzheimer"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-                </LinearLayout>
+                        app:layout_constraintStart_toEndOf="@id/btncompanion_regis_comp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.32" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_regis_comp"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:backgroundTint="@color/primary_blue"
+                    android:text="Register"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="10dp" />
             </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_regis_comp"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="85dp"
-                android:backgroundTint="@color/primary_blue"
-                android:text="Register"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                app:cornerRadius="10dp" />
-
-
-        </LinearLayout>
-
+        </ScrollView>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
 import com.yousef.mysight00.databinding.FragmentGpsAlzheimerBinding
 
-
 class GpsAlzheimerFragment : Fragment() {
 
     private var _binding: FragmentGpsAlzheimerBinding? = null
@@ -21,8 +20,7 @@ class GpsAlzheimerFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentGpsAlzheimerBinding.inflate(inflater, container, false)
@@ -47,18 +45,6 @@ class GpsAlzheimerFragment : Fragment() {
             icAreaStatus.setOnClickListener {
                 changeAreaState()
             }
-
-            bottomNavigationView.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.nav_home -> {navigateTo(R.id.action_gps_to_home)
-                        true }
-                    R.id.nav_calls -> { navigateTo(R.id.action_gps_to_audio_call)
-                        true }
-                    R.id.nav_task -> { navigateTo(R.id.action_gps_to_tasks)
-                        true }
-                    else -> false
-                }
-            }
         }
     }
 
@@ -79,11 +65,6 @@ class GpsAlzheimerFragment : Fragment() {
                 }
             }
         )
-    }
-
-    private fun navigateTo(actionId: Int): Boolean {
-        findNavController().navigate(actionId)
-        return true
     }
 
     override fun onDestroyView() {
