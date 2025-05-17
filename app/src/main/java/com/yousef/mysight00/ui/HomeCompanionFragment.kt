@@ -29,55 +29,27 @@ class HomeCompanionFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.apply {
-            icNotificationComp.setOnClickListener { 
+            icNotificationComp.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_notification)
             }
-            
-            logoProfileHomeComp.setOnClickListener { 
+            logoProfileHomeComp.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_profile)
             }
-            
-            imageGpsComp.setOnClickListener { 
+            imageGpsComp.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_gps)
             }
-            
-            icCallBlind.setOnClickListener { 
+            icCallBlind.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_audio_call)
             }
-            
-            icVideoBlind.setOnClickListener { 
+            icVideoBlind.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_video_call)
             }
-            
-            tvSeeAll.setOnClickListener { 
+            tvSeeAll.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_tasks)
             }
-            
             listOf(imageCard1Comp, imageCard2Comp, imageCard3Comp).forEach {
-                it.setOnClickListener { 
+                it.setOnClickListener {
                     findNavController().navigate(R.id.action_home_to_tasks)
-                }
-            }
-
-            bottomNavigationView5.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.nav_gps -> {
-                        findNavController().navigate(R.id.action_home_to_gps)
-                        true
-                    }
-                    R.id.nav_calls -> {
-                        findNavController().navigate(R.id.action_home_to_audio_call)
-                        true
-                    }
-                    R.id.nav_task -> {
-                        findNavController().navigate(R.id.action_home_to_tasks)
-                        true
-                    }
-                    R.id.nav_history -> {
-                        findNavController().navigate(R.id.action_home_to_history)
-                        true
-                    }
-                    else -> false
                 }
             }
         }

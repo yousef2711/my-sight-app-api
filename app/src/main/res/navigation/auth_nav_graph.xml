@@ -126,7 +126,7 @@
             app:exitAnim="@anim/slide_out_right" />
     </fragment>
     <include app:graph="@navigation/blind_nav_graph" />
-    <include app:graph="@navigation/alzheimer_nav_graph" />
+    <include app:graph="@navigation/alzhaimer_nav_graph" />
     <include app:graph="@navigation/companion_nav_graph" />
 
 </navigation> 

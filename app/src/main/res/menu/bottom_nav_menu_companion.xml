@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home_companian"
-        android:title="Home"/>
-
+        android:id="@+id/homeCompanionFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_home_companian" />
     <item
-        android:id="@+id/nav_calls"
+        android:id="@+id/audioCallCompanionFragment"
         android:title="Call"
-        android:icon="@drawable/ic_call_companian"/>
-
+        android:icon="@drawable/ic_call_companian" />
     <item
-        android:id="@+id/nav_gps"
-        android:icon="@drawable/ic_gps"
-        android:title="Gps"
-        android:itemBackground="@drawable/bg_rounded_blue_oval"/>
-
+        android:id="@+id/ic"
+        android:title=""
+        android:icon="@drawable/ic_blank" />
     <item
-        android:id="@+id/nav_history"
-        android:icon="@drawable/ic_history_companian"
-        android:title="History"/>
+        android:id="@+id/gpsCompanionFragment"
+        android:title="GPS"
+        android:icon="@drawable/ic_gps" />
+    <item
+        android:id="@+id/historyCompanionFragment"
+        android:title="History"
+        android:icon="@drawable/ic_history" />
 
 </menu>

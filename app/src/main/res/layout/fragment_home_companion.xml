@@ -201,18 +201,8 @@
 
         </LinearLayout>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconSize="36dp"
-        android:paddingVertical="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu_companion"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

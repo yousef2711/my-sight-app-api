@@ -1,310 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfileBlindFragment">
+    tools:context=".ui.HistoryFragment">
 
-    <ImageView
-        android:id="@+id/bg_profile"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/bg_main"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/backButton_history"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:src="@drawable/arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/title_history" />
-
-    <TextView
-        android:id="@+id/title_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="History"
-        android:textColor="@android:color/white"
-        android:textSize="26dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bg_profile" />
-
-    <TextView
-        android:id="@+id/tvPlaces_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Places"
-        android:textColor="@android:color/white"
-        android:textSize="26dp"
-        app:layout_constraintStart_toStartOf="@+id/backButton_history"
-        app:layout_constraintTop_toBottomOf="@+id/backButton_history" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_rounded_white_small"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPlaces_history">
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_home_companian"
-                app:tint="@color/dark" />
+                android:id="@+id/bg_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="Add home"
-                android:textColor="@color/dark"
-                android:textSize="24sp" />
-
-            <ImageView
+                android:id="@+id/title_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:src="@drawable/arrow_right"
-                app:tint="@color/dark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+                android:layout_marginTop="32dp"
+                android:text="History"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_work"
-                app:tint="@color/dark" />
+                android:id="@+id/backButton_history"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/title_history" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="Add Work"
-                android:textColor="@color/dark"
-                android:textSize="24sp" />
-
-            <ImageView
+                android:id="@+id/tvPlaces_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:src="@drawable/arrow_right"
-                app:tint="@color/dark" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:text="place saved"
-            android:textColor="@color/dark"
-            android:textSize="24dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="16dp"
-            android:text="place saved"
-            android:textColor="@color/dark"
-            android:textSize="24dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_rounded_white_small"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
-            <ImageView
-                android:id="@+id/icon1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_task"
-                android:background="@drawable/bg_rounded_blue_small"
-                android:padding="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_marginTop="24dp"
+                android:text="Places"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="@id/backButton_history"
+                app:layout_constraintTop_toBottomOf="@id/title_history" />
 
             <LinearLayout
-                android:id="@+id/linearLayout1"
+                android:id="@+id/linearLayout10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_rounded_white_small"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnCorrect1"
-                app:layout_constraintStart_toEndOf="@id/icon1"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/taskTitle1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Task name"
-                    android:textColor="@android:color/black"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-
-                
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/btnCorrect1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:background="@drawable/bg_green_circle"
-                android:padding="4dp"
-                android:src="@drawable/ic_check"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
-            <ImageView
-                android:id="@+id/icon2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_task"
-                android:background="@drawable/bg_rounded_blue_small"
-                android:padding="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/tvPlaces_history">
 
-            <!-- العنوان والتاريخ -->
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnCorrect2"
-                app:layout_constraintStart_toEndOf="@id/icon2"
-                app:layout_constraintTop_toTopOf="parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_home_companian"
+                        app:tint="@color/dark" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Add home"
+                        android:textColor="@color/dark"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_right"
+                        app:tint="@color/dark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_work"
+                        app:tint="@color/dark" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Add Work"
+                        android:textColor="@color/dark"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_right"
+                        app:tint="@color/dark" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/taskTitle2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Task name"
-                    android:textColor="@android:color/black"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                    android:padding="8dp"
+                    android:text="place saved"
+                    android:textColor="@color/dark"
+                    android:textSize="18sp" />
 
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="place saved"
+                    android:textColor="@color/dark"
+                    android:textSize="18sp" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/btnCorrect2"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:background="@drawable/bg_wrong"
-                android:padding="4dp"
-                android:src="@drawable/ic_wrong"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_rounded_white_small"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
-            <ImageView
-                android:id="@+id/icon3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_task"
-                android:background="@drawable/bg_rounded_blue_small"
-                android:padding="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/linearLayout10">
 
-            <!-- العنوان والتاريخ -->
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnCorrect3"
-                app:layout_constraintStart_toEndOf="@id/icon3"
-                app:layout_constraintTop_toTopOf="parent">
+                <include layout="@layout/item_task" />
 
-                <TextView
-                    android:id="@+id/taskTitle3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Task name"
-                    android:textColor="@android:color/black"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                <include layout="@layout/item_task" />
+
+                <include layout="@layout/item_task" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/btnCorrect3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:background="@drawable/bg_green_circle"
-                android:padding="4dp"
-                android:src="@drawable/ic_check"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

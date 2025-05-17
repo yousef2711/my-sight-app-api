@@ -3,4 +3,5 @@
     <string name="discription_forget_pass">Provide your email for which you want to reset your password</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sos_button">SOS Button</string>
 </resources>

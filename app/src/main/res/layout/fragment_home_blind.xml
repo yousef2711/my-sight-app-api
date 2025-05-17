@@ -43,9 +43,9 @@
 
         <ImageView
             android:id="@+id/logo_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logo_blind" />
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_inapp" />
 
         <View
             android:layout_width="0dp"
@@ -104,8 +104,8 @@
 
         <ImageView
             android:id="@+id/ic_sos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:src="@drawable/ic_sos"
             android:layout_marginTop="32dp"
             android:padding="8dp"
@@ -143,17 +143,5 @@
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationViewBlind"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconSize="40dp"
-        android:paddingVertical="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu2" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

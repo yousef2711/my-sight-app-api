@@ -72,19 +72,19 @@ class LoginFragment : Fragment() {
     }
 
     private fun authenticateUser(email: String, password: String) {
-        when {
-            email == "companion@gmail.com" && password == "123456" -> {
-                findNavController().navigate(R.id.action_login_to_companion)
-            }
-            email == "alzhaimer@gmail.com" && password == "123456" -> {
-                findNavController().navigate(R.id.action_login_to_alzheimer)
-            }
-            email == "blind@gmail.com" && password == "123456" -> {
-                findNavController().navigate(R.id.action_login_to_blind)
-            }
-            else -> {
-                requireContext().showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة")
-            }
+        val userType = when {
+            email == "companion@gmail.com" && password == "123456" -> "companion"
+            email == "alzhaimer@gmail.com" && password == "123456" -> "alzhaimer"
+            email == "blind@gmail.com" && password == "123456" -> "blind"
+            else -> null
+        }
+
+        if (userType != null) {
+            val intent = requireActivity().intent
+            intent.putExtra("user_type", userType)
+            requireActivity().recreate()
+        } else {
+            requireContext().showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة")
         }
     }
 

@@ -15,4 +15,40 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/auth_nav_graph" />
 
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <!-- Bottom Navigation Bar -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark"
+            app:itemIconTint="@color/bottom_nav_item_color"
+            app:itemTextColor="@color/bottom_nav_item_color"
+            app:menu="@menu/bottom_nav_menu_companion" />
+
+        <!-- زر SOS في المنتصف -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_sos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="SOS emergency button"
+            android:elevation="10dp"
+            android:src="@drawable/ic_sos"
+            app:elevation="10dp"
+            app:maxImageSize="57dp"
+            app:tint="@null" />
+
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

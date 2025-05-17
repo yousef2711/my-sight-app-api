@@ -71,7 +71,8 @@
         android:gravity="bottom"
         android:orientation="horizontal"
         android:paddingTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        android:layout_marginBottom="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_home_companion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
@@ -104,16 +105,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconSize="36dp"
-        android:paddingVertical="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import com.yousef.mysight00.R
 import com.yousef.mysight00.databinding.FragmentGpsBlindBinding
 
 class GpsBlindFragment : Fragment() {
+
     private var _binding: FragmentGpsBlindBinding? = null
     private val binding get() = _binding!!
 
@@ -24,31 +25,10 @@ class GpsBlindFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
-    }
 
-    private fun setupClickListeners() {
-        binding.apply {
-
-            logoProfileHomeComp.setOnClickListener {
-                findNavController().navigate(R.id.action_gps_to_profile)
-            }
-
-            bottomNavigationView.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.nav_home -> {
-                        navigateTo(R.id.action_gps_to_home)
-                        true
-                    }
-                    else -> false
-                }
-            }
+        binding.logoProfileHomeComp.setOnClickListener {
+            findNavController().navigate(R.id.action_gps_to_profile)
         }
-    }
-
-    private fun navigateTo(actionId: Int): Boolean {
-        findNavController().navigate(actionId)
-        return true
     }
 
     override fun onDestroyView() {

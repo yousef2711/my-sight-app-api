@@ -29,22 +29,24 @@ class HomeBlindFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            // OnClickListeners for each element
-            logoProfileHomeBlind.setOnClickListener { navigateTo(R.id.action_home_to_profile) }
-            icNotificationBlind.setOnClickListener { navigateTo(R.id.action_home_to_notification) }
-            icCameraBlind.setOnClickListener { openCamera() }
-            icCallBlind.setOnClickListener { navigateTo(R.id.action_home_to_audio_call) }
-            icVideoBlind.setOnClickListener { navigateTo(R.id.action_home_to_video_call) }
+            logoProfileHomeBlind.setOnClickListener {
+                findNavController().navigate(R.id.action_home_to_profile)
+            }
 
-            // BottomNavigationView interaction
-            bottomNavigationViewBlind.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.nav_gps -> {
-                        navigateTo(R.id.action_home_to_gps)
-                        true
-                    }
-                    else -> false
-                }
+            icNotificationBlind.setOnClickListener {
+                findNavController().navigate(R.id.action_home_to_notification)
+            }
+
+            icCameraBlind.setOnClickListener {
+                openCamera()
+            }
+
+            icCallBlind.setOnClickListener {
+                findNavController().navigate(R.id.action_home_to_audio_call)
+            }
+
+            icVideoBlind.setOnClickListener {
+                findNavController().navigate(R.id.action_home_to_video_call)
             }
         }
     }
@@ -52,10 +54,6 @@ class HomeBlindFragment : Fragment() {
     private fun openCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivity(cameraIntent)
-    }
-
-    private fun navigateTo(actionId: Int) {
-        findNavController().navigate(actionId)
     }
 
     override fun onDestroyView() {

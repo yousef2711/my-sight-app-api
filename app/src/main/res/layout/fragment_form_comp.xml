@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/titleText_patient_form"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
         android:layout_marginTop="86dp"
@@ -40,20 +40,23 @@
         android:textColor="@android:color/white"
         android:textSize="36dp"
         app:layout_constraintStart_toStartOf="@+id/bg_patient_form"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bg_patient_form"
         tools:ignore="MissingConstraints" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/containerForget_patient_form"
-        android:layout_width="416dp"
-        android:layout_height="738dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="50dp"
         android:radius="24dp"
-        app:cardBackgroundColor="@color/material_dynamic_neutral0"
+        app:cardBackgroundColor="@android:color/white"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleText_patient_form">
+        app:layout_constraintTop_toBottomOf="@id/titleText_patient_form"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.75">
 
 
         <LinearLayout
