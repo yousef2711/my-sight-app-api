@@ -13,7 +13,6 @@
         android:id="@+id/navigation_blank"
         android:title=""
         android:icon="@drawable/ic_blank" />
-
     <item
         android:id="@+id/navigation_gps"
         android:icon="@drawable/ic_location"

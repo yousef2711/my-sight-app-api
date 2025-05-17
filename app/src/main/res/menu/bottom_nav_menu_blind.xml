@@ -9,7 +9,4 @@
         android:id="@+id/navigation_gps"
         android:icon="@drawable/ic_location"
         android:title="GPS" />
-
-
-
 </menu> 
