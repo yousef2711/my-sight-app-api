@@ -8,17 +8,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.GpsAlzheimerFragment">
 
-    <!-- Background Map Image -->
-    <ImageView
-        android:id="@+id/bg_home_companion"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_map"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="397dp" />
 
     <!-- Top Bar -->
     <LinearLayout
@@ -56,5 +51,7 @@
             app:layout_constraintHeight_percent="0.08"
             android:src="@drawable/ic_profile_gps_blind" />
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

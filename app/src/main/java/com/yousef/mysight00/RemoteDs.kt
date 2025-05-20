@@ -30,6 +30,8 @@ interface ApiService {
     suspend fun forgotPassword(
         @Body request: forgotPasswordRequest
     ): Response<forgotPasswordResponse>
+
+    
 }
 
 object RetrofitInstance {

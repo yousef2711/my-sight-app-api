@@ -3,17 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.GpsCompanionFragment">
+    tools:context=".ui.GpsAlzheimerFragment">
 
-    <ImageView
-        android:id="@+id/bg_home_companion"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_map"
-        app:layout_constraintDimensionRatio="1:1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -62,49 +61,47 @@
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
-        android:gravity="end"
+        android:gravity="bottom"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/bg_home_companion"
+        android:paddingTop="16dp"
+        android:layout_marginBottom="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/mapView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/ic_save_Places"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:src="@drawable/ic_places_save" />
+            android:gravity="end"
+            android:orientation="horizontal">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/ic_save_Places"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:src="@drawable/ic_places_save" />
 
-        <ImageView
-            android:id="@+id/unsafe_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:src="@drawable/ic_unsafe" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ic_area_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Area Status"
+                android:padding="6dp"
+                android:src="@drawable/ic_unsafe" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/securityPopup"
-        android:layout_width="361dp"
-        android:layout_height="502dp"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:scaleType="fitCenter"
-        android:src="@drawable/image_popup_security"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

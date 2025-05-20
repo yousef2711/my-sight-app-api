@@ -8,16 +8,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.GpsAlzheimerFragment">
 
-    <ImageView
-        android:id="@+id/bg_home_companion"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_map"
-        app:layout_constraintDimensionRatio="1:1.2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="397dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -72,7 +68,7 @@
         android:orientation="horizontal"
         android:paddingTop="16dp"
         android:layout_marginBottom="90dp"
-        app:layout_constraintBottom_toBottomOf="@+id/bg_home_companion"
+        app:layout_constraintBottom_toBottomOf="@+id/mapView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
