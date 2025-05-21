@@ -8,6 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
 import com.yousef.mysight00.databinding.FragmentGpsCompanionBinding
+import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import android.preference.PreferenceManager
 
 class GpsCompanionFragment : Fragment() {
 
@@ -26,15 +32,11 @@ class GpsCompanionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        setupMap()
     }
 
     private fun setupClickListeners() {
         binding.apply {
-
-            unsafeArea.setOnClickListener {
-                securityPopup.visibility = View.VISIBLE
-            }
-
             icNotificationComp.setOnClickListener {
                 findNavController().navigate(R.id.action_gps_to_notification)
             }
@@ -42,11 +44,22 @@ class GpsCompanionFragment : Fragment() {
             logoProfileHomeComp.setOnClickListener {
                 findNavController().navigate(R.id.action_gps_to_profile)
             }
-
-            securityPopup.setOnClickListener {
-                securityPopup.visibility = View.GONE
-            }
         }
+    }
+
+    private fun setupMap() {
+        Configuration.getInstance().load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
+
+        val map = binding.map
+        map.setTileSource(TileSourceFactory.MAPNIK)
+        map.setBuiltInZoomControls(true)
+        map.setMultiTouchControls(true)
+
+        val mapController = map.controller
+        mapController.setZoom(15.0)
+
+        val startPoint = GeoPoint(30.0444, 31.2357) // Cairo, Egypt
+        mapController.setCenter(startPoint)
     }
 
     override fun onDestroyView() {
