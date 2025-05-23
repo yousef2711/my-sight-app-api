@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- البار العلوي ثابت بدون scroll -->
     <ImageView
         android:id="@+id/logo_login"
         android:layout_width="0dp"
@@ -58,162 +59,170 @@
         app:layout_constraintTop_toBottomOf="@+id/titleText_login"
         app:layout_constraintWidth_percent="0.9" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/container_login"
+    <!-- Scrollable content داخل NestedScrollView -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollable_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="25dp"
-        android:radius="24dp"
-        app:cardElevation="8dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/subText_login"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.7"
-        app:layout_constraintWidth_percent="1">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_rounded_white_up"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="16dp"
+            android:radius="24dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@android:color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@drawable/bg_rounded_white_up"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-                <Button
-                    android:id="@+id/btn_Login"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_Login"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/primary_blue"
+                        android:text="Log In"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/btn_signup_log"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@android:color/white"
+                        android:text="Sign Up"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/email_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/btn_text_rounded"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/password_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/btn_text_rounded"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textSize="16sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <CheckBox
+                        android:id="@+id/rememberMe_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="Remember me" />
+
+                    <TextView
+                        android:id="@+id/tvForgetPass_login"
+                        android:layout_width="237dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:paddingEnd="6dp"
+                        android:text="Forgot Password ?"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_Login_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
                     android:backgroundTint="@color/primary_blue"
                     android:text="Log In"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/white"
+                    app:cornerRadius="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/darker_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:text="Or"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/darker_gray" />
+                </LinearLayout>
+
 
                 <Button
-                    android:id="@+id/btn_signup_log"
-                    android:layout_width="0dp"
+                    android:id="@+id/btnGoogle_login"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:backgroundTint="@android:color/white"
-                    android:text="Sign Up"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
+                    android:drawableLeft="@drawable/ic_google"
+                    android:padding="12dp"
+                    android:text="Continue with Google"
+                    android:textColor="@android:color/black"/>
 
-            <EditText
-                android:id="@+id/email_login"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/btn_text_rounded"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:padding="12dp"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/password_login"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/btn_text_rounded"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="12dp"
-                android:textSize="16sp" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <CheckBox
-                    android:id="@+id/rememberMe_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:text="Remember me" />
-
-                <TextView
-                    android:id="@+id/tvForgetPass_login"
-                    android:layout_width="237dp"
+                <Button
+                    android:id="@+id/btnFacebook_login"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:paddingEnd="6dp"
-                    android:text="Forgot Password ?"
-                    android:textColor="@color/primary_blue"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="@android:color/white"
+                    android:drawableLeft="@drawable/ic_facebook"
+                    android:drawablePadding="8dp"
+                    android:padding="12dp"
+                    android:text="Continue with Facebook"
+                    android:textColor="@android:color/black"/>
 
             </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_Login_login"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="@color/primary_blue"
-                android:text="Log In"
-                android:textColor="@color/white"
-                app:cornerRadius="10dp" />
+        </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/darker_gray" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="8dp"
-                    android:text="Or"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/darker_gray" />
-            </LinearLayout>
-
-
-            <Button
-                android:id="@+id/btnGoogle_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/white"
-                android:drawableLeft="@drawable/ic_google"
-                android:padding="12dp"
-                android:text="Continue with Google"
-                android:textColor="@android:color/black"/>
-
-            <Button
-                android:id="@+id/btnFacebook_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/white"
-                android:drawableLeft="@drawable/ic_facebook"
-                android:drawablePadding="8dp"
-                android:padding="12dp"
-                android:text="Continue with Facebook"
-                android:textColor="@android:color/black"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

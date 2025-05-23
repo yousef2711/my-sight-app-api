@@ -118,9 +118,9 @@
 
     <fragment
         android:id="@+id/profileBlindFragment"
-        android:name="com.yousef.mysight00.ui.ProfileBlindFragment"
+        android:name="com.yousef.mysight00.ui.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile_blind">
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profile_to_edit_profile"
             app:destination="@id/editProfileBlindFragment"

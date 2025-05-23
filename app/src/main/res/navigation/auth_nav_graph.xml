@@ -65,26 +65,9 @@
         android:name="com.yousef.mysight00.ui.RegisterFragment"
         android:label="Register"
         tools:layout="@layout/fragment_register">
-        <action
-            android:id="@+id/action_register_to_form"
-            app:destination="@id/formCompFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+
         <action
             android:id="@+id/action_register_to_login"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    <!-- شاشة نموذج التسجيل -->
-    <fragment
-        android:id="@+id/formCompFragment"
-        android:name="com.yousef.mysight00.ui.FormCompFragment"
-        android:label="Registration Form"
-        tools:layout="@layout/fragment_form_comp">
-        <action
-            android:id="@+id/action_form_to_login"
             app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />

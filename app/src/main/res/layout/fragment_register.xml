@@ -8,6 +8,7 @@
     android:background="@color/white"
     tools:context=".ui.RegisterFragment">
 
+    <!-- Background image -->
     <ImageView
         android:id="@+id/bg_regis_comp"
         android:layout_width="match_parent"
@@ -18,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Back arrow -->
     <ImageView
         android:id="@+id/arrow_back_regis_comp"
         android:layout_width="wrap_content"
@@ -28,6 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Title Text -->
     <TextView
         android:id="@+id/titleText_regis_comp"
         android:layout_width="0dp"
@@ -42,6 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.9" />
 
+    <!-- "Already have an account?" row -->
     <LinearLayout
         android:id="@+id/layout"
         android:layout_width="0dp"
@@ -71,6 +75,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <!-- CardView with ScrollView for the form inputs -->
     <androidx.cardview.widget.CardView
         android:id="@+id/container_regis_comp"
         android:layout_width="0dp"

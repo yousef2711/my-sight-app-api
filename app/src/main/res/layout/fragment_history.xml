@@ -8,26 +8,27 @@
     tools:context=".ui.HistoryFragment">
 
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
+            <!-- Background -->
             <ImageView
                 android:id="@+id/bg_profile"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg_main"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <!-- Title -->
             <TextView
                 android:id="@+id/title_history"
                 android:layout_width="wrap_content"
@@ -36,10 +37,11 @@
                 android:text="History"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <!-- Back Button -->
             <ImageView
                 android:id="@+id/backButton_history"
                 android:layout_width="30dp"
@@ -50,6 +52,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/title_history" />
 
+            <!-- Places Title -->
             <TextView
                 android:id="@+id/tvPlaces_history"
                 android:layout_width="wrap_content"
@@ -61,108 +64,123 @@
                 app:layout_constraintStart_toStartOf="@id/backButton_history"
                 app:layout_constraintTop_toBottomOf="@id/title_history" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout10"
+            <!-- Places Scrollable List -->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/places_scroll"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_rounded_white_small"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="16dp"
+                android:maxHeight="250dp"
+                android:fillViewport="true"
+                app:layout_constraintTop_toBottomOf="@id/tvPlaces_history"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPlaces_history">
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_rounded_white_small"
+                    android:paddingBottom="8dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_home_companian"
-                        app:tint="@color/dark" />
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_home_companian"
+                            app:tint="@color/dark" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Add home"
+                            android:textColor="@color/dark"
+                            android:textSize="20sp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/arrow_right"
+                            app:tint="@color/dark" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_work"
+                            app:tint="@color/dark" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Add Work"
+                            android:textColor="@color/dark"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/arrow_right"
+                            app:tint="@color/dark" />
+                    </LinearLayout>
+                    <!-- تكرارات -->
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Add home"
+                        android:padding="8dp"
+                        android:text="place saved"
                         android:textColor="@color/dark"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_right"
-                        app:tint="@color/dark" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_work"
-                        app:tint="@color/dark" />
-
+                        android:textSize="18sp" />
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Add Work"
+                        android:padding="8dp"
+                        android:text="place saved"
                         android:textColor="@color/dark"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_right"
-                        app:tint="@color/dark" />
+                        android:textSize="18sp" />
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="place saved"
-                    android:textColor="@color/dark"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="place saved"
-                    android:textColor="@color/dark"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
+            <!-- Tasks Scrollable List -->
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/tasks_scroll"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_rounded_white_small"
-                android:orientation="vertical"
+                android:fillViewport="true"
+                android:maxHeight="250dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout10">
+                app:layout_constraintTop_toBottomOf="@+id/places_scroll">
 
-                <include layout="@layout/item_task" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_white_small"
+                    android:orientation="vertical">
 
-                <include layout="@layout/item_task" />
+                    <!-- Task Items -->
+                    <include layout="@layout/item_task" />
 
-                <include layout="@layout/item_task" />
-            </LinearLayout>
+                    <include layout="@layout/item_task" />
+
+                    <include layout="@layout/item_task" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -31,7 +31,7 @@ class NotificationFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.btnSignupLog.setOnClickListener {
+        binding.btnTasks.setOnClickListener {
             val options = navOptions {
                 anim {
                     enter = R.anim.slide_in_right

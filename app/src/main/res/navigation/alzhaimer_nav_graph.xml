@@ -130,9 +130,9 @@
     <!-- شاشة الملف الشخصي -->
     <fragment
         android:id="@+id/profileAlzheimerFragment"
-        android:name="com.yousef.mysight00.ui.ProfileAlzheimerFragment"
+        android:name="com.yousef.mysight00.ui.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile_alzheimer">
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profile_to_edit_profile"
             app:destination="@id/editProfileAlzheimerFragment"

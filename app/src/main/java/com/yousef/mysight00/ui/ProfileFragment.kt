@@ -11,13 +11,13 @@ import com.yousef.mysight00.R
 import com.yousef.mysight00.adapter.ProfileAdapter
 import com.yousef.mysight00.model.ProfileItem
 
-class ProfileBlindFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_profile_blind, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

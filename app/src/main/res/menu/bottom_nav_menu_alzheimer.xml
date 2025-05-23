@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_companian"
         android:title="Home" />
     <item
         android:id="@+id/navigation_call"
@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_blank" />
     <item
         android:id="@+id/navigation_gps"
-        android:icon="@drawable/ic_location"
+        android:icon="@drawable/ic_gps"
         android:title="GPS" />
 
     <item

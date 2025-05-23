@@ -1,6 +1,7 @@
 package com.yousef.mysight00.ui
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +12,15 @@ import com.yousef.mysight00.databinding.FragmentGpsCompanionBinding
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-import android.preference.PreferenceManager
+import org.osmdroid.views.overlay.Marker
 
 class GpsCompanionFragment : Fragment() {
 
     private var _binding: FragmentGpsCompanionBinding? = null
     private val binding get() = _binding!!
+
+    // 🧠 نقطة تمثّل موقع المريض (بشكل ثابت مؤقتًا)
+    private val patientLocation = GeoPoint(30.0450, 31.2360)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,10 +58,18 @@ class GpsCompanionFragment : Fragment() {
         map.setMultiTouchControls(true)
 
         val mapController = map.controller
-        mapController.setZoom(15.0)
+        mapController.setZoom(17.0)
+        mapController.setCenter(patientLocation)
 
-        val startPoint = GeoPoint(30.0444, 31.2357) // Cairo, Egypt
-        mapController.setCenter(startPoint)
+        // 📍 أضف Marker يمثل المريض
+        val patientMarker = Marker(map)
+        patientMarker.position = patientLocation
+        patientMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        patientMarker.title = "Patient site"
+        patientMarker.icon = resources.getDrawable(R.drawable.ic_patient_location, null) // تأكد من وجود الأيقونة
+        map.overlays.add(patientMarker)
+
+        map.invalidate()
     }
 
     override fun onDestroyView() {

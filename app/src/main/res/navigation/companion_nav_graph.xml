@@ -139,9 +139,9 @@
     <!-- شاشة الملف الشخصي -->
     <fragment
         android:id="@+id/profileCompanionFragment"
-        android:name="com.yousef.mysight00.ui.ProfileCompanionFragment"
+        android:name="com.yousef.mysight00.ui.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile_companion">
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profile_to_edit_profile"
             app:destination="@id/editProfileCompanionFragment"

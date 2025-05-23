@@ -66,7 +66,7 @@ class RegisterFragment : Fragment() {
         val age = binding.ageRegisComp.text.toString().trim()
         val phone = binding.phNumRegisComp.text.toString().trim()
         val patientName = binding.namePatient.text.toString().trim()
-        val patientrelation = binding.relationPatient.text.toString().trim()
+        val patientRelation = binding.relationPatient.text.toString().trim()
 
         val validName = name.isNotEmpty() && name.length >= 3
         val validEmail = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -76,7 +76,7 @@ class RegisterFragment : Fragment() {
         val validTypeSelected = selectedUserType != null
         val isCompanion = selectedUserType == UserType.COMPANION
         val validPatientName = if (isCompanion) patientName.isNotEmpty() else true
-        val validRelation = if (isCompanion) patientrelation.isNotEmpty() else true
+        val validRelation = if (isCompanion) patientRelation.isNotEmpty() else true
 
         val isFormValid = validName && validEmail && validPassword && validAge && validPhone &&
                 validTypeSelected && validPatientName && validRelation
@@ -86,7 +86,8 @@ class RegisterFragment : Fragment() {
         binding.apply {
             nameRegisComp.error = if (!validName) "Please enter a valid name" else null
             emailRegisComp.error = if (!validEmail) "Please enter a valid email" else null
-            passwordRegisComp.error = if (!validPassword) "Password must be at least 6 characters" else null
+            passwordRegisComp.error =
+                if (!validPassword) "Password must be at least 6 characters" else null
             ageRegisComp.error = if (!validAge) "Please enter a valid age" else null
             phNumRegisComp.error = if (!validPhone) "Please enter a valid phone number" else null
             if (isCompanion) {
@@ -138,70 +139,56 @@ class RegisterFragment : Fragment() {
                 binding.namePatient.visibility = View.VISIBLE
             }
         }
-
         validateFields()
     }
 
     private fun resetUserTypeButtons() {
-        listOf(
+        val buttons = listOf(
             binding.btnblindRegisComp,
             binding.btnalzheimerRegisComp,
             binding.btncompanionRegisComp
-        ).forEach {
-            it.setChipBackgroundColorResource(R.color.gray_lite)
+        )
+        buttons.forEach {
+            it.setChipBackgroundColorResource(R.color.white)
             it.setTextColor(Color.BLACK)
         }
     }
 
     private fun setupNavigation() {
-        val navigateToLogin = View.OnClickListener {
-            findNavController().navigate(R.id.action_register_to_login)
-        }
-        binding.arrowBackRegisComp.setOnClickListener(navigateToLogin)
-        binding.btnLoginRegisComp.setOnClickListener(navigateToLogin)
-        binding.logTextRegisComp.setOnClickListener(navigateToLogin)
-
         binding.btnRegisComp.setOnClickListener {
+            if (selectedUserType == null) {
+                Log.i("RegisterFragment", "User type is not selected")
+                return@setOnClickListener
+            }
             val registerRequest = RegisterRequest(
-                username = binding.nameRegisComp.text.toString(),
-                email = binding.emailRegisComp.text.toString(),
-                password = binding.passwordRegisComp.text.toString(),
-                phone_number = binding.phNumRegisComp.text.toString(),
-                name = binding.nameRegisComp.text.toString(),
+                username = binding.emailRegisComp.text.toString().trim(),
+                email = binding.emailRegisComp.text.toString().trim(),
+                password = binding.passwordRegisComp.text.toString().trim(),
+                phone_number = binding.phNumRegisComp.text.toString().trim(),
+                name = selectedUserType?.nameValue ?: "",
                 account_type = if (selectedUserType == UserType.BLIND || selectedUserType == UserType.ALZHEIMER) "patients" else "companions",
-                patient_username = if (selectedUserType == UserType.COMPANION) binding.namePatient.text.toString() else null,
-                relationship = if (selectedUserType == UserType.COMPANION) binding.relationPatient.text.toString() else null
+                patient_username = if (selectedUserType == UserType.COMPANION) binding.namePatient.text.toString().trim() else null,
+                relationship = if (selectedUserType == UserType.COMPANION) binding.relationPatient.text.toString().trim() else null
             )
-
-            if (binding.btnRegisComp.isEnabled) {
-                lifecycleScope.launch {
-                    try {
-                        val response = RetrofitInstance.api.registerUser(registerRequest)
-                        if (response.isSuccessful) {
-                            response.body()?.let { registerResponse ->
-                                if (registerResponse.success) {
-                                    findNavController().navigate(R.id.action_register_to_login)
-                                } else {
-                                    registerResponse.error?.let { errors ->
-                                        errors.username?.firstOrNull()?.let { binding.nameRegisComp.error = it }
-                                        errors.email?.firstOrNull()?.let { binding.emailRegisComp.error = it }
-                                        errors.phone_number?.firstOrNull()?.let { binding.phNumRegisComp.error = it }
-                                    }
-                                    Log.e("RegisterFragment", "فشل التسجيل: ${registerResponse.message}")
-                                }
-                            }
-                        } else {
-                            Log.e("RegisterFragment", "Registration failed: ${response.code()}")
-                        }
-                    } catch (e: Exception) {
-                        Log.e("RegisterFragment", "Registration error", e)
+            lifecycleScope.launch {
+                try {
+                    val response = RetrofitInstance.api.registerUser(registerRequest)
+                    if (response.isSuccessful) {
+                        Log.i("RegisterFragment", "User registered successfully")
+                        findNavController().navigate(R.id.action_register_to_login)
+                    } else {
+                        Log.e(
+                            "RegisterFragment",
+                            "Registration failed: ${response.errorBody()?.string()}"
+                        )
                     }
+                } catch (e: Exception) {
+                    Log.e("RegisterFragment", "Error during registration", e)
                 }
-            } else {
-                Log.d("RegisterFragment", "Button is disabled, form is not valid")
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

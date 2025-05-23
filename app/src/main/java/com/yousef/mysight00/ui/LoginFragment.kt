@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
 import com.yousef.mysight00.RetrofitInstance
 import com.yousef.mysight00.databinding.FragmentLoginBinding
+import com.yousef.mysight00.model.UserType
 import com.yousef.mysight00.model.loginRequest
 import com.yousef.mysight00.utils.showToast
 import kotlinx.coroutines.launch
@@ -31,7 +32,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
-
     }
 
     private fun setupClickListeners() {
@@ -78,34 +78,57 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun authenticateUser(email: String, password: String) {
+    /*  private fun authenticateUser(email: String, password: String) {
+          val userType = when {
+              email == "companion@gmail.com" && password == "123456" -> "companion"
+              email == "alzhaimer@gmail.com" && password == "123456" -> "alzhaimer"
+              email == "blind@gmail.com" && password == "123456" -> "blind"
+              else -> null
+          }
 
-//            when {
-//            email == "companion@gmail.com" && password == "123456" -> "companion"
-//            email == "alzhaimer@gmail.com" && password == "123456" -> "alzhaimer"
-//            email == "blind@gmail.com" && password == "123456" -> "blind"
-//            else -> null
-//        }
-            Log.i("LoginFragment", "Email: $email, Password: $password")
-            lifecycleScope.launch {
+          if (userType != null) {
+              Log.i("LoginFragment", "User type: $userType")
+              val intent = requireActivity().intent
+              intent.putExtra("user_type", userType)
+              requireActivity().recreate()
+          } else {
+              requireContext().showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة")
+          }
+      }*/
+
+    private fun authenticateUser(email: String, password: String) {
+        Log.i("LoginFragment", "Email: $email, Password: $password")
+        lifecycleScope.launch {
+            try {
                 val response = RetrofitInstance.api.loginUser(loginRequest(email, password))
                 if (response.isSuccessful) {
-                    val userType =if ( response.body()?.user?.account_type == "patients") {
-                     "blind"
-                    } else {
-                        "companion"
+                    val name = response.body()?.user?.name?.lowercase()
+
+                    val userType: UserType? = when (name) {
+                        "blind" -> UserType.BLIND
+                        "alzheimer" -> UserType.ALZHEIMER
+                        "companion" -> UserType.COMPANION
+                        else -> null
                     }
-                    Log.i("LoginFragment", "User type: $userType")
-                    val intent = requireActivity().intent
-                    intent.putExtra("user_type", userType)
-                    requireActivity().recreate()
+
+                    if (userType != null) {
+                        Log.i("LoginFragment", "User type: $userType")
+                        val intent = requireActivity().intent
+                        intent.putExtra("user_type", userType.nameValue)
+                        requireActivity().recreate()
+                    } else {
+                        requireContext().showToast("فشل تسجيل الدخول: نوع المستخدم غير معروف")
+                        Log.e("LoginFragment", "Unknown user name: $name")
+                    }
                 } else {
+                    requireContext().showToast("فشل تسجيل الدخول: ${response.code()}")
                     Log.i("LoginFragment", "Login failed: ${response.code()}")
-//            requireContext().showToast("البريد الإلكتروني أو كلمة المرور غير صحيحة")
                 }
+            } catch (e: Exception) {
+                requireContext().showToast("حدث خطأ أثناء تسجيل الدخول")
+                Log.e("LoginFragment", "Login error", e)
             }
-
-
+        }
     }
 
     override fun onDestroyView() {

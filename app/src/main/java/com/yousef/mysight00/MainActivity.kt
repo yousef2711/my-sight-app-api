@@ -7,20 +7,21 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.yousef.mysight00.databinding.ActivityMainBinding
+import com.yousef.mysight00.model.UserType
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private var userType: String? = null
+    private var userType: UserType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userType = intent.getStringExtra("user_type")
-        if (userType == "blind") {
+        userType = UserType.fromString(intent.getStringExtra("user_type"))
+        if (userType == UserType.BLIND) {
             binding.fabSos.visibility = View.GONE
         }
 
@@ -28,26 +29,24 @@ class MainActivity : AppCompatActivity() {
         hideSystemUI()
     }
 
-
     private fun setupNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Clear existing menu before inflating new one
         binding.bottomNavigation.menu.clear()
 
         val navInflater = navController.navInflater
         val graph: NavGraph = when (userType) {
-            "companion" -> {
+            UserType.COMPANION -> {
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_nav_menu_companion)
                 navInflater.inflate(R.navigation.companion_nav_graph)
             }
-            "blind" -> {
+            UserType.BLIND -> {
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_nav_menu_blind)
                 navInflater.inflate(R.navigation.blind_nav_graph)
             }
-            "alzhaimer" -> {
+            UserType.ALZHEIMER -> {
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_nav_menu_alzheimer)
                 navInflater.inflate(R.navigation.alzhaimer_nav_graph)
             }
@@ -57,16 +56,16 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val bottomNavDestinations = when (userType) {
-                "companion" -> setOf(
+                UserType.COMPANION -> setOf(
                     R.id.homeCompanionFragment,
                     R.id.gpsCompanionFragment,
                     R.id.historyCompanionFragment
                 )
-                "blind" -> setOf(
+                UserType.BLIND -> setOf(
                     R.id.homeBlindFragment,
                     R.id.gpsBlindFragment
                 )
-                "alzhaimer" -> setOf(
+                UserType.ALZHEIMER -> setOf(
                     R.id.homeAlzheimerFragment,
                     R.id.gpsAlzheimerFragment
                 )
@@ -74,10 +73,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (bottomNavDestinations.contains(destination.id)) {
-                binding.relativeLayout.visibility = View.VISIBLE
+                binding.bottomBarContainer.visibility = View.VISIBLE
+                binding.fabSos.visibility = if (userType == UserType.BLIND) View.GONE else View.VISIBLE
                 binding.bottomNavigation.menu.findItem(destination.id)?.isChecked = true
             } else {
-                binding.relativeLayout.visibility = View.GONE
+                binding.bottomBarContainer.visibility = View.GONE
+                binding.fabSos.visibility = View.GONE
                 for (i in 0 until binding.bottomNavigation.menu.size()) {
                     binding.bottomNavigation.menu.getItem(i).isChecked = false
                 }
@@ -86,9 +87,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (userType) {
-                "companion" -> handleCompanionNavigation(item.itemId)
-                "blind" -> handleBlindNavigation(item.itemId)
-                "alzhaimer" -> handleAlzheimerNavigation(item.itemId)
+                UserType.COMPANION -> handleCompanionNavigation(item.itemId)
+                UserType.BLIND -> handleBlindNavigation(item.itemId)
+                UserType.ALZHEIMER -> handleAlzheimerNavigation(item.itemId)
                 else -> false
             }
         }

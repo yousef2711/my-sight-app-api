@@ -23,8 +23,12 @@ data class Errors(
     val phone_number: List<String>? = null
 )
 
-enum class UserType(val accountType: String) {
-    BLIND("patients"),
-    ALZHEIMER("patients"),
-    COMPANION("companions")
+enum class UserType(val nameValue: String) {
+    BLIND("blind"),
+    ALZHEIMER("alzheimer"),
+    COMPANION("companions");
+
+    companion object {
+        fun fromString(value: String?): UserType? = values().find { it.nameValue == value }
+    }
 }
