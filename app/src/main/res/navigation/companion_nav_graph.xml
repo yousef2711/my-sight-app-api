@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/companion_nav_graph"
-    app:startDestination="@id/homeCompanionFragment">
+    app:startDestination="@id/homeCompanion">
 
     <!-- الشاشة الرئيسية للمرافق -->
     <fragment
-        android:id="@+id/homeCompanionFragment"
+        android:id="@+id/homeCompanion"
         android:name="com.yousef.mysight00.ui.HomeCompanionFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_companion">
@@ -24,12 +24,12 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_home_to_gps"
-            app:destination="@id/gpsCompanionFragment"
+            app:destination="@id/gpsCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_home_to_audio_call"
-            app:destination="@id/audioCallCompanionFragment"
+            app:destination="@id/audioCallCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -44,14 +44,14 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_home_to_history"
-            app:destination="@id/historyCompanionFragment"
+            app:destination="@id/historyCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <!-- شاشة GPS -->
     <fragment
-        android:id="@+id/gpsCompanionFragment"
+        android:id="@+id/gpsCompanion"
         android:name="com.yousef.mysight00.ui.GpsCompanionFragment"
         android:label="GPS"
         tools:layout="@layout/fragment_gps_companion">
@@ -67,17 +67,17 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_gps_to_audio_call"
-            app:destination="@id/audioCallCompanionFragment"
+            app:destination="@id/audioCallCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_gps_to_home"
-            app:destination="@id/homeCompanionFragment"
+            app:destination="@id/homeCompanion"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_gps_to_history"
-            app:destination="@id/historyCompanionFragment"
+            app:destination="@id/historyCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
     </fragment>
@@ -100,7 +100,7 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_tasks_to_home"
-            app:destination="@id/homeCompanionFragment"
+            app:destination="@id/homeCompanion"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
     </fragment>
@@ -118,7 +118,7 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_notification_to_home"
-            app:destination="@id/homeCompanionFragment"
+            app:destination="@id/homeCompanion"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
     </fragment>
@@ -149,7 +149,7 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_profile_to_home"
-            app:destination="@id/homeCompanionFragment"
+            app:destination="@id/homeCompanion"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>
@@ -171,13 +171,13 @@
 
     <!-- شاشة المكالمة الصوتية -->
     <fragment
-        android:id="@+id/audioCallCompanionFragment"
+        android:id="@+id/audioCallCompanion"
         android:name="com.yousef.mysight00.ui.AudioCallFragment"
         android:label="Audio Call"
         tools:layout="@layout/fragment_audio_call">
         <action
             android:id="@+id/action_audio_call_to_home"
-            app:destination="@id/homeCompanionFragment"
+            app:destination="@id/homeCompanion"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>
@@ -190,30 +190,30 @@
         tools:layout="@layout/fragment_video_call">
         <action
             android:id="@+id/action_video_call_to_home"
-            app:destination="@id/homeCompanionFragment"
+            app:destination="@id/homeCompanion"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
     <!-- شاشة السجل -->
     <fragment
-        android:id="@+id/historyCompanionFragment"
+        android:id="@+id/historyCompanion"
         android:name="com.yousef.mysight00.ui.HistoryFragment"
         android:label="History"
         tools:layout="@layout/fragment_history">
         <action
             android:id="@+id/action_history_to_home"
-            app:destination="@id/homeCompanionFragment"
+            app:destination="@id/homeCompanion"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_history_to_audio_call"
-            app:destination="@id/audioCallCompanionFragment"
+            app:destination="@id/audioCallCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_history_to_gps"
-            app:destination="@id/gpsCompanionFragment"
+            app:destination="@id/gpsCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
     </fragment>

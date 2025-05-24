@@ -20,7 +20,7 @@ class GpsCompanionFragment : Fragment() {
     private val binding get() = _binding!!
 
     // 🧠 نقطة تمثّل موقع المريض (بشكل ثابت مؤقتًا)
-    private val patientLocation = GeoPoint(30.0450, 31.2360)
+    private val patientLocation = GeoPoint(30.0444, 30.9320)
 
     override fun onCreateView(
         inflater: LayoutInflater,

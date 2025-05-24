@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_home_companian"
         android:title="Home" />
     <item
-        android:id="@+id/navigation_call"
+        android:id="@+id/audioCallAlzheimer"
         android:icon="@drawable/ic_call_companian"
         android:title="Call" />
 

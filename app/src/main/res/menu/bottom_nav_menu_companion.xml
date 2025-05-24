@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/homeCompanionFragment"
+        android:id="@+id/homeCompanion"
         android:title="Home"
         android:icon="@drawable/ic_home_companian" />
     <item
-        android:id="@+id/audioCallCompanionFragment"
+        android:id="@+id/audioCallCompanion"
         android:title="Call"
         android:icon="@drawable/ic_call_companian" />
     <item
@@ -13,11 +13,11 @@
         android:title=""
         android:icon="@drawable/ic_blank" />
     <item
-        android:id="@+id/gpsCompanionFragment"
+        android:id="@+id/gpsCompanion"
         android:title="GPS"
         android:icon="@drawable/ic_gps" />
     <item
-        android:id="@+id/historyCompanionFragment"
+        android:id="@+id/historyCompanion"
         android:title="History"
         android:icon="@drawable/ic_history" />
 

@@ -57,9 +57,9 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val bottomNavDestinations = when (userType) {
                 UserType.COMPANION -> setOf(
-                    R.id.homeCompanionFragment,
-                    R.id.gpsCompanionFragment,
-                    R.id.historyCompanionFragment
+                    R.id.homeCompanion,
+                    R.id.gpsCompanion,
+                    R.id.historyCompanion
                 )
                 UserType.BLIND -> setOf(
                     R.id.homeBlindFragment,
@@ -97,20 +97,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleCompanionNavigation(itemId: Int): Boolean {
         return when (itemId) {
-            R.id.homeCompanionFragment -> {
-                navController.navigate(R.id.homeCompanionFragment)
+            R.id.homeCompanion -> {
+                navController.navigate(R.id.homeCompanion)
                 true
             }
-            R.id.gpsCompanionFragment -> {
-                navController.navigate(R.id.gpsCompanionFragment)
+            R.id.gpsCompanion -> {
+                navController.navigate(R.id.gpsCompanion)
                 true
             }
-            R.id.historyCompanionFragment -> {
-                navController.navigate(R.id.historyCompanionFragment)
+            R.id.historyCompanion -> {
+                navController.navigate(R.id.historyCompanion)
                 true
             }
-            R.id.audioCallCompanionFragment -> {
-                navController.navigate(R.id.audioCallCompanionFragment)
+            R.id.audioCallCompanion -> {
+                navController.navigate(R.id.audioCallCompanion)
                 true
             }
             else -> false
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.tasksAlzheimerFragment)
                 true
             }
-            R.id.navigation_call -> {
+            R.id.audioCallAlzheimerFragment -> {
                 navController.navigate(R.id.audioCallAlzheimerFragment)
                 true
             }

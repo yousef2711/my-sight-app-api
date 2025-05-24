@@ -13,7 +13,11 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.yousef.mysight00.R
 import com.yousef.mysight00.databinding.FragmentGpsAlzheimerBinding
 import org.osmdroid.config.Configuration
@@ -25,7 +29,9 @@ class GpsAlzheimerFragment : Fragment() {
 
     private var _binding: FragmentGpsAlzheimerBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
 
     private enum class State {
         UNKNOWN, SAFE, UNSAFE
@@ -34,24 +40,29 @@ class GpsAlzheimerFragment : Fragment() {
     private var currentState = State.UNKNOWN
 
     private val safeZones = listOf(
-        GeoPoint(30.0450, 31.2360),
+        GeoPoint(30.0450, 31.2360),  // مثال منطقة آمنة
         GeoPoint(30.0448, 31.2355)
     )
     private val unsafeZones = listOf(
-        GeoPoint(30.0430, 31.2340),
+        GeoPoint(30.0430, 31.2340),  // مثال منطقة غير آمنة
         GeoPoint(30.0465, 31.2375)
     )
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentGpsAlzheimerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         setupClickListeners()
         setupMap()
+        startLocationUpdates()
     }
 
     private fun setupClickListeners() {
@@ -59,48 +70,75 @@ class GpsAlzheimerFragment : Fragment() {
             icNotificationComp.setOnClickListener {
                 findNavController().navigate(R.id.action_gps_to_notification)
             }
-
             logoProfileHomeComp.setOnClickListener {
                 findNavController().navigate(R.id.action_gps_to_profile)
             }
-
             icAreaStatus.setOnClickListener {
                 goToNearestSafeZone()
             }
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun setupMap() {
-        Configuration.getInstance().load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
-        val map = binding.map
-        map.setTileSource(TileSourceFactory.MAPNIK)
-        map.setMultiTouchControls(true)
-        map.setBuiltInZoomControls(true)
+        Configuration.getInstance()
+            .load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100)
+        binding.map.apply {
+            setTileSource(TileSourceFactory.MAPNIK)
+            setMultiTouchControls(true)
+            setBuiltInZoomControls(true)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                100
+            )
             return
         }
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            location?.let {
-                val userPoint = GeoPoint(it.latitude, it.longitude)
-                binding.map.controller.setZoom(17.0)
-                binding.map.controller.setCenter(userPoint)
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000)
+            .setMinUpdateIntervalMillis(3000)
+            .build()
 
-                // ✳️ إضافة Marker لمكان المريض
-                val marker = Marker(binding.map)
-                marker.position = userPoint
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                marker.icon = resources.getDrawable(R.drawable.ic_patient_location, null) // ← حط الأيقونة المناسبة هنا
-                marker.title = "موقعك الحالي"
-                binding.map.overlays.add(marker)
-                binding.map.invalidate()
-
-                updateAreaStatus(userPoint)
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                val location = locationResult.lastLocation ?: return
+                updateMapWithLocation(location)
             }
         }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+    }
+
+    private fun updateMapWithLocation(location: Location) {
+        val userPoint = GeoPoint(location.latitude, location.longitude)
+        val map = binding.map
+
+        map.controller.setZoom(17.0)
+        map.controller.setCenter(userPoint)
+
+        map.overlays.clear()  // نمسح الماركرز القديمة قبل إضافة الجديد
+
+        // إضافة Marker لموقع المريض الحالي
+        val marker = Marker(map)
+        marker.position = userPoint
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        marker.icon = resources.getDrawable(R.drawable.ic_patient_location, null) // عدل حسب أيقونتك
+        marker.title = "موقعك الحالي"
+        map.overlays.add(marker)
+
+        map.invalidate()
+
+        updateAreaStatus(userPoint)
     }
 
     private fun updateAreaStatus(currentLocation: GeoPoint) {
@@ -119,15 +157,23 @@ class GpsAlzheimerFragment : Fragment() {
         )
     }
 
-    private fun isInZone(current: GeoPoint, zone: List<GeoPoint>, radius: Double = 0.0008): Boolean {
+    private fun isInZone(
+        current: GeoPoint,
+        zone: List<GeoPoint>,
+        radius: Double = 0.0008
+    ): Boolean {
         return zone.any {
             val distance = it.distanceToAsDouble(current)
-            distance <= radius * 111000 // تحويل من درجات إلى أمتار تقريبًا
+            distance <= radius * 111000 // تقريبًا تحويل درجة إلى متر
         }
     }
 
     private fun goToNearestSafeZone() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) return
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) return
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let {
@@ -142,6 +188,7 @@ class GpsAlzheimerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
         _binding = null
     }
 }
