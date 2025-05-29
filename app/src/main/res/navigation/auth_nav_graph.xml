@@ -9,7 +9,7 @@
     <!-- شاشة البداية -->
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.yousef.mysight00.ui.SplashFragment"
+        android:name="com.yousef.mysight00.ui.Auth.SplashFragment"
         android:label="Splash"
         tools:layout="@layout/fragment_splash">
         <action
@@ -24,7 +24,7 @@
     <!-- شاشة تسجيل الدخول -->
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.yousef.mysight00.ui.LoginFragment"
+        android:name="com.yousef.mysight00.ui.Auth.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -62,7 +62,7 @@
     <!-- شاشة التسجيل -->
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.yousef.mysight00.ui.RegisterFragment"
+        android:name="com.yousef.mysight00.ui.Auth.RegisterFragment"
         android:label="Register"
         tools:layout="@layout/fragment_register">
 
@@ -76,7 +76,7 @@
     <!-- شاشة نسيان كلمة المرور -->
     <fragment
         android:id="@+id/forgetPassFragment"
-        android:name="com.yousef.mysight00.ui.ForgetPassFragment"
+        android:name="com.yousef.mysight00.ui.Auth.ForgetPassFragment"
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forget_pass">
         <action
@@ -94,7 +94,7 @@
     <!-- شاشة كلمة المرور الجديدة -->
     <fragment
         android:id="@+id/newPasswordFragment"
-        android:name="com.yousef.mysight00.ui.NewPasswordFragment"
+        android:name="com.yousef.mysight00.ui.Auth.NewPasswordFragment"
         android:label="New Password"
         tools:layout="@layout/fragment_new_password">
         <action

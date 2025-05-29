@@ -1,4 +1,4 @@
-package com.yousef.mysight00.ui
+package com.yousef.mysight00.ui.Auth
 
 import android.graphics.Color
 import android.os.Bundle
@@ -161,7 +161,7 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
             val registerRequest = RegisterRequest(
-                username = binding.emailRegisComp.text.toString().trim(),
+                username = binding.nameRegisComp.text.toString().trim(),
                 email = binding.emailRegisComp.text.toString().trim(),
                 password = binding.passwordRegisComp.text.toString().trim(),
                 phone_number = binding.phNumRegisComp.text.toString().trim(),
@@ -186,6 +186,17 @@ class RegisterFragment : Fragment() {
                     Log.e("RegisterFragment", "Error during registration", e)
                 }
             }
+        }
+        binding.arrowBackRegisComp.setOnClickListener {
+            findNavController().navigate(R.id.action_register_to_login)
+        }
+
+        binding.btnLoginRegisComp.setOnClickListener {
+            findNavController().navigate(R.id.action_register_to_login)
+        }
+
+        binding.logTextRegisComp.setOnClickListener {
+            findNavController().navigate(R.id.action_register_to_login)
         }
     }
 

@@ -22,7 +22,8 @@ data class User(
     val medical_condition: String? = null,
     val account_photo: String? = null,
     val current_gps_location: String? = null,
-    val additional_notes: String? = null
+    val additional_notes: String? = null,
+    val patient_username: String? = null
 )
 
 data class forgotPasswordRequest(

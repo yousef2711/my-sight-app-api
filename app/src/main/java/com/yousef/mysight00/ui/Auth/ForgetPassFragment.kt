@@ -1,4 +1,4 @@
-package com.yousef.mysight00.ui
+package com.yousef.mysight00.ui.Auth
 
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.yousef.mysight00.R
 import com.yousef.mysight00.RetrofitInstance
 import com.yousef.mysight00.databinding.FragmentForgetPassBinding
 import com.yousef.mysight00.model.forgotPasswordRequest
-import com.yousef.mysight00.model.loginRequest
 import kotlinx.coroutines.launch
 
 

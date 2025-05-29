@@ -1,4 +1,4 @@
-package com.yousef.mysight00.ui
+package com.yousef.mysight00.ui.Gps
 
 import android.Manifest
 import android.annotation.SuppressLint

@@ -1,4 +1,4 @@
-package com.yousef.mysight00.ui
+package com.yousef.mysight00.ui.Features
 
 import android.os.Bundle
 import android.view.LayoutInflater

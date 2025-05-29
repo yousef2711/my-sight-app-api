@@ -25,6 +25,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MySight"
         tools:targetApi="31">
+        
+        <service
+            android:name="com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+            
         <activity
             android:name="com.yousef.mysight00.MainActivity"
             android:exported="true"

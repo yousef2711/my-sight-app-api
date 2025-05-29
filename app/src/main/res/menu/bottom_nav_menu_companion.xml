@@ -5,8 +5,8 @@
         android:title="Home"
         android:icon="@drawable/ic_home_companian" />
     <item
-        android:id="@+id/audioCallCompanion"
-        android:title="Call"
+        android:id="@+id/callsFragment"
+        android:title="Calls"
         android:icon="@drawable/ic_call_companian" />
     <item
         android:id="@+id/ic"

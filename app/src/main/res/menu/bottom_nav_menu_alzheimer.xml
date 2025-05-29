@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_companian"
-        android:title="Home" />
+        android:id="@+id/homeAlzheimerFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_home_companian" />
     <item
-        android:id="@+id/audioCallAlzheimer"
-        android:icon="@drawable/ic_call_companian"
-        android:title="Call" />
-
+        android:id="@+id/callsFragment"
+        android:title="Calls"
+        android:icon="@drawable/ic_call_companian" />
     <item
-        android:id="@+id/navigation_blank"
+        android:id="@+id/ic"
         android:title=""
         android:icon="@drawable/ic_blank" />
     <item
-        android:id="@+id/navigation_gps"
-        android:icon="@drawable/ic_gps"
-        android:title="GPS" />
-
+        android:id="@+id/gpsAlzheimerFragment"
+        android:title="GPS"
+        android:icon="@drawable/ic_gps" />
     <item
-        android:id="@+id/navigation_task"
-        android:icon="@drawable/ic_task"
-        android:title="Task" />
+        android:id="@+id/taskAlzheimerFragment"
+        android:title="TASK"
+        android:icon="@drawable/ic_task" />
 </menu>

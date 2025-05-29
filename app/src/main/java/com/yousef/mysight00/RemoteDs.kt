@@ -35,7 +35,7 @@ interface ApiService {
 object RetrofitInstance {
     val api: ApiService by lazy {
         Retrofit.Builder()
-            .baseUrl("https://5514-154-177-135-227.ngrok-free.app/")
+            .baseUrl("https://b9c3-156-193-246-85.ngrok-free.app/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)

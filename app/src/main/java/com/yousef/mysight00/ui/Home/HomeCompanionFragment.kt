@@ -1,4 +1,4 @@
-package com.yousef.mysight00.ui
+package com.yousef.mysight00.ui.Home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
+import com.yousef.mysight00.constant
 import com.yousef.mysight00.databinding.FragmentHomeCompanionBinding
+import com.yousef.mysight00.utils.UserPreferences
+import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
+import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
 
 class HomeCompanionFragment : Fragment() {
     private var _binding: FragmentHomeCompanionBinding? = null
     private val binding get() = _binding!!
+    private lateinit var userPreferences: UserPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,6 +24,7 @@ class HomeCompanionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeCompanionBinding.inflate(inflater, container, false)
+        userPreferences = UserPreferences(requireContext())
         return binding.root
     }
 
@@ -38,11 +44,11 @@ class HomeCompanionFragment : Fragment() {
             imageGpsComp.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_gps)
             }
-            icCallBlind.setOnClickListener {
-                findNavController().navigate(R.id.action_home_to_audio_call)
+            icCallCompanion.setOnClickListener {
+                startAudioCall()
             }
-            icVideoBlind.setOnClickListener {
-                findNavController().navigate(R.id.action_home_to_video_call)
+            icVideoCompanion.setOnClickListener {
+                startVideoCall()
             }
             tvSeeAll.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_tasks)
@@ -53,6 +59,38 @@ class HomeCompanionFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun startAudioCall() {
+        val callInvitationConfig = ZegoUIKitPrebuiltCallInvitationConfig()
+        ZegoUIKitPrebuiltCallService.init(
+            requireActivity().application,
+            constant.appId,
+            constant.AppSign,
+            getCurrentUserId(),
+            getTargetUserId(),
+            callInvitationConfig
+        )
+    }
+
+    private fun startVideoCall() {
+        val callInvitationConfig = ZegoUIKitPrebuiltCallInvitationConfig()
+        ZegoUIKitPrebuiltCallService.init(
+            requireActivity().application,
+            constant.appId,
+            constant.AppSign,
+            getCurrentUserId(),
+            getTargetUserId(),
+            callInvitationConfig
+        )
+    }
+
+    private fun getCurrentUserId(): String {
+        return userPreferences.getUserId() ?: "UnknownID"
+    }
+
+    private fun getTargetUserId(): String {
+        return userPreferences.getPatientId() ?: "UnknownPatientID"
     }
 
     override fun onDestroyView() {

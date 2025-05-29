@@ -9,7 +9,7 @@
     <!-- الشاشة الرئيسية للمرافق -->
     <fragment
         android:id="@+id/homeCompanion"
-        android:name="com.yousef.mysight00.ui.HomeCompanionFragment"
+        android:name="com.yousef.mysight00.ui.Home.HomeCompanionFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_companion">
         <action
@@ -28,13 +28,8 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_home_to_audio_call"
-            app:destination="@id/audioCallCompanion"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_home_to_video_call"
-            app:destination="@id/videoCallCompanionFragment"
+            android:id="@+id/action_home_to_calls"
+            app:destination="@id/callsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -52,7 +47,7 @@
     <!-- شاشة GPS -->
     <fragment
         android:id="@+id/gpsCompanion"
-        android:name="com.yousef.mysight00.ui.GpsCompanionFragment"
+        android:name="com.yousef.mysight00.ui.Gps.GpsCompanionFragment"
         android:label="GPS"
         tools:layout="@layout/fragment_gps_companion">
         <action
@@ -67,7 +62,7 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_gps_to_audio_call"
-            app:destination="@id/audioCallCompanion"
+            app:destination="@id/callsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -85,7 +80,7 @@
     <!-- شاشة المهام -->
     <fragment
         android:id="@+id/tasksCompanionFragment"
-        android:name="com.yousef.mysight00.ui.TasksFragment"
+        android:name="com.yousef.mysight00.ui.Features.TasksFragment"
         android:label="Tasks"
         tools:layout="@layout/fragment_tasks">
         <action
@@ -108,7 +103,7 @@
     <!-- شاشة الإشعارات -->
     <fragment
         android:id="@+id/notificationCompanionFragment"
-        android:name="com.yousef.mysight00.ui.NotificationFragment"
+        android:name="com.yousef.mysight00.ui.Features.NotificationFragment"
         android:label="Notifications"
         tools:layout="@layout/fragment_notification">
         <action
@@ -126,7 +121,7 @@
     <!-- شاشة إنشاء مهمة -->
     <fragment
         android:id="@+id/createTaskCompanionFragment"
-        android:name="com.yousef.mysight00.ui.CreateTaskFragment"
+        android:name="com.yousef.mysight00.ui.Features.CreateTaskFragment"
         android:label="Create Task"
         tools:layout="@layout/fragment_create_task">
         <action
@@ -139,7 +134,7 @@
     <!-- شاشة الملف الشخصي -->
     <fragment
         android:id="@+id/profileCompanionFragment"
-        android:name="com.yousef.mysight00.ui.ProfileFragment"
+        android:name="com.yousef.mysight00.ui.Features.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -157,7 +152,7 @@
     <!-- شاشة تعديل الملف الشخصي -->
     <fragment
         android:id="@+id/editProfileCompanionFragment"
-        android:name="com.yousef.mysight00.ui.EditProfileFragment"
+        android:name="com.yousef.mysight00.ui.Features.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile">
         <action
@@ -169,36 +164,9 @@
             app:popUpToInclusive="false" />
     </fragment>
 
-    <!-- شاشة المكالمة الصوتية -->
-    <fragment
-        android:id="@+id/audioCallCompanion"
-        android:name="com.yousef.mysight00.ui.AudioCallFragment"
-        android:label="Audio Call"
-        tools:layout="@layout/fragment_audio_call">
-        <action
-            android:id="@+id/action_audio_call_to_home"
-            app:destination="@id/homeCompanion"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    <!-- شاشة المكالمة المرئية -->
-    <fragment
-        android:id="@+id/videoCallCompanionFragment"
-        android:name="com.yousef.mysight00.ui.VideoCallFragment"
-        android:label="Video Call"
-        tools:layout="@layout/fragment_video_call">
-        <action
-            android:id="@+id/action_video_call_to_home"
-            app:destination="@id/homeCompanion"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    <!-- شاشة السجل -->
     <fragment
         android:id="@+id/historyCompanion"
-        android:name="com.yousef.mysight00.ui.HistoryFragment"
+        android:name="com.yousef.mysight00.ui.Features.HistoryFragment"
         android:label="History"
         tools:layout="@layout/fragment_history">
         <action
@@ -208,7 +176,7 @@
             app:exitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_history_to_audio_call"
-            app:destination="@id/audioCallCompanion"
+            app:destination="@id/callsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -216,6 +184,19 @@
             app:destination="@id/gpsCompanion"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- شاشة المكالمات -->
+    <fragment
+        android:id="@+id/callsFragment"
+        android:name="com.yousef.mysight00.ui.Gps.CallsFragment"
+        android:label="Calls"
+        tools:layout="@layout/fragment_calls">
+        <action
+            android:id="@+id/action_calls_to_home"
+            app:destination="@id/homeCompanion"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
 </navigation>

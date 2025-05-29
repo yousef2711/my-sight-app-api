@@ -8,30 +8,45 @@ import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.yousef.mysight00.databinding.ActivityMainBinding
 import com.yousef.mysight00.model.UserType
+import com.yousef.mysight00.utils.UserPreferences
+import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
+import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private var userType: UserType? = null
+    private lateinit var userPreferences: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        userPreferences = UserPreferences(this)
+
+        // مسح بيانات المستخدم في كل مرة يتم فيها فتح التطبيق (يمكنك تعديل هذا حسب الحاجة)
+        userPreferences.clearUserData()
+
         setContentView(binding.root)
 
-        userType = UserType.fromString(intent.getStringExtra("user_type"))
-        if (userType == UserType.BLIND) {
-            binding.fabSos.visibility = View.GONE
-        }
+        // تهيئة Navigation
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-        setupNavigation()
+        // تعيين الرسم البياني للتنقل الافتراضي (مثلاً شاشة المصادقة)
+        val navInflater = navController.navInflater
+        val graph = navInflater.inflate(R.navigation.auth_nav_graph)
+        navController.graph = graph
+
+        // الانتقال إلى شاشة Splash
+        navController.navigate(R.id.splashFragment)
+
         hideSystemUI()
     }
 
+    // هذه الدالة تستخدم بعد تحديد userType (مثلاً بعد تسجيل الدخول) لتهيئة التنقل والواجهة
     private fun setupNavigation() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         binding.bottomNavigation.menu.clear()
@@ -54,21 +69,12 @@ class MainActivity : AppCompatActivity() {
         }
         navController.graph = graph
 
+        // إظهار أو إخفاء القائمة السفلية بناءً على الشاشة الحالية
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val bottomNavDestinations = when (userType) {
-                UserType.COMPANION -> setOf(
-                    R.id.homeCompanion,
-                    R.id.gpsCompanion,
-                    R.id.historyCompanion
-                )
-                UserType.BLIND -> setOf(
-                    R.id.homeBlindFragment,
-                    R.id.gpsBlindFragment
-                )
-                UserType.ALZHEIMER -> setOf(
-                    R.id.homeAlzheimerFragment,
-                    R.id.gpsAlzheimerFragment
-                )
+                UserType.COMPANION -> setOf(R.id.homeCompanion, R.id.gpsCompanion, R.id.historyCompanion)
+                UserType.BLIND -> setOf(R.id.homeBlindFragment, R.id.gpsBlindFragment)
+                UserType.ALZHEIMER -> setOf(R.id.homeAlzheimerFragment, R.id.gpsAlzheimerFragment)
                 else -> emptySet()
             }
 
@@ -85,6 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // التعامل مع الضغط على عناصر القائمة السفلية حسب نوع المستخدم
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (userType) {
                 UserType.COMPANION -> handleCompanionNavigation(item.itemId)
@@ -109,8 +116,8 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.historyCompanion)
                 true
             }
-            R.id.audioCallCompanion -> {
-                navController.navigate(R.id.audioCallCompanion)
+            R.id.callsFragment -> {
+                startAudioCall()
                 true
             }
             else -> false
@@ -119,12 +126,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleBlindNavigation(itemId: Int): Boolean {
         return when (itemId) {
-            R.id.navigation_home -> {
+            R.id.homeBlindFragment -> {
                 navController.navigate(R.id.homeBlindFragment)
                 true
             }
-            R.id.navigation_gps -> {
+            R.id.gpsBlindFragment -> {
                 navController.navigate(R.id.gpsBlindFragment)
+                true
+            }
+            R.id.callsFragment -> {
+                startAudioCall()
                 true
             }
             else -> false
@@ -133,24 +144,40 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleAlzheimerNavigation(itemId: Int): Boolean {
         return when (itemId) {
-            R.id.navigation_home -> {
+            R.id.homeAlzheimerFragment -> {
                 navController.navigate(R.id.homeAlzheimerFragment)
                 true
             }
-            R.id.navigation_gps -> {
+            R.id.gpsAlzheimerFragment -> {
                 navController.navigate(R.id.gpsAlzheimerFragment)
                 true
             }
-            R.id.navigation_task -> {
+            R.id.tasksAlzheimerFragment -> {
                 navController.navigate(R.id.tasksAlzheimerFragment)
                 true
             }
-            R.id.audioCallAlzheimerFragment -> {
-                navController.navigate(R.id.audioCallAlzheimerFragment)
+            R.id.callsFragment -> {
+                startAudioCall()
                 true
             }
             else -> false
         }
+    }
+
+    private fun startAudioCall() {
+        val callInvitationConfig = ZegoUIKitPrebuiltCallInvitationConfig()
+        ZegoUIKitPrebuiltCallService.init(
+            application,
+            constant.appId,        // ضع هنا الـ appId من ZEGOCLOUD
+            constant.AppSign,      // ضع هنا الـ appSign من ZEGOCLOUD
+            userPreferences.getUserId() ?: "UnknownID",
+            if (userType == UserType.COMPANION) {
+                userPreferences.getPatientId() ?: "UnknownPatientID"
+            } else {
+                "Josef" // اسم المرافق الثابت للمريض - عدل حسب حالتك
+            },
+            callInvitationConfig
+        )
     }
 
     private fun hideSystemUI() {

@@ -1,4 +1,4 @@
-package com.yousef.mysight00.ui
+package com.yousef.mysight00.ui.Auth
 
 import android.os.Bundle
 import android.os.Handler

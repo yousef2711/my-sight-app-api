@@ -1,4 +1,4 @@
-package com.yousef.mysight00.ui
+package com.yousef.mysight00.ui.Features
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yousef.mysight00.R
-import com.yousef.mysight00.databinding.FragmentTasksBinding
 import com.yousef.mysight00.adapter.DaysAdapter
 import com.yousef.mysight00.adapter.TaskAdapter
+import com.yousef.mysight00.databinding.FragmentTasksBinding
 import com.yousef.mysight00.model.TaskModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class TasksFragment : Fragment() {
 

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeBlindFragment"
-        android:name="com.yousef.mysight00.ui.HomeBlindFragment"
+        android:name="com.yousef.mysight00.ui.Home.HomeBlindFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_blind">
         <action
@@ -27,13 +27,8 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
-            android:id="@+id/action_home_to_audio_call"
-            app:destination="@id/audioCallBlindFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
-        <action
-            android:id="@+id/action_home_to_video_call"
-            app:destination="@id/videoCallBlindFragment"
+            android:id="@+id/action_home_to_call"
+            app:destination="@id/callsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -45,7 +40,7 @@
 
     <fragment
         android:id="@+id/gpsBlindFragment"
-        android:name="com.yousef.mysight00.ui.GpsBlindFragment"
+        android:name="com.yousef.mysight00.ui.Gps.GpsBlindFragment"
         android:label="GPS"
         tools:layout="@layout/fragment_gps_blind">
         <action
@@ -60,7 +55,7 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_gps_to_audio_call"
-            app:destination="@id/audioCallBlindFragment"
+            app:destination="@id/callsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -72,7 +67,7 @@
 
     <fragment
         android:id="@+id/tasksBlindFragment"
-        android:name="com.yousef.mysight00.ui.TasksFragment"
+        android:name="com.yousef.mysight00.ui.Features.TasksFragment"
         android:label="Tasks"
         tools:layout="@layout/fragment_tasks">
         <action
@@ -94,7 +89,7 @@
 
     <fragment
         android:id="@+id/notificationBlindFragment"
-        android:name="com.yousef.mysight00.ui.NotificationFragment"
+        android:name="com.yousef.mysight00.ui.Features.NotificationFragment"
         android:label="Notifications"
         tools:layout="@layout/fragment_notification">
         <action
@@ -105,20 +100,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/audioCallBlindFragment"
-        android:name="com.yousef.mysight00.ui.AudioCallFragment"
-        android:label="Audio Call"
-        tools:layout="@layout/fragment_audio_call" />
-
-    <fragment
-        android:id="@+id/videoCallBlindFragment"
-        android:name="com.yousef.mysight00.ui.VideoCallFragment"
-        android:label="Video Call"
-        tools:layout="@layout/fragment_video_call" />
-
-    <fragment
         android:id="@+id/profileBlindFragment"
-        android:name="com.yousef.mysight00.ui.ProfileFragment"
+        android:name="com.yousef.mysight00.ui.Features.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -130,7 +113,7 @@
 
     <fragment
         android:id="@+id/editProfileBlindFragment"
-        android:name="com.yousef.mysight00.ui.EditProfileFragment"
+        android:name="com.yousef.mysight00.ui.Features.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile">
         <action
@@ -142,12 +125,25 @@
 
     <fragment
         android:id="@+id/createTaskBlindFragment"
-        android:name="com.yousef.mysight00.ui.CreateTaskFragment"
+        android:name="com.yousef.mysight00.ui.Features.CreateTaskFragment"
         android:label="Create Task"
         tools:layout="@layout/fragment_create_task">
         <action
             android:id="@+id/action_create_task_to_tasks"
             app:destination="@id/tasksBlindFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <!-- شاشة المكالمات -->
+    <fragment
+        android:id="@+id/callsFragment"
+        android:name="com.yousef.mysight00.ui.Gps.CallsFragment"
+        android:label="Calls"
+        tools:layout="@layout/fragment_calls">
+        <action
+            android:id="@+id/action_calls_to_home"
+            app:destination="@id/homeBlindFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>
