@@ -58,7 +58,7 @@ class HomeBlindFragment : Fragment() {
             constant.appId,
             constant.AppSign,
             getCurrentUserId(),
-            "Josef",
+            getTargetUserId(),
             callInvitationConfig
         )
     }
@@ -70,13 +70,22 @@ class HomeBlindFragment : Fragment() {
             constant.appId,
             constant.AppSign,
             getCurrentUserId(),
-            "Josef",
+            getTargetUserId(),
             callInvitationConfig
         )
     }
 
     private fun getCurrentUserId(): String {
         return userPreferences.getUserId() ?: "UnknownID"
+    }
+
+    private fun getTargetUserId(): String {
+        val userType = userPreferences.getUserType() ?: "companions"
+        return if (userType == "companions") {
+            userPreferences.getPatientName() ?: "UnknownPatientID"
+        } else {
+            userPreferences.getCompanionName() ?: "UnknownCompanionID"
+        }
     }
 
     override fun onDestroyView() {

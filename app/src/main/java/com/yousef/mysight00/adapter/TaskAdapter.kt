@@ -1,70 +1,80 @@
 package com.yousef.mysight00.adapter
 
 import android.view.LayoutInflater
-import android.view.MenuInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yousef.mysight00.R
 import com.yousef.mysight00.databinding.ItemTaskBinding
-import com.yousef.mysight00.model.TaskModel
+import com.yousef.mysight00.model.Task
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TaskAdapter(
-    private val taskList: MutableList<TaskModel>,
-    private val listener: TaskActionListener
-) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+    private val onTaskChecked: (Task, Boolean) -> Unit,
+    private val onTaskDelete: (Task) -> Unit,
+    private val onTaskEdit: (Task) -> Unit,
+    private val onTaskSend: (Task) -> Unit
+) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(TaskDiffCallback()) {
 
-    inner class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
+        val binding = ItemTaskBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return TaskViewHolder(binding)
+    }
 
-        fun bind(task: TaskModel) {
-            binding.taskTitle.text = task.name
-            binding.taskDate.text = task.date
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
 
-            updateButtonUI(task)
+    inner class TaskViewHolder(
+        private val binding: ItemTaskBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-            binding.btnCorrect.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    taskList[position].isCorrect = !taskList[position].isCorrect
-                    notifyItemChanged(position)
+        private val dateFormat = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
+
+        fun bind(task: Task) {
+            binding.apply {
+                textViewTitle.text = task.title
+                textViewDescription.text = task.description
+                checkBoxTask.isChecked = task.isCompleted
+                
+                val timeText = "Start: ${dateFormat.format(task.startTime)}\n" +
+                             "End: ${dateFormat.format(task.endTime)}"
+                textViewScheduledTime.text = timeText
+                textViewScheduledTime.visibility = android.view.View.VISIBLE
+
+                checkBoxTask.setOnCheckedChangeListener { _, isChecked ->
+                    onTaskChecked(task, isChecked)
+                }
+
+                buttonDelete.setOnClickListener {
+                    showTaskOptions(task)
                 }
             }
-
-            binding.btnMore.setOnClickListener { showPopupMenu(it, task) }
         }
 
-        private fun updateButtonUI(task: TaskModel) {
-            val context = binding.root.context
-
-            if (task.isCorrect) {
-                binding.btnCorrect.setImageResource(R.drawable.ic_check)
-                binding.btnCorrect.background = ContextCompat.getDrawable(context, R.drawable.bg_green_circle)
-            } else {
-                binding.btnCorrect.setImageResource(R.drawable.ic_wrong)
-                binding.btnCorrect.background = ContextCompat.getDrawable(context, R.drawable.bg_wrong)
-            }
-        }
-
-        private fun showPopupMenu(view: View, task: TaskModel) {
-            val popup = PopupMenu(view.context, view)
-            val inflater: MenuInflater = popup.menuInflater
-            inflater.inflate(R.menu.menu_task_options, popup.menu)
-
-            popup.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
+        private fun showTaskOptions(task: Task) {
+            val popup = PopupMenu(binding.root.context, binding.buttonDelete)
+            popup.menuInflater.inflate(R.menu.menu_task_options, popup.menu)
+            
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
                     R.id.action_send -> {
-                        listener.onSendTask(task)
-                        true
-                    }
-                    R.id.action_delete -> {
-                        listener.onDeleteTask(task)
-                        notifyItemRemoved(adapterPosition)
+                        onTaskSend(task)
                         true
                     }
                     R.id.action_edit -> {
-                        listener.onEditTask(task)
+                        onTaskEdit(task)
+                        true
+                    }
+                    R.id.action_delete -> {
+                        onTaskDelete(task)
                         true
                     }
                     else -> false
@@ -74,20 +84,13 @@ class TaskAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TaskViewHolder(binding)
-    }
+    private class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
+        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(taskList[position])
-    }
-
-    override fun getItemCount(): Int = taskList.size
-
-    interface TaskActionListener {
-        fun onSendTask(task: TaskModel)
-        fun onDeleteTask(task: TaskModel)
-        fun onEditTask(task: TaskModel)
+        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem == newItem
+        }
     }
 }

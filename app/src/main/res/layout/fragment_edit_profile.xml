@@ -99,7 +99,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Relative">
+                    android:hint="Tybe">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/relative_patient_form"
                         android:layout_width="match_parent"
@@ -110,27 +110,25 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Gender">
+                    android:hint="Phone">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/gender_patient_form"
+                        android:id="@+id/phone_patient_form"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <!-- تاريخ الميلاد -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Date of birth">
+                android:hint="Email">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/date_edit_profile"
+                    android:id="@+id/email_edit_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- الطول والوزن -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,9 +138,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Height (cm)">
+                    android:hint="Relation">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/height_patient_form"
+                        android:id="@+id/relation_patient_form"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -151,9 +149,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Weight (kg)">
+                    android:hint="Name">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/weight_patient_form"
+                        android:id="@+id/name_relation_form"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>

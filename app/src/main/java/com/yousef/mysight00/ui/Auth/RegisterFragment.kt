@@ -9,7 +9,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
@@ -17,9 +16,11 @@ import com.yousef.mysight00.RetrofitInstance
 import com.yousef.mysight00.databinding.FragmentRegisterBinding
 import com.yousef.mysight00.model.RegisterRequest
 import com.yousef.mysight00.model.UserType
+import com.yousef.mysight00.ui.base.BaseFragment
+import com.yousef.mysight00.utils.showToast
 import kotlinx.coroutines.launch
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -70,9 +71,9 @@ class RegisterFragment : Fragment() {
 
         val validName = name.isNotEmpty() && name.length >= 3
         val validEmail = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val validPassword = password.isNotEmpty() && password.length >= 6
-        val validAge = age.isNotEmpty() && age.toIntOrNull()?.let { it > 0 } == true
-        val validPhone = phone.isNotEmpty() && phone.length >= 10 && phone.all { it.isDigit() }
+        val validPassword = password.isNotEmpty() && isPasswordStrong(password)
+        val validAge = age.isNotEmpty() && age.toIntOrNull()?.let { it in 1..120 } == true
+        val validPhone = phone.isNotEmpty() && isValidPhoneNumber(phone)
         val validTypeSelected = selectedUserType != null
         val isCompanion = selectedUserType == UserType.COMPANION
         val validPatientName = if (isCompanion) patientName.isNotEmpty() else true
@@ -84,17 +85,25 @@ class RegisterFragment : Fragment() {
         binding.btnRegisComp.isEnabled = isFormValid
 
         binding.apply {
-            nameRegisComp.error = if (!validName) "Please enter a valid name" else null
-            emailRegisComp.error = if (!validEmail) "Please enter a valid email" else null
-            passwordRegisComp.error =
-                if (!validPassword) "Password must be at least 6 characters" else null
-            ageRegisComp.error = if (!validAge) "Please enter a valid age" else null
-            phNumRegisComp.error = if (!validPhone) "Please enter a valid phone number" else null
+            nameRegisComp.error = if (!validName) "الاسم يجب أن يكون 3 أحرف على الأقل" else null
+            emailRegisComp.error = if (!validEmail) "يرجى إدخال بريد إلكتروني صحيح" else null
+            passwordRegisComp.error = if (!validPassword) "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل، حرف كبير، حرف صغير، رقم ورمز خاص" else null
+            ageRegisComp.error = if (!validAge) "يرجى إدخال عمر صحيح (1-120)" else null
+            phNumRegisComp.error = if (!validPhone) "يرجى إدخال رقم هاتف صحيح" else null
             if (isCompanion) {
-                namePatient.error = if (!validPatientName) "Enter patient's username" else null
-                relationPatient.error = if (!validRelation) "Enter your relationship" else null
+                namePatient.error = if (!validPatientName) "يرجى إدخال اسم المريض" else null
+                relationPatient.error = if (!validRelation) "يرجى إدخال العلاقة" else null
             }
         }
+    }
+
+    private fun isPasswordStrong(password: String): Boolean {
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
+        return password.matches(passwordPattern.toRegex())
+    }
+    private fun isValidPhoneNumber(phone: String): Boolean {
+        val phonePattern = "^[+]?[0-9]{10,15}$"
+        return phone.matches(phonePattern.toRegex())
     }
 
     private fun setupUserTypeSelection() {
@@ -172,18 +181,21 @@ class RegisterFragment : Fragment() {
             )
             lifecycleScope.launch {
                 try {
-                    val response = RetrofitInstance.api.registerUser(registerRequest)
+                    val response = RetrofitInstance.getApi(requireContext()).registerUser(registerRequest)
                     if (response.isSuccessful) {
                         Log.i("RegisterFragment", "User registered successfully")
+                        requireContext().showToast("تم التسجيل بنجاح")
                         findNavController().navigate(R.id.action_register_to_login)
                     } else {
                         Log.e(
                             "RegisterFragment",
                             "Registration failed: ${response.errorBody()?.string()}"
                         )
+                        requireContext().showToast("فشل في التسجيل: ${response.errorBody()?.string()}")
                     }
                 } catch (e: Exception) {
                     Log.e("RegisterFragment", "Error during registration", e)
+                    requireContext().showToast("حدث خطأ: ${e.message}")
                 }
             }
         }
@@ -205,3 +217,4 @@ class RegisterFragment : Fragment() {
         _binding = null
     }
 }
+

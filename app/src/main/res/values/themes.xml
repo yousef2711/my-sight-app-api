@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Theme الأساسي بعد السبلاتش -->
     <style name="Theme.MySight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimaryVariant">@color/primary_blue</item>
         <item name="colorPrimary">@color/primary_blue</item>
@@ -11,10 +12,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
-    </style>
-
-    <style name="Theme.MySight.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/bg_sc_splash</item>
+        <item name="android:windowBackground">@color/black</item>
     </style>
 
 </resources>

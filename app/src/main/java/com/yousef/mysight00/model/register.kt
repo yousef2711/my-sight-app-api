@@ -26,9 +26,18 @@ data class Errors(
 enum class UserType(val nameValue: String) {
     BLIND("blind"),
     ALZHEIMER("alzheimer"),
-    COMPANION("companions");
+    COMPANION("companions");  // لاحظ أنها "companions" حسب fromString
 
     companion object {
-        fun fromString(value: String?): UserType? = values().find { it.nameValue == value }
+        fun fromString(value: String?): UserType? {
+            return when (value?.lowercase()) {
+                "blind" -> BLIND
+                "alzheimer" -> ALZHEIMER
+                "companions" -> COMPANION
+                else -> null
+            }
+        }
     }
 }
+
+

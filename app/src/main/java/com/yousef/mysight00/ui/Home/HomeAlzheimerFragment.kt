@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
 import com.yousef.mysight00.constant
 import com.yousef.mysight00.databinding.FragmentHomeAlzheimerBinding
+import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
 
-class HomeAlzheimerFragment : Fragment() {
+class HomeAlzheimerFragment : BaseFragment() {
     private var _binding: FragmentHomeAlzheimerBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreferences: UserPreferences
@@ -65,7 +65,7 @@ class HomeAlzheimerFragment : Fragment() {
             constant.appId,
             constant.AppSign,
             getCurrentUserId(),
-            "Josef", // اسم المرافق الثابت للمريض
+            getTargetUserId(),
             callInvitationConfig
         )
     }
@@ -77,13 +77,22 @@ class HomeAlzheimerFragment : Fragment() {
             constant.appId,
             constant.AppSign,
             getCurrentUserId(),
-            "Josef", // اسم المرافق الثابت للمريض
+            getTargetUserId(),
             callInvitationConfig
         )
     }
 
     private fun getCurrentUserId(): String {
         return userPreferences.getUserId() ?: "UnknownID"
+    }
+
+    private fun getTargetUserId(): String {
+        val userType = userPreferences.getUserType() ?: "companions"
+        return if (userType == "companions") {
+            userPreferences.getPatientName() ?: "UnknownPatientID"
+        } else {
+            userPreferences.getCompanionName() ?: "UnknownCompanionID"
+        }
     }
 
     override fun onDestroyView() {

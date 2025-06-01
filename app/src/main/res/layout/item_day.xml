@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tvDay"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:background="@drawable/bg_rounded_blue_oval"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:gravity="center"
-    android:text="4"
-    android:textSize="18sp"
-    android:textColor="@android:color/white"
-    android:layout_margin="4dp"/>
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvDayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mon"
+        android:textSize="12sp"
+        android:textColor="@color/dark"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvDay"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_rounded_gray_oval"
+        android:gravity="center"
+        android:text="4"
+        android:textSize="16sp"
+        android:textColor="@color/dark"/>
+
+</LinearLayout>

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -20,12 +19,13 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.yousef.mysight00.R
 import com.yousef.mysight00.databinding.FragmentGpsBlindBinding
+import com.yousef.mysight00.ui.base.BaseFragment
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
 
-class GpsBlindFragment : Fragment() {
+class GpsBlindFragment : BaseFragment() {
 
     private var _binding: FragmentGpsBlindBinding? = null
     private val binding get() = _binding!!

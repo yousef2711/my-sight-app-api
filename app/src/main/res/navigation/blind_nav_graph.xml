@@ -18,7 +18,7 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_home_to_profile"
-            app:destination="@id/profileBlindFragment"
+            app:destination="@id/profileFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -50,7 +50,7 @@
             app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_gps_to_profile"
-            app:destination="@id/profileBlindFragment"
+            app:destination="@id/profileFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
         <action
@@ -79,7 +79,12 @@
             android:id="@+id/action_tasks_to_create_task"
             app:destination="@id/createTaskBlindFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left">
+            <argument
+                android:name="taskId"
+                android:defaultValue="-1L"
+                app:argType="long" />
+        </action>
         <action
             android:id="@+id/action_tasks_to_home"
             app:destination="@id/homeBlindFragment"
@@ -100,25 +105,35 @@
     </fragment>
 
     <fragment
-        android:id="@+id/profileBlindFragment"
+        android:id="@+id/profileFragment"
         android:name="com.yousef.mysight00.ui.Features.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile">
         <action
+            android:id="@+id/action_profile_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/auth_nav_graph"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_profile_to_home"
+            app:destination="@id/homeBlindFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <action
             android:id="@+id/action_profile_to_edit_profile"
-            app:destination="@id/editProfileBlindFragment"
+            app:destination="@id/editprofileFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
     <fragment
-        android:id="@+id/editProfileBlindFragment"
+        android:id="@+id/editprofileFragment"
         android:name="com.yousef.mysight00.ui.Features.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile">
         <action
             android:id="@+id/action_edit_profile_to_profile"
-            app:destination="@id/profileBlindFragment"
+            app:destination="@id/profileFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right" />
     </fragment>

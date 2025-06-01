@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/homeCompanion"
+        android:id="@+id/homeIcon"
         android:title="Home"
         android:icon="@drawable/ic_home_companian" />
     <item
-        android:id="@+id/callsFragment"
+        android:id="@+id/callIcon"
         android:title="Calls"
         android:icon="@drawable/ic_call_companian" />
     <item
-        android:id="@+id/ic"
-        android:title=""
-        android:icon="@drawable/ic_blank" />
-    <item
-        android:id="@+id/gpsCompanion"
+        android:id="@+id/gpsIcon"
         android:title="GPS"
         android:icon="@drawable/ic_gps" />
     <item
-        android:id="@+id/historyCompanion"
+        android:id="@+id/historyIcon"
         android:title="History"
         android:icon="@drawable/ic_history" />
 

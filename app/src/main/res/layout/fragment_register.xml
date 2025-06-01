@@ -136,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/btn_text_rounded"
-                    android:hint="UserName"
+                    android:hint="Full Name"
                     android:padding="12dp"
                     android:textSize="16sp" />
 

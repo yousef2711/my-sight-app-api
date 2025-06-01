@@ -2,14 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_send"
-        android:title="Send Task now"
-        android:icon="@drawable/arrow_right" />
-    <item
-        android:id="@+id/action_delete"
-        android:title="Delete Task"
-        android:icon="@drawable/arrow_right" />
+        android:title="Send Task" />
     <item
         android:id="@+id/action_edit"
-        android:title="Edit Task"
-        android:icon="@drawable/arrow_right" />
+        android:title="Edit Task" />
+    <item
+        android:id="@+id/action_delete"
+        android:title="Delete Task" />
 </menu>

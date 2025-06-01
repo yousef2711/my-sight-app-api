@@ -37,7 +37,8 @@
             app:itemTextColor="@color/bottom_nav_item_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:labelVisibilityMode="selected"/>
 
         <!-- SOS FloatingActionButton -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton

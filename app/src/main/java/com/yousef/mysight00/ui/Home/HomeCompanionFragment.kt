@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
 import com.yousef.mysight00.constant
 import com.yousef.mysight00.databinding.FragmentHomeCompanionBinding
+import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
 
-class HomeCompanionFragment : Fragment() {
+class HomeCompanionFragment : BaseFragment() {
     private var _binding: FragmentHomeCompanionBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreferences: UserPreferences
@@ -90,8 +90,14 @@ class HomeCompanionFragment : Fragment() {
     }
 
     private fun getTargetUserId(): String {
-        return userPreferences.getPatientId() ?: "UnknownPatientID"
+        val userType = userPreferences.getUserType() ?: "companions"
+        return if (userType == "companions") {
+            userPreferences.getPatientName() ?: "UnknownPatientID"
+        } else {
+            userPreferences.getCompanionName() ?: "UnknownCompanionID"
+        }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

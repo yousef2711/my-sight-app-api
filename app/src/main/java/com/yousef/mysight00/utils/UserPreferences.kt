@@ -1,56 +1,119 @@
 package com.yousef.mysight00.utils
 
 import android.content.Context
-import android.content.Intent
-import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 
-class UserPreferences(private val context: Context) {
-    private val sharedPreferences = context.getSharedPreferences("MySightPrefs", AppCompatActivity.MODE_PRIVATE)
+class UserPreferences(context: Context) {
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("my_sight_prefs", Context.MODE_PRIVATE)
 
-    companion object {
-        private const val USER_TYPE = "USER_TYPE"
-        private const val PATIENT_ID = "PATIENT_ID"
-        private const val USER_ID = "USER_ID"
+    // Token Management
+    fun saveAccessToken(token: String) {
+        sharedPreferences.edit().putString("access_token", token).apply()
+    }
+
+    fun getAccessToken(): String? {
+        return sharedPreferences.getString("access_token", null)
+    }
+
+    fun saveRefreshToken(token: String) {
+        sharedPreferences.edit().putString("refresh_token", token).apply()
+    }
+
+    fun getRefreshToken(): String? {
+        return sharedPreferences.getString("refresh_token", null)
+    }
+
+    fun saveUserName(name: String) {
+        sharedPreferences.edit().putString("user_name", name).apply()
+    }
+
+    fun getUserName(): String? {
+        return sharedPreferences.getString("user_name", null)
+    }
+
+    fun saveUsername(username: String) {
+        sharedPreferences.edit().putString("username", username).apply()
+    }
+
+    fun getUsername(): String? {
+        return sharedPreferences.getString("username", null)
+    }
+
+    fun saveUserEmail(email: String) {
+        sharedPreferences.edit().putString("user_email", email).apply()
+    }
+
+    fun getUserEmail(): String? {
+        return sharedPreferences.getString("user_email", null)
+    }
+
+    fun saveUserPhone(phone: String) {
+        sharedPreferences.edit().putString("user_phone", phone).apply()
+    }
+
+    fun getUserPhone(): String? {
+        return sharedPreferences.getString("user_phone", null)
+    }
+
+    fun saveUserLocation(location: String) {
+        sharedPreferences.edit().putString("user_location", location).apply()
+    }
+
+    fun getUserLocation(): String? {
+        return sharedPreferences.getString("user_location", null)
+    }
+
+    fun saveUserRelationship(relationship: String) {
+        sharedPreferences.edit().putString("user_relationship", relationship).apply()
+    }
+
+    fun getUserRelationship(): String? {
+        return sharedPreferences.getString("user_relationship", null)
+    }
+
+    fun savePatientName(linked_patient_name: String) {
+        sharedPreferences.edit().putString("patient_name", linked_patient_name).apply()
+    }
+
+    fun getPatientName(): String? {
+        return sharedPreferences.getString("patient_name", null)
+    }
+
+    fun saveCompanionName(linked_companion_name: String) {
+        sharedPreferences.edit().putString("companion_name", linked_companion_name).apply()
+    }
+
+    fun getCompanionName(): String? {
+        return sharedPreferences.getString("companion_name", null)
     }
 
     fun saveUserType(userType: String) {
-        sharedPreferences.edit().putString(USER_TYPE, userType).apply()
+        sharedPreferences.edit().putString("user_type", userType).apply()
     }
 
     fun getUserType(): String? {
-        return sharedPreferences.getString(USER_TYPE, null)
-    }
-
-    fun savePatientId(patientId: String) {
-        sharedPreferences.edit().putString(PATIENT_ID, patientId).apply()
-    }
-
-    fun getPatientId(): String? {
-        return sharedPreferences.getString(PATIENT_ID, null)
+        return sharedPreferences.getString("user_type", null)
     }
 
     fun saveUserId(userId: String) {
-        sharedPreferences.edit().putString(USER_ID, userId).apply()
+        sharedPreferences.edit().putString("user_id", userId).apply()
     }
 
     fun getUserId(): String? {
-        return sharedPreferences.getString(USER_ID, null)
+        return sharedPreferences.getString("user_id", null)
     }
 
-    fun clearUserData() {
+    fun saveUserAvatar(avatarResId: Int) {
+        sharedPreferences.edit().putInt("user_avatar", avatarResId).apply()
+    }
+
+    fun getUserAvatar(): Int? {
+        val avatarResId = sharedPreferences.getInt("user_avatar", -1)
+        return if (avatarResId != -1) avatarResId else null
+    }
+
+    fun clearAll() {
         sharedPreferences.edit().clear().apply()
-    }
-
-    fun logout(context: Context) {
-        clearUserData()
-        // إعادة تشغيل التطبيق
-        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
-        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
-        if (context is Activity) {
-            context.finish()
-        }
     }
 }

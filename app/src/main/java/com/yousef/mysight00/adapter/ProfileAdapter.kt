@@ -8,11 +8,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.yousef.mysight00.R
 import com.yousef.mysight00.model.ProfileItem
+import com.yousef.mysight00.utils.UserPreferences
 
-class ProfileAdapter(private val itemList: List<ProfileItem>) :
-    RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
+class ProfileAdapter(
+    private val items: List<ProfileItem>,
+    private val userPreferences: UserPreferences,
+    private val onItemClick: (ProfileItem) -> Unit
+) : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 
-    class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.item_icon)
         val title: TextView = itemView.findViewById(R.id.item_title)
     }
@@ -24,12 +28,14 @@ class ProfileAdapter(private val itemList: List<ProfileItem>) :
     }
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
-        val item = itemList[position]
+        val item = items[position]
         holder.icon.setImageResource(item.iconResId)
         holder.title.text = item.title
+
+        holder.itemView.setOnClickListener {
+            onItemClick(item)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount(): Int = items.size
 }
