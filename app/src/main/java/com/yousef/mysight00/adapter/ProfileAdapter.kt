@@ -19,6 +19,7 @@ class ProfileAdapter(
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.item_icon)
         val title: TextView = itemView.findViewById(R.id.item_title)
+        val value: TextView = itemView.findViewById(R.id.item_value)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -31,6 +32,8 @@ class ProfileAdapter(
         val item = items[position]
         holder.icon.setImageResource(item.iconResId)
         holder.title.text = item.title
+        holder.value.text = item.value ?: ""
+        holder.value.visibility = if (item.value != null) View.VISIBLE else View.GONE
 
         holder.itemView.setOnClickListener {
             onItemClick(item)

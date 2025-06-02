@@ -49,13 +49,13 @@ class ForgetPassFragment : BaseFragment() {
                 try {
                     val response = RetrofitInstance.getApi(requireContext()).forgotPassword(forgotPasswordRequest(email))
                     if (response.isSuccessful) {
-                        requireContext().showToast("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني")
+                        requireContext().showToast("Password reset link has been sent to your email")
                         findNavController().navigateUp()
                     } else {
-                        requireContext().showToast("فشل في إرسال رابط إعادة تعيين كلمة المرور")
+                        requireContext().showToast("Failed to send password reset link")
                     }
                 } catch (e: Exception) {
-                    requireContext().showToast("حدث خطأ: ${e.message}")
+                    requireContext().showToast("An error occurred: ${e.message}")
                 }
             }
         }
@@ -64,10 +64,10 @@ class ForgetPassFragment : BaseFragment() {
     private fun validateInput(email: String): Boolean {
         return when {
             email.isEmpty() -> {
-                requireContext().showToast("الرجاء إدخال البريد الإلكتروني").let { false }
+                requireContext().showToast("Please enter your email").let { false }
             }
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                requireContext().showToast("الرجاء إدخال بريد إلكتروني صحيح").let { false }
+                requireContext().showToast("Please enter a valid email").let { false }
             }
             else -> true
         }

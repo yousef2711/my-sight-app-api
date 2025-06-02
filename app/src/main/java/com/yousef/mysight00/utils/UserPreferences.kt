@@ -72,16 +72,24 @@ class UserPreferences(context: Context) {
         return sharedPreferences.getString("user_relationship", null)
     }
 
-    fun savePatientName(linked_patient_name: String) {
-        sharedPreferences.edit().putString("patient_name", linked_patient_name).apply()
+    fun savePatientName(patientName: String) {
+        sharedPreferences.edit().putString("patient_name", patientName).apply()
     }
 
     fun getPatientName(): String? {
         return sharedPreferences.getString("patient_name", null)
     }
 
-    fun saveCompanionName(linked_companion_name: String) {
-        sharedPreferences.edit().putString("companion_name", linked_companion_name).apply()
+    fun savePatientType(patientType: String) {
+        sharedPreferences.edit().putString("patient_type", patientType).apply()
+    }
+
+    fun getPatientType(): String? {
+        return sharedPreferences.getString("patient_type", null)
+    }
+
+    fun saveCompanionName(linkedCompanionName: String) {
+        sharedPreferences.edit().putString("companion_name", linkedCompanionName).apply()
     }
 
     fun getCompanionName(): String? {

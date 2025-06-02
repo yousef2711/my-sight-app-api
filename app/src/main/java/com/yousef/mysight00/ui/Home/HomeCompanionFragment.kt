@@ -1,6 +1,7 @@
 package com.yousef.mysight00.ui.Home
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,18 @@ import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
+import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.Marker
 
 class HomeCompanionFragment : BaseFragment() {
     private var _binding: FragmentHomeCompanionBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreferences: UserPreferences
+
+    // 🧠 نقطة تمثّل موقع المريض (بشكل ثابت مؤقتًا)
+    private val patientLocation = GeoPoint(30.0444, 30.9320)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +39,7 @@ class HomeCompanionFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        setupMap()
     }
 
     private fun setupClickListeners() {
@@ -59,6 +68,29 @@ class HomeCompanionFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    private fun setupMap() {
+        Configuration.getInstance().load(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
+
+        val map = binding.imageGpsComp
+        map.setTileSource(TileSourceFactory.MAPNIK)
+        map.setBuiltInZoomControls(true)
+        map.setMultiTouchControls(true)
+
+        val mapController = map.controller
+        mapController.setZoom(17.0)
+        mapController.setCenter(patientLocation)
+
+        // 📍 أضف Marker يمثل المريض
+        val patientMarker = Marker(map)
+        patientMarker.position = patientLocation
+        patientMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        patientMarker.title = "Patient site"
+        patientMarker.icon = resources.getDrawable(R.drawable.ic_patient_location, null)
+        map.overlays.add(patientMarker)
+
+        map.invalidate()
     }
 
     private fun startAudioCall() {
@@ -97,7 +129,6 @@ class HomeCompanionFragment : BaseFragment() {
             userPreferences.getCompanionName() ?: "UnknownCompanionID"
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

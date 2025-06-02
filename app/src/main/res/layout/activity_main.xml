@@ -24,13 +24,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@null"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <!-- BottomNavigationView -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
             android:background="@color/dark"
             app:menu="@menu/bottom_nav_menu_companion"
             app:itemIconTint="@color/bottom_nav_item_color"
@@ -43,8 +45,8 @@
         <!-- SOS FloatingActionButton -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_sos"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="-20dp"
@@ -54,12 +56,12 @@
             android:elevation="10dp"
             app:elevation="10dp"
             android:src="@drawable/ic_sos"
-            app:fabCustomSize="100dp"
+            app:fabCustomSize="90dp"
             app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
-            app:maxImageSize="105dp"
+            app:maxImageSize="95dp"
             app:tint="@null" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

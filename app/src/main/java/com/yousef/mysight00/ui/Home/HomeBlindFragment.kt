@@ -4,16 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
 import com.yousef.mysight00.constant
 import com.yousef.mysight00.databinding.FragmentHomeBlindBinding
+import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
 
-class HomeBlindFragment : Fragment() {
+class HomeBlindFragment : BaseFragment() {
 
     private var _binding: FragmentHomeBlindBinding? = null
     private val binding get() = _binding!!

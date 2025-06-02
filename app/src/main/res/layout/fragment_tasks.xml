@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_back_black"
-            android:contentDescription="arrow back" />
+            android:contentDescription="Back" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -41,7 +41,7 @@
                 android:layout_height="65dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
-                android:text="Notifications"
+                android:text="@string/notifications"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 android:layout_height="65dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/primary_blue"
-                android:text="Tasks"
+                android:text="@string/tasks"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:background="@drawable/bg_rounded_blue"
-                        android:text="+Add Task"
+                        android:text="@string/add_task"
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -130,7 +130,7 @@
                         android:id="@+id/tvTitleTasks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tasks"
+                        android:text="@string/tasks"
                         android:textColor="@color/black"
                         android:textSize="24sp"
                         android:textStyle="bold" />

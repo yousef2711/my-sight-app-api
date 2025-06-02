@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:layout_margin="4dp">
 
     <TextView
         android:id="@+id/tvDayName"
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Mon"
         android:textSize="12sp"
-        android:textColor="@color/dark"
+        android:textColor="@color/white"
         android:layout_marginBottom="4dp"/>
 
     <TextView

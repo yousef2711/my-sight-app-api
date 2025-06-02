@@ -39,7 +39,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/arrow_back"
-            android:contentDescription="Back Button" />
+            android:contentDescription="Back" />
 
         <TextView
             android:id="@+id/titleText_patient_form"
@@ -99,7 +99,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Tybe">
+                    android:hint="Type">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/relative_patient_form"
                         android:layout_width="match_parent"

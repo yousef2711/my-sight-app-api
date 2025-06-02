@@ -13,8 +13,8 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yousef.mysight00.R
 import com.yousef.mysight00.MainActivity
+import com.yousef.mysight00.R
 import com.yousef.mysight00.adapter.ProfileAdapter
 import com.yousef.mysight00.model.ProfileItem
 import com.yousef.mysight00.model.UserType
@@ -27,15 +27,14 @@ class ProfileFragment : BaseFragment() {
     private val avatars = listOf(
         R.drawable.img_edit_profile,
         R.drawable.ic_personal_profile,
-        R.drawable.img_personal1,
-        R.drawable.img_personal
+        R.drawable.img_personal,
+        R.drawable.img_personal1
     )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Set full screen flags
         requireActivity().window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
             addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -50,10 +49,8 @@ class ProfileFragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         userPreferences = UserPreferences(requireContext())
 
-        // تحديث بيانات المستخدم في الواجهة
         updateUserProfile(view)
 
-        // إعداد أزرار الصورة
         view.findViewById<ImageView>(R.id.profileImage).setOnClickListener {
             showAvatarSelectionDialog()
         }
@@ -62,15 +59,12 @@ class ProfileFragment : BaseFragment() {
             showAvatarSelectionDialog()
         }
 
-        // إعداد قائمة البروفايل
         setupProfileList(view)
 
-        // إضافة زر التعديل
         view.findViewById<View>(R.id.editProfileButton)?.setOnClickListener {
             findNavController().navigate(R.id.action_profile_to_edit_profile)
         }
 
-        // إضافة زر الباك
         view.findViewById<View>(R.id.backButton_history)?.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -83,25 +77,30 @@ class ProfileFragment : BaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         val items = mutableListOf(
-            ProfileItem(R.drawable.ic_profile, "Name"),
-            ProfileItem(R.drawable.ic_email, "Email"),
-            ProfileItem(R.drawable.ic_phone, "Phone"),
-            ProfileItem(R.drawable.ic_location, "Location")
+            ProfileItem(R.drawable.ic_profile, "Name", userPreferences.getUsername() ?: "Not Set"),
+            ProfileItem(R.drawable.ic_email, "Email", userPreferences.getUserEmail() ?: "Not Set"),
+            ProfileItem(R.drawable.ic_phone, "Phone", userPreferences.getUserPhone() ?: "Not Set"),
+            ProfileItem(R.drawable.ic_location, "Location", userPreferences.getUserLocation() ?: "Not Set")
         )
 
-        // إضافة حقول إضافية حسب نوع المستخدم
-        when (UserType.fromString(userPreferences.getUserType() ?: "")) {
-            UserType.COMPANION -> {
-                items.add(ProfileItem(R.drawable.ic_relation, "Relationship"))
-                items.add(ProfileItem(R.drawable.ic_rela_name, "Patient Name"))
+        val userName = userPreferences.getUserName()?.lowercase() ?: ""
+        when {
+            userName.contains("companions") -> {
+                items.add(ProfileItem(R.drawable.ic_relation, "Relationship", userPreferences.getUserRelationship() ?: "Not Set"))
+                items.add(ProfileItem(R.drawable.ic_rela_name, "Patient Name", userPreferences.getPatientName() ?: "Not Set"))
+                items.add(ProfileItem(R.drawable.ic_rela_name, "Patient Type", userPreferences.getPatientType() ?: "Not Set"))
             }
-            UserType.ALZHEIMER -> {
-                items.add(ProfileItem(R.drawable.ic_rela_name, "Companion Name"))
+            userName.contains("alzheimer") -> {
+                items.add(ProfileItem(R.drawable.ic_relation, "Relationship", userPreferences.getUserRelationship() ?: "Not Set"))
+                items.add(ProfileItem(R.drawable.ic_rela_name, "Companion Name", userPreferences.getCompanionName() ?: "Not Set"))
+            }
+            userName.contains("blind") -> {
+                items.add(ProfileItem(R.drawable.ic_relation, "Relationship", userPreferences.getUserRelationship() ?: "Not Set"))
+                items.add(ProfileItem(R.drawable.ic_rela_name, "Companion Name", userPreferences.getCompanionName() ?: "Not Set"))
             }
             else -> {}
         }
 
-        // إضافة زر تسجيل الخروج في النهاية
         items.add(ProfileItem(R.drawable.ic_logout, "Log Out"))
 
         val adapter = ProfileAdapter(items, userPreferences) { item ->
@@ -117,12 +116,10 @@ class ProfileFragment : BaseFragment() {
         dialog.setContentView(R.layout.dialog_logout_confirmation)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // زر الإلغاء
         dialog.findViewById<View>(R.id.btnCancel)?.setOnClickListener {
             dialog.dismiss()
         }
 
-        // زر تأكيد تسجيل الخروج
         dialog.findViewById<View>(R.id.btnConfirm)?.setOnClickListener {
             dialog.dismiss()
             handleLogout()
@@ -165,35 +162,32 @@ class ProfileFragment : BaseFragment() {
             profileImage.setImageResource(savedAvatar)
         }
 
-        // تحديث اسم المستخدم
         val userNameTextView = view.findViewById<TextView>(R.id.userName)
         userNameTextView.text = userPreferences.getUsername() ?: "UserName"
 
-        // تحديث نوع المستخدم
         val userTypeTextView = view.findViewById<TextView>(R.id.userTybe)
-        val userType = UserType.fromString(userPreferences.getUserType() ?: "")
+        val userType = UserType.fromString(userPreferences.getUserName() ?: "")
         userTypeTextView.text = userType?.toString() ?: ""
     }
 
     private fun handleLogout() {
         try {
-            Log.d(TAG, "بدء عملية تسجيل الخروج")
+            Log.d(TAG, "Starting logout process")
             
-            // مسح بيانات المستخدم
-            Log.d(TAG, "جاري مسح بيانات المستخدم")
+            Log.d(TAG, "Clearing user data")
             userPreferences.clearAll()
-            Log.d(TAG, "تم مسح بيانات المستخدم بنجاح")
+            Log.d(TAG, "User data cleared successfully")
 
-            // إعادة تشغيل التطبيق للعودة إلى شاشة تسجيل الدخول
+            // Restart app to return to login screen
             val intent = Intent(requireContext(), MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                putExtra("SKIP_SPLASH", true)  // إضافة علامة لتخطي شاشة السبلاش
+                putExtra("SKIP_SPLASH", true)  // Add flag to skip splash screen
             }
             startActivity(intent)
             requireActivity().finish()
-            Log.d(TAG, "تم إعادة تشغيل التطبيق")
+            Log.d(TAG, "App restarted")
         } catch (e: Exception) {
-            Log.e(TAG, "حدث خطأ أثناء تسجيل الخروج", e)
+            Log.e(TAG, "Error occurred during logout", e)
             e.printStackTrace()
         }
     }

@@ -7,17 +7,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yousef.mysight00.R
 import com.yousef.mysight00.databinding.ItemDayBinding
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 data class DayItem(
     val date: Date,
-    val isSelected: Boolean = false
+    var isSelected: Boolean = false
 )
 
 class DaysAdapter(
-    private val daysList: List<DayItem>,
+    private var daysList: List<DayItem>,
     private val onClick: (Date) -> Unit
 ) : RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
+
+    private var selectedPosition = -1
+
+    init {
+        // Set initial selection to today
+        val today = Calendar.getInstance().time
+        daysList.forEachIndexed { index, dayItem ->
+            if (isSameDay(dayItem.date, today)) {
+                selectedPosition = index
+                dayItem.isSelected = true
+            }
+        }
+    }
 
     class DayViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
         private val dayFormat = SimpleDateFormat("d", Locale.getDefault())
@@ -38,7 +53,7 @@ class DaysAdapter(
 
                 // Update text color based on selection
                 val textColor = if (dayItem.isSelected) {
-                    R.color.white
+                    R.color.primary_blue
                 } else {
                     R.color.dark
                 }
@@ -51,13 +66,61 @@ class DaysAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
-        val binding = ItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemDayBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return DayViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.bind(daysList[position], onClick)
+        holder.bind(daysList[position]) { date ->
+            updateSelection(position)
+            onClick(date)
+        }
     }
 
-    override fun getItemCount(): Int = daysList.size
+    override fun getItemCount() = daysList.size
+
+    private fun updateSelection(position: Int) {
+        if (position == selectedPosition) return
+
+        val previousSelected = selectedPosition
+        selectedPosition = position
+
+        // Update the previous selection
+        if (previousSelected != -1) {
+            daysList[previousSelected].isSelected = false
+            notifyItemChanged(previousSelected)
+        }
+
+        // Update the new selection
+        daysList[position].isSelected = true
+        notifyItemChanged(position)
+    }
+
+    fun updateDays(newDays: List<DayItem>) {
+        val oldSelectedDate = if (selectedPosition != -1) daysList[selectedPosition].date else null
+        
+        daysList = newDays.map { dayItem ->
+            DayItem(
+                date = dayItem.date,
+                isSelected = oldSelectedDate != null && isSameDay(dayItem.date, oldSelectedDate)
+            )
+        }
+        
+        // Update selected position
+        selectedPosition = daysList.indexOfFirst { it.isSelected }
+        notifyDataSetChanged()
+    }
+
+    private fun isSameDay(date1: Date, date2: Date): Boolean {
+        val cal1 = Calendar.getInstance()
+        val cal2 = Calendar.getInstance()
+        cal1.time = date1
+        cal2.time = date2
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+    }
 }

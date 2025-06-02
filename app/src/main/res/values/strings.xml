@@ -1,8 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Sight00</string>
     <string name="discription_forget_pass">Provide your email for which you want to reset your password</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sos_button">SOS Button</string>
-    <string name="no_tasks_for_date">لم يتم إضافة أي مهام في %s</string>
+    <string name="no_tasks_for_date">No tasks added for %s</string>
+    <string name="add_task">Add Task</string>
+    <string name="create_task">Create Task</string>
+    <string name="update_task">Update Task</string>
+    <string name="send_now">Send Now</string>
+    <string name="update_and_send">Update &amp; Send</string>
+    <string name="task_name">Task Name</string>
+    <string name="task_description">Description</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="date">Date</string>
+    <string name="tasks">Tasks</string>
+    <string name="notifications">Notifications</string>
+    <string name="see_all">See All</string>
+    <string name="notification_and_task">Notification &amp; Task</string>
+    <string name="home">Home</string>
+    <string name="calls">Calls</string>
+    <string name="gps">GPS</string>
+    <string name="task">Task</string>
+    <string name="send_task">Send Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="get_started">Get Started now</string>
+    <string name="create_account">Create an account or log in to explore about our app</string>
+    <string name="register">Register</string>
+    <string name="forgot_password">FORGOT PASSWORD</string>
+    <string name="cancel">Cancel</string>
+    <string name="log_out">Log Out</string>
+    <string name="log_out_confirmation">Are you sure you want to log out?</string>
 </resources>

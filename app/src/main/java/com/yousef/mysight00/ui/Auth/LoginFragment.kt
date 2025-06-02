@@ -59,7 +59,7 @@ class LoginFragment : BaseFragment() {
                 binding.btnLoginLogin.isEnabled = true
 
                 if (!response.isSuccessful || response.body() == null) {
-                    requireContext().showToast("فشل تسجيل الدخول: ${response.code()}")
+                    requireContext().showToast("Login failed: ${response.code()}")
                     return@launch
                 }
 
@@ -76,30 +76,32 @@ class LoginFragment : BaseFragment() {
                         saveUsername(user.username ?: "")
                         saveUserEmail(user.email ?: "")
                         saveUserPhone(user.phone_number ?: "")
-                        savePatientName(user.linked_patient_name ?: "")
+                        saveUserRelationship(user.relationship ?: "")
+                        savePatientName(user.patient_username ?: "")
                         saveCompanionName(user.linked_companion_name ?: "")
+                        savePatientType(user.linked_patient_type ?: "")
                         saveUserType(user.account_type?.lowercase() ?: "")
                     }
 
                     navigateBasedOnUser(user.account_type?.lowercase(), user.name?.lowercase())
-                } ?: requireContext().showToast("فشل في الحصول على بيانات المستخدم")
+                } ?: requireContext().showToast("Failed to get user data")
 
             } catch (e: Exception) {
                 binding.progressBar.visibility = View.GONE
                 binding.btnLoginLogin.isEnabled = true
-                requireContext().showToast("حدث خطأ: ${e.message}")
+                requireContext().showToast("An error occurred: ${e.message}")
             }
         }
     }
 
     private fun validateInputs(email: String, password: String): Boolean {
         return when {
-            email.isEmpty() -> requireContext().showToast("يرجى إدخال البريد الإلكتروني").let { false }
+            email.isEmpty() -> requireContext().showToast("Please enter your email").let { false }
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                requireContext().showToast("يرجى إدخال بريد إلكتروني صحيح")
+                requireContext().showToast("Please enter a valid email")
                 false
             }
-            password.isEmpty() -> requireContext().showToast("يرجى إدخال كلمة المرور").let { false }
+            password.isEmpty() -> requireContext().showToast("Please enter your password").let { false }
             else -> true
         }
     }

@@ -6,7 +6,7 @@
     android:id="@+id/auth_nav_graph"
     app:startDestination="@id/splashFragment">
 
-    <!-- شاشة البداية -->
+    <!-- Start screen -->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.yousef.mysight00.ui.Auth.SplashFragment"
@@ -21,7 +21,7 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
-    <!-- شاشة تسجيل الدخول -->
+    <!-- Login screen -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.yousef.mysight00.ui.Auth.LoginFragment"
@@ -60,7 +60,7 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <!-- شاشة التسجيل -->
+    <!-- Registration screen -->
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.yousef.mysight00.ui.Auth.RegisterFragment"
@@ -74,7 +74,7 @@
             app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
-    <!-- شاشة نسيان كلمة المرور -->
+    <!-- Forgot password screen -->
     <fragment
         android:id="@+id/forgetPassFragment"
         android:name="com.yousef.mysight00.ui.Auth.ForgetPassFragment"
@@ -92,7 +92,7 @@
             app:exitAnim="@anim/slide_out_left" />
     </fragment>
 
-    <!-- شاشة كلمة المرور الجديدة -->
+    <!-- New password screen -->
     <fragment
         android:id="@+id/newPasswordFragment"
         android:name="com.yousef.mysight00.ui.Auth.NewPasswordFragment"

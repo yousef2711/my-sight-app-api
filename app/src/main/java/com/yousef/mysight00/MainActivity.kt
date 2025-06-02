@@ -65,53 +65,87 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        // Show/hide bottom navigation based on user type
-        binding.bottomBarContainer.visibility = if (userType != null) View.VISIBLE else View.GONE
-        binding.fabSos.visibility = if (userType != null) View.VISIBLE else View.GONE
+        val isBlind = userType == UserType.BLIND
 
-        // Set up SOS button click listener
-        binding.fabSos.setOnClickListener {
-            startAudioCall()
-        }
+        binding.bottomBarContainer.visibility = if (userType != null) View.VISIBLE else View.GONE
+        binding.fabSos.visibility = if (isBlind) View.GONE else View.VISIBLE
+
+        binding.fabSos.isEnabled = !isBlind
+
     }
 
+
     private fun setupBottomNavigation() {
-        binding.bottomNavigation.menu.clear()  // مهم جدا لمسح القوائم السابقة
+        binding.bottomNavigation.menu.clear()
 
         when (userType) {
             UserType.BLIND -> {
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_nav_menu_blind)
+                binding.fabSos.visibility =  View.VISIBLE
                 binding.bottomNavigation.setOnItemSelectedListener { item ->
                     when (item.itemId) {
-                        R.id.homeIcon -> navController.navigate(R.id.homeBlindFragment)
-                        R.id.gpsIcon -> navController.navigate(R.id.gpsBlindFragment)
-                        R.id.callIcon -> startAudioCall()
+                        R.id.homeIcon -> {
+                            navController.navigate(R.id.homeBlindFragment)
+                            true
+                        }
+                        R.id.gpsIcon -> {
+                            navController.navigate(R.id.gpsBlindFragment)
+                            true
+                        }
+                        R.id.callIcon -> {
+                            startAudioCall()
+                            false
+                        }
+                        else -> false
                     }
-                    true
                 }
             }
             UserType.ALZHEIMER -> {
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_nav_menu_alzheimer)
                 binding.bottomNavigation.setOnItemSelectedListener { item ->
                     when (item.itemId) {
-                        R.id.homeIcon -> navController.navigate(R.id.homeAlzheimerFragment)
-                        R.id.gpsIcon -> navController.navigate(R.id.gpsAlzheimerFragment)
-                        R.id.tasksIcon -> navController.navigate(R.id.tasksAlzheimerFragment)
-                        R.id.callIcon -> startAudioCall()
+                        R.id.homeIcon -> {
+                            navController.navigate(R.id.homeAlzheimerFragment)
+                            true
+                        }
+                        R.id.gpsIcon -> {
+                            navController.navigate(R.id.gpsAlzheimerFragment)
+                            true
+                        }
+                        R.id.tasksIcon -> {
+                            navController.navigate(R.id.tasksAlzheimerFragment)
+                            false
+                        }
+                        R.id.callIcon -> {
+                            startAudioCall()
+                            false
+                        }
+                        else -> false
                     }
-                    true
                 }
             }
             UserType.COMPANION -> {
                 binding.bottomNavigation.inflateMenu(R.menu.bottom_nav_menu_companion)
                 binding.bottomNavigation.setOnItemSelectedListener { item ->
                     when (item.itemId) {
-                        R.id.homeIcon -> navController.navigate(R.id.homeCompanion)
-                        R.id.gpsIcon -> navController.navigate(R.id.gpsCompanion)
-                        R.id.historyIcon -> navController.navigate(R.id.historyCompanion)
-                        R.id.callIcon -> startAudioCall()
+                        R.id.homeIcon -> {
+                            navController.navigate(R.id.homeCompanion)
+                            true
+                        }
+                        R.id.gpsIcon -> {
+                            navController.navigate(R.id.gpsCompanion)
+                            true
+                        }
+                        R.id.historyIcon -> {
+                            navController.navigate(R.id.historyCompanion)
+                            false
+                        }
+                        R.id.callIcon -> {
+                            startAudioCall()
+                            false
+                        }
+                        else -> false
                     }
-                    true
                 }
             }
             else -> {
@@ -123,8 +157,8 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val showBottomNav = when (userType) {
                 UserType.BLIND -> destination.id in listOf(R.id.homeBlindFragment, R.id.gpsBlindFragment)
-                UserType.ALZHEIMER -> destination.id in listOf(R.id.homeAlzheimerFragment, R.id.gpsAlzheimerFragment, R.id.tasksAlzheimerFragment)
-                UserType.COMPANION -> destination.id in listOf(R.id.homeCompanion, R.id.gpsCompanion, R.id.historyCompanion)
+                UserType.ALZHEIMER -> destination.id in listOf(R.id.homeAlzheimerFragment, R.id.gpsAlzheimerFragment)
+                UserType.COMPANION -> destination.id in listOf(R.id.homeCompanion, R.id.gpsCompanion)
                 else -> false
             }
 

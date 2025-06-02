@@ -24,7 +24,7 @@ abstract class BaseFragment : Fragment() {
         try {
             findNavController().navigate(destinationId)
         } catch (e: Exception) {
-            showErrorToast("حدث خطأ أثناء التنقل")
+            showErrorToast("An error occurred while navigating")
         }
     }
 

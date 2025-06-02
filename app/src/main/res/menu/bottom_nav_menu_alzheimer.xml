@@ -2,18 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/homeIcon"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home_companian" />
     <item
         android:id="@+id/callIcon"
-        android:title="Calls"
+        android:title="@string/calls"
         android:icon="@drawable/ic_call_companian" />
     <item
+        android:id="@+id/blank"
+        android:title=""
+        android:icon="@drawable/ic_blank" />
+    <item
         android:id="@+id/gpsIcon"
-        android:title="GPS"
+        android:title="@string/gps"
         android:icon="@drawable/ic_gps" />
     <item
         android:id="@+id/tasksIcon"
-        android:title="TASK"
+        android:title="@string/task"
         android:icon="@drawable/ic_task" />
 </menu>

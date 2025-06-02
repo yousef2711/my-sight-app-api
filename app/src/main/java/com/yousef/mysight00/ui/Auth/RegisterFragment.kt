@@ -44,7 +44,9 @@ class RegisterFragment : BaseFragment() {
 
     private fun setupValidation() {
         val watcher = object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) = validateFields()
+            override fun afterTextChanged(s: Editable?) {
+                validateFields(false)
+            }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }
@@ -60,7 +62,7 @@ class RegisterFragment : BaseFragment() {
         }
     }
 
-    private fun validateFields() {
+    private fun validateFields(showErrors: Boolean = false): Boolean {
         val name = binding.nameRegisComp.text.toString().trim()
         val email = binding.emailRegisComp.text.toString().trim()
         val password = binding.passwordRegisComp.text.toString().trim()
@@ -82,25 +84,51 @@ class RegisterFragment : BaseFragment() {
         val isFormValid = validName && validEmail && validPassword && validAge && validPhone &&
                 validTypeSelected && validPatientName && validRelation
 
-        binding.btnRegisComp.isEnabled = isFormValid
+        if (showErrors) {
+            binding.apply {
+                nameRegisComp.error = if (!validName) "Name must be at least 3 characters" else null
+                emailRegisComp.error = if (!validEmail) "Please enter a valid email" else null
+                passwordRegisComp.error = if (!validPassword) "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character" else null
+                ageRegisComp.error = if (!validAge) "Please enter a valid age (1-120)" else null
+                phNumRegisComp.error = if (!validPhone) "Please enter a valid phone number" else null
+                if (!validTypeSelected) {
+                    requireContext().showToast("Please select user type")
+                }
+                if (isCompanion) {
+                    namePatient.error = if (!validPatientName) "Please enter patient name" else null
+                    relationPatient.error = if (!validRelation) "Please enter relationship" else null
+                }
+            }
 
-        binding.apply {
-            nameRegisComp.error = if (!validName) "الاسم يجب أن يكون 3 أحرف على الأقل" else null
-            emailRegisComp.error = if (!validEmail) "يرجى إدخال بريد إلكتروني صحيح" else null
-            passwordRegisComp.error = if (!validPassword) "كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل، حرف كبير، حرف صغير، رقم ورمز خاص" else null
-            ageRegisComp.error = if (!validAge) "يرجى إدخال عمر صحيح (1-120)" else null
-            phNumRegisComp.error = if (!validPhone) "يرجى إدخال رقم هاتف صحيح" else null
-            if (isCompanion) {
-                namePatient.error = if (!validPatientName) "يرجى إدخال اسم المريض" else null
-                relationPatient.error = if (!validRelation) "يرجى إدخال العلاقة" else null
+            val firstInvalidField = when {
+                !validName -> binding.nameRegisComp
+                !validEmail -> binding.emailRegisComp
+                !validPassword -> binding.passwordRegisComp
+                !validAge -> binding.ageRegisComp
+                !validPhone -> binding.phNumRegisComp
+                !validTypeSelected -> null
+                isCompanion && !validPatientName -> binding.namePatient
+                isCompanion && !validRelation -> binding.relationPatient
+                else -> null
+            }
+            firstInvalidField?.requestFocus()
+            firstInvalidField?.let { view ->
+                binding.scrollViewRegis.post {
+                    binding.scrollViewRegis.smoothScrollTo(0, view.top)
+                }
             }
         }
+
+        binding.btnRegisComp.isEnabled = isFormValid
+        return isFormValid
     }
 
     private fun isPasswordStrong(password: String): Boolean {
-        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
+        val passwordPattern =
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
         return password.matches(passwordPattern.toRegex())
     }
+
     private fun isValidPhoneNumber(phone: String): Boolean {
         val phonePattern = "^[+]?[0-9]{10,15}$"
         return phone.matches(phonePattern.toRegex())
@@ -146,9 +174,11 @@ class RegisterFragment : BaseFragment() {
                 binding.btncompanionRegisComp.setTextColor(Color.WHITE)
                 binding.relationPatient.visibility = View.VISIBLE
                 binding.namePatient.visibility = View.VISIBLE
+                validateFields(true)
             }
         }
-        validateFields()
+
+        validateFields(false)
     }
 
     private fun resetUserTypeButtons() {
@@ -158,17 +188,15 @@ class RegisterFragment : BaseFragment() {
             binding.btncompanionRegisComp
         )
         buttons.forEach {
-            it.setChipBackgroundColorResource(R.color.white)
+            it.setChipBackgroundColorResource(R.color.gray_lite)
             it.setTextColor(Color.BLACK)
         }
     }
 
     private fun setupNavigation() {
         binding.btnRegisComp.setOnClickListener {
-            if (selectedUserType == null) {
-                Log.i("RegisterFragment", "User type is not selected")
-                return@setOnClickListener
-            }
+            if (!validateFields(true)) return@setOnClickListener
+
             val registerRequest = RegisterRequest(
                 username = binding.nameRegisComp.text.toString().trim(),
                 email = binding.emailRegisComp.text.toString().trim(),
@@ -179,26 +207,26 @@ class RegisterFragment : BaseFragment() {
                 patient_username = if (selectedUserType == UserType.COMPANION) binding.namePatient.text.toString().trim() else null,
                 relationship = if (selectedUserType == UserType.COMPANION) binding.relationPatient.text.toString().trim() else null
             )
+
             lifecycleScope.launch {
                 try {
                     val response = RetrofitInstance.getApi(requireContext()).registerUser(registerRequest)
                     if (response.isSuccessful) {
                         Log.i("RegisterFragment", "User registered successfully")
-                        requireContext().showToast("تم التسجيل بنجاح")
+                        requireContext().showToast("Registration successful")
                         findNavController().navigate(R.id.action_register_to_login)
                     } else {
-                        Log.e(
-                            "RegisterFragment",
-                            "Registration failed: ${response.errorBody()?.string()}"
-                        )
-                        requireContext().showToast("فشل في التسجيل: ${response.errorBody()?.string()}")
+                        val error = response.errorBody()?.string()
+                        Log.e("RegisterFragment", "Registration failed: $error")
+                        requireContext().showToast("Registration failed: $error")
                     }
                 } catch (e: Exception) {
                     Log.e("RegisterFragment", "Error during registration", e)
-                    requireContext().showToast("حدث خطأ: ${e.message}")
+                    requireContext().showToast("An error occurred: ${e.message}")
                 }
             }
         }
+
         binding.arrowBackRegisComp.setOnClickListener {
             findNavController().navigate(R.id.action_register_to_login)
         }
@@ -217,4 +245,3 @@ class RegisterFragment : BaseFragment() {
         _binding = null
     }
 }
-

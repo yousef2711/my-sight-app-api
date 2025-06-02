@@ -9,6 +9,10 @@
         android:title="Calls"
         android:icon="@drawable/ic_call_companian" />
     <item
+        android:id="@+id/blank"
+        android:title=""
+        android:icon="@drawable/ic_blank" />
+    <item
         android:id="@+id/gpsIcon"
         android:title="GPS"
         android:icon="@drawable/ic_gps" />

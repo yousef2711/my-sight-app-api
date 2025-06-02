@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Get Started now"
+        android:text="@string/get_started"
         android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -50,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Create an account or log in to explore about our app"
+        android:text="@string/create_account"
         android:textColor="@android:color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="16dp"
             android:radius="24dp"
             app:cardElevation="8dp"
             app:cardBackgroundColor="@android:color/white">
@@ -148,8 +147,9 @@
 
                     <TextView
                         android:id="@+id/tvForgetPass_login"
-                        android:layout_width="237dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="end"
                         android:paddingEnd="6dp"
                         android:text="Forgot Password ?"
@@ -163,7 +163,7 @@
                     android:id="@+id/btn_Login_login"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="36dp"
                     android:backgroundTint="@color/primary_blue"
                     android:text="Log In"
                     android:textColor="@color/white"
@@ -177,55 +177,6 @@
                     android:layout_marginTop="16dp"
                     android:visibility="gone" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp">
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/darker_gray" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="8dp"
-                        android:text="Or"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1"
-                        android:background="@android:color/darker_gray" />
-                </LinearLayout>
-
-
-                <Button
-                    android:id="@+id/btnGoogle_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/white"
-                    android:drawableLeft="@drawable/ic_google"
-                    android:padding="12dp"
-                    android:text="Continue with Google"
-                    android:textColor="@android:color/black"/>
-
-                <Button
-                    android:id="@+id/btnFacebook_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/white"
-                    android:drawableLeft="@drawable/ic_facebook"
-                    android:drawablePadding="8dp"
-                    android:padding="12dp"
-                    android:text="Continue with Facebook"
-                    android:textColor="@android:color/black"/>
 
             </LinearLayout>
 

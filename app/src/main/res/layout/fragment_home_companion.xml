@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.Home.HomeCompanionFragment">
 
-    <!-- Guidelines هنا لو محتاج تستخدمها -->
-
-    <!-- الخلفية -->
     <ImageView
         android:id="@+id/bg_home_companion"
         android:layout_width="match_parent"
@@ -20,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
     <!-- البار العلوي (ثابت) -->
     <LinearLayout
@@ -72,44 +70,50 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:overScrollMode="ifContentScrolls"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- ConstraintLayout داخل السكروول -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/center_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
-            <ImageView
-                android:id="@+id/image_gps_comp"
+            android:paddingHorizontal="16dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="136dp"
-                android:src="@drawable/image_gps_comp"
+                android:layout_height="147dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <org.osmdroid.views.MapView
+                    android:id="@+id/image_gps_comp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.cardview.widget.CardView>
 
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/image_gps_comp"
-                app:layout_constraintTop_toBottomOf="@+id/image_gps_comp"
-                app:layout_constraintVertical_bias="0.028">
+                android:paddingTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notification &amp; Task"
+                    android:text="@string/notification_and_task"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <View
                     android:layout_width="0dp"
@@ -118,11 +122,11 @@
 
                 <TextView
                     android:id="@+id/tv_see_all"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="See All >"
+                    android:text="@string/see_all"
                     android:textColor="@color/white"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -132,50 +136,40 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                tools:layout_editor_absoluteX="16dp">
+                app:layout_constraintTop_toBottomOf="@id/linearLayout3">
 
                 <ImageView
                     android:id="@+id/image_card1_comp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/card0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:src="@drawable/card0" />
 
                 <ImageView
                     android:id="@+id/image_card2_comp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/card2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:src="@drawable/card2" />
 
                 <ImageView
                     android:id="@+id/image_card3_comp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/card2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:src="@drawable/card2" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
                     android:id="@+id/ic_call_companion"
@@ -192,7 +186,7 @@
                     android:id="@+id/ic_video_companion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_video"/>
+                    android:src="@drawable/ic_video" />
 
             </LinearLayout>
 
