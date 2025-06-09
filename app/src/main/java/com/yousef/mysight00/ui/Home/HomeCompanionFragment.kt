@@ -1,21 +1,28 @@
 package com.yousef.mysight00.ui.Home
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.R
 import com.yousef.mysight00.constant
 import com.yousef.mysight00.databinding.FragmentHomeCompanionBinding
 import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
-import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallService
-import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
+import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallConfig
+import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallFragment
 import org.osmdroid.config.Configuration
+import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 
 class HomeCompanionFragment : BaseFragment() {
@@ -23,8 +30,13 @@ class HomeCompanionFragment : BaseFragment() {
     private val binding get() = _binding!!
     private lateinit var userPreferences: UserPreferences
 
-    // 🧠 نقطة تمثّل موقع المريض (بشكل ثابت مؤقتًا)
+    private val PERMISSION_REQUEST_CODE = 1002
+
+    // موقع المريض (ثابت مؤقتًا)
     private val patientLocation = GeoPoint(30.0444, 30.9320)
+
+    // لتخزين نوع المكالمة المطلوبة عند طلب الصلاحيات
+    private var pendingVideoCall: Boolean? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,10 +66,20 @@ class HomeCompanionFragment : BaseFragment() {
                 findNavController().navigate(R.id.action_home_to_gps)
             }
             icCallCompanion.setOnClickListener {
-                startAudioCall()
+                // طلب صلاحيات المايكروفون لمكالمة صوتية
+                if (checkAndRequestPermissions(audioOnly = true)) {
+                    startCall(isVideoCall = false)
+                } else {
+                    pendingVideoCall = false
+                }
             }
             icVideoCompanion.setOnClickListener {
-                startVideoCall()
+                // طلب صلاحيات المايكروفون والكاميرا لمكالمة فيديو
+                if (checkAndRequestPermissions(audioOnly = false)) {
+                    startCall(isVideoCall = true)
+                } else {
+                    pendingVideoCall = true
+                }
             }
             tvSeeAll.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_tasks)
@@ -79,10 +101,9 @@ class HomeCompanionFragment : BaseFragment() {
         map.setMultiTouchControls(true)
 
         val mapController = map.controller
-        mapController.setZoom(17.0)
+        mapController.setZoom(14.0)  // تكبير أوسع للخريطة
         mapController.setCenter(patientLocation)
 
-        // 📍 أضف Marker يمثل المريض
         val patientMarker = Marker(map)
         patientMarker.position = patientLocation
         patientMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
@@ -90,31 +111,74 @@ class HomeCompanionFragment : BaseFragment() {
         patientMarker.icon = resources.getDrawable(R.drawable.ic_patient_location, null)
         map.overlays.add(patientMarker)
 
+        // إضافة Overlay للاستماع للنقرات على الخريطة
+        val mapEventsReceiver = object : MapEventsReceiver {
+            override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
+                findNavController().navigate(R.id.action_home_to_gps)
+                return true
+            }
+            override fun longPressHelper(p: GeoPoint?): Boolean {
+                return false
+            }
+        }
+        val mapEventsOverlay = MapEventsOverlay(requireContext(), mapEventsReceiver)
+        map.overlays.add(mapEventsOverlay)
+
         map.invalidate()
     }
 
-    private fun startAudioCall() {
-        val callInvitationConfig = ZegoUIKitPrebuiltCallInvitationConfig()
-        ZegoUIKitPrebuiltCallService.init(
-            requireActivity().application,
-            constant.appId,
-            constant.AppSign,
-            getCurrentUserId(),
-            getTargetUserId(),
-            callInvitationConfig
-        )
+
+    private fun checkAndRequestPermissions(audioOnly: Boolean): Boolean {
+        val requiredPermissions = mutableListOf(Manifest.permission.RECORD_AUDIO)
+        if (!audioOnly) requiredPermissions.add(Manifest.permission.CAMERA)
+
+        val missingPermissions = requiredPermissions.filter {
+            ContextCompat.checkSelfPermission(requireContext(), it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        return if (missingPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(requireActivity(), missingPermissions.toTypedArray(), PERMISSION_REQUEST_CODE)
+            false
+        } else {
+            true
+        }
     }
 
-    private fun startVideoCall() {
-        val callInvitationConfig = ZegoUIKitPrebuiltCallInvitationConfig()
-        ZegoUIKitPrebuiltCallService.init(
-            requireActivity().application,
-            constant.appId,
-            constant.AppSign,
-            getCurrentUserId(),
-            getTargetUserId(),
-            callInvitationConfig
-        )
+    private fun startCall(isVideoCall: Boolean) {
+        val userName = userPreferences.getUserName() ?: "user"
+        val userId = userPreferences.getUserId() ?: "0"
+        val targetUserId = getTargetUserId()
+
+        if (userId == "UnknownID" || targetUserId == "UnknownID") {
+            showToast("لم يتم العثور على معرف المستخدم أو المستخدم المستهدف")
+            return
+        }
+
+        try {
+            val callConfig = if (isVideoCall) {
+                ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
+            } else {
+                ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall()
+            }
+
+            val callFragment = ZegoUIKitPrebuiltCallFragment.newInstance(
+                constant.appId,
+                constant.AppSign,
+                userId,
+                userName,
+                targetUserId,
+                callConfig
+            )
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, callFragment)
+                .addToBackStack(null)
+                .commit()
+
+            showToast("جاري بدء المكالمة...")
+        } catch (e: Exception) {
+            showToast("حدث خطأ أثناء بدء المكالمة: ${e.message}")
+        }
     }
 
     private fun getCurrentUserId(): String {
@@ -124,9 +188,35 @@ class HomeCompanionFragment : BaseFragment() {
     private fun getTargetUserId(): String {
         val userType = userPreferences.getUserType() ?: "companions"
         return if (userType == "companions") {
-            userPreferences.getPatientName() ?: "UnknownPatientID"
+            // إذا كان المستخدم مرافق، نحتاج إلى الحصول على معرف المريض
+            val patientId = userPreferences.getPatientId()
+            if (patientId.isNullOrEmpty() || patientId == "0") {
+                // إذا لم يكن هناك معرف للمريض، نستخدم معرف المستخدم الحالي
+                userPreferences.getUserId() ?: "UnknownID"
+            } else {
+                patientId
+            }
         } else {
-            userPreferences.getCompanionName() ?: "UnknownCompanionID"
+            userPreferences.getCompanionId() ?: "UnknownID"
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                // صلاحيات مُنحت، نبدأ المكالمة حسب نوعها المحفوظ
+                pendingVideoCall?.let {
+                    startCall(it)
+                    pendingVideoCall = null
+                }
+            } else {
+                showToast("يجب منح صلاحيات المايكروفون والكاميرا للاتصال")
+            }
         }
     }
 

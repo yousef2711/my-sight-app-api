@@ -56,7 +56,7 @@ interface ApiService {
 }
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://dacb-154-177-159-225.ngrok-free.app/" // Replace with your actual API base URL
+    private const val BASE_URL = "https://83d6-196-136-7-232.ngrok-free.app/" // Replace with your actual API base URL
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

@@ -121,6 +121,22 @@ class UserPreferences(context: Context) {
         return if (avatarResId != -1) avatarResId else null
     }
 
+    fun savePatientId(patientId: String) {
+        sharedPreferences.edit().putString("patient_id", patientId).apply()
+    }
+
+    fun getPatientId(): String? {
+        return sharedPreferences.getString("patient_id", null)
+    }
+
+    fun saveCompanionId(companionId: String) {
+        sharedPreferences.edit().putString("companion_id", companionId).apply()
+    }
+
+    fun getCompanionId(): String? {
+        return sharedPreferences.getString("companion_id", null)
+    }
+
     fun clearAll() {
         sharedPreferences.edit().clear().apply()
     }

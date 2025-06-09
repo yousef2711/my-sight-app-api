@@ -76,7 +76,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp">
 
             <!-- Title & See All -->
             <LinearLayout
@@ -152,16 +152,17 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_height="160dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
-                    android:id="@+id/ic_call_alzheimer"
+                    android:id="@+id/icCallAlzheimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_call" />
@@ -172,10 +173,11 @@
                     android:layout_weight="0.25" />
 
                 <ImageView
-                    android:id="@+id/ic_video_alzheimer"
+                    android:id="@+id/icVideoAlzheimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_video" />
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

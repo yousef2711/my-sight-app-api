@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -107,7 +107,6 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@drawable/ic_sos"
-            android:layout_marginTop="32dp"
             android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -115,32 +114,39 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="4dp"
             android:gravity="center"
-            android:layout_marginTop="32dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ic_sos">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ic_sos">
 
             <ImageView
                 android:id="@+id/ic_call_blind"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_call_blind"/>
+                android:layout_weight="1"
+                android:src="@drawable/ic_call_blind"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="0.2" />
 
             <ImageView
                 android:id="@+id/ic_video_blind"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_video_blind"/>
-
+                android:layout_weight="1"
+                android:src="@drawable/ic_video_blind"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

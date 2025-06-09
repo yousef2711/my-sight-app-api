@@ -13,13 +13,14 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yousef.mysight00.MainActivity
 import com.yousef.mysight00.R
 import com.yousef.mysight00.adapter.ProfileAdapter
 import com.yousef.mysight00.model.ProfileItem
 import com.yousef.mysight00.model.UserType
 import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
+import com.yousef.mysight00.MainActivity
+
 
 class ProfileFragment : BaseFragment() {
     private val TAG = "ProfileFragment"

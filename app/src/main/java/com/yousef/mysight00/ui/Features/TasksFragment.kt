@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,11 +13,14 @@ import com.yousef.mysight00.adapter.DaysAdapter
 import com.yousef.mysight00.adapter.TaskAdapter
 import com.yousef.mysight00.databinding.FragmentTasksBinding
 import com.yousef.mysight00.model.Task
+import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.ui.tasks.TaskViewModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
-class TasksFragment : Fragment() {
+class TasksFragment : BaseFragment() {
 
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!

@@ -12,7 +12,6 @@ import com.yousef.mysight00.R
 import com.yousef.mysight00.RetrofitInstance
 import com.yousef.mysight00.databinding.FragmentEditProfileBinding
 import com.yousef.mysight00.model.EditProfileRequest
-import com.yousef.mysight00.model.RelatedCompanion
 import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
 import kotlinx.coroutines.launch
@@ -37,41 +36,30 @@ class EditProfileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         loadCurrentUserData()
-        setupClickListeners()
     }
 
     private fun setupViews() {
-        // Set up profile photo click listener
+        // Set up avatar selection dialog
         binding.btnEditProfile.setOnClickListener {
             showAvatarSelectionDialog()
         }
 
-        // Set up back button
+        // Back button
         binding.arrowBackPatientForm.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        // Set up save button
+        // Save button
         binding.btnCreateProfile.setOnClickListener {
             updateProfile()
         }
     }
 
     private fun loadCurrentUserData() {
-        // Load current user data into the form
-        binding.namePatientForm.setText(userPreferences.getUserName())
+        binding.namePatientForm.setText(userPreferences.getUsername())
         binding.emailEditProfile.setText(userPreferences.getUserEmail())
         binding.phonePatientForm.setText(userPreferences.getUserPhone())
-        
-        // Load relationship and related user info if available
-        binding.relationPatientForm.setText(userPreferences.getUserRelationship())
-        binding.nameRelationForm.setText(userPreferences.getPatientName())
-    }
-
-    private fun setupClickListeners() {
-        binding.btnEditProfile.setOnClickListener {
-            showAvatarSelectionDialog()
-        }
+        binding.relativePatientForm.setText(userPreferences.getUserName())
     }
 
     private fun showAvatarSelectionDialog() {
@@ -79,7 +67,6 @@ class EditProfileFragment : BaseFragment() {
         dialog.setContentView(R.layout.dialog_avatar_selection)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // Set up avatar selection
         val avatars = listOf(
             R.id.avatar1 to R.drawable.img_edit_profile,
             R.id.avatar2 to R.drawable.ic_personal_profile,
@@ -102,27 +89,16 @@ class EditProfileFragment : BaseFragment() {
         val username = binding.namePatientForm.text.toString()
         val email = binding.emailEditProfile.text.toString()
         val phone = binding.phonePatientForm.text.toString()
-        val relationship = binding.relationPatientForm.text.toString()
-        val nameRelation = binding.nameRelationForm.text.toString()
+        val relative = binding.relativePatientForm.text.toString()
 
         if (validateInputs(username, email, phone)) {
             lifecycleScope.launch {
                 try {
-                    val relatedCompanion = if (nameRelation.isNotEmpty() && relationship.isNotEmpty()) {
-                        RelatedCompanion(
-                            username = nameRelation,
-                            relationship = relationship,
-                            companion_user = userPreferences.getUsername() ?: "",
-                            patient_user = userPreferences.getPatientName() ?: ""
-                        )
-                    } else null
-
                     val request = EditProfileRequest(
                         username = userPreferences.getUsername() ?: "",
-                        email = email,
                         phone_number = phone,
-                        profile_photo = selectedProfilePhoto,
-                        related_companion = relatedCompanion
+                        name = relative,
+                        profile_photo = selectedProfilePhoto
                     )
 
                     val accessToken = userPreferences.getAccessToken()
@@ -139,17 +115,9 @@ class EditProfileFragment : BaseFragment() {
                     if (response.isSuccessful) {
                         val updatedUser = response.body()
                         if (updatedUser != null) {
-                            // Update local preferences
                             userPreferences.saveUserName(updatedUser.name)
-                            userPreferences.saveUserEmail(updatedUser.email)
                             userPreferences.saveUserPhone(updatedUser.phone_number)
-                            
-                            // Update companion info if available
-                            updatedUser.related_companion?.let { companion ->
-                                userPreferences.saveUserRelationship(companion.relationship)
-                                userPreferences.savePatientName(companion.username)
-                            }
-                            
+
                             Toast.makeText(requireContext(), "تم تحديث الملف الشخصي بنجاح", Toast.LENGTH_SHORT).show()
                             findNavController().navigateUp()
                         }

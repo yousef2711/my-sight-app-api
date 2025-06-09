@@ -51,14 +51,21 @@ class DaysAdapter(
                 }
                 root.setBackgroundResource(backgroundRes)
 
-                // Update text color based on selection
-                val textColor = if (dayItem.isSelected) {
+                // Update text colors based on selection
+                val dayNameColor = if (dayItem.isSelected) {
+                    R.color.white
+                } else {
+                    R.color.dark
+                }
+                
+                val dayNumberColor = if (dayItem.isSelected) {
                     R.color.primary_blue
                 } else {
                     R.color.dark
                 }
-                tvDay.setTextColor(ContextCompat.getColor(root.context, textColor))
-                tvDayName.setTextColor(ContextCompat.getColor(root.context, textColor))
+                
+                tvDayName.setTextColor(ContextCompat.getColor(root.context, dayNameColor))
+                tvDay.setTextColor(ContextCompat.getColor(root.context, dayNumberColor))
 
                 root.setOnClickListener { onClick(dayItem.date) }
             }
