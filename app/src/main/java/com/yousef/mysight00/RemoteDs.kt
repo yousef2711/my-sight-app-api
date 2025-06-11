@@ -20,6 +20,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import okhttp3.Response as OkHttpResponse
 
 interface ApiService {
@@ -43,7 +44,7 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Response<EditProfileResponse>
 
-    @POST("profile/")
+    @PUT("profile/")
     suspend fun editProfile(
         @Header("Authorization") token: String,
         @Body request: EditProfileRequest
@@ -56,7 +57,7 @@ interface ApiService {
 }
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://83d6-196-136-7-232.ngrok-free.app/" // Replace with your actual API base URL
+    private const val BASE_URL = "https://dad2-156-193-235-108.ngrok-free.app/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

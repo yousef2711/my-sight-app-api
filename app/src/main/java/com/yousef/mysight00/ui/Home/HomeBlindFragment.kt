@@ -77,9 +77,9 @@ class HomeBlindFragment : BaseFragment() {
     }
 
     private fun startCall(isVideoCall: Boolean) {
-        val userName = userPreferences.getUserName() ?: "user"
+        val userName = userPreferences.getUsername() ?: "user"
         val userId = userPreferences.getUserId() ?: "0"
-        val targetUserId = userPreferences.getCompanionId() ?: run {
+        val targetUserId = userPreferences.getCompanionName() ?: run {
             userId
         }
 

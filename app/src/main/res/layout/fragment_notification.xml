@@ -14,26 +14,27 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintWidth_percent="1">
 
         <ImageView
             android:id="@+id/arrowBackPatientForm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_back_black"
-            android:contentDescription="Back" />
+            android:contentDescription="Back"
+            android:src="@drawable/ic_back_black" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="-32dp"
             android:layout_marginEnd="16dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_notifications"
@@ -41,20 +42,25 @@
                 android:layout_height="65dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/primary_blue"
-                android:textColor="@color/white"
                 android:text="@string/notifications"
-                android:textStyle="bold" />
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:ellipsize="end" />
 
             <Button
                 android:id="@+id/btn_tasks"
                 android:layout_width="0dp"
                 android:layout_height="65dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
+                android:text="@string/tasks"
                 android:textColor="@color/black"
-                android:text="Tasks"
+                android:backgroundTint="@color/white"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
     </LinearLayout>
 
     <!-- المحتوى داخل CardView بدون ارتفاع ثابت -->
@@ -62,7 +68,6 @@
         android:id="@+id/containerForget_patient_form"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/linearLayout6"
@@ -74,8 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="24dp">
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="wrap_content"

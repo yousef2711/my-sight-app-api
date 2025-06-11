@@ -179,38 +179,17 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Action Buttons -->
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_task"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_create_task"
-                    android:layout_width="0dp"
-                    android:layout_height="65dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/primary_blue"
-                    android:text="@string/create_task"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="10dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSend_taskNow"
-                    android:layout_width="0dp"
-                    android:layout_height="65dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:backgroundTint="@color/green"
-                    android:text="@string/send_now"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="10dp" />
-            </LinearLayout>
+                android:layout_height="65dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/primary_blue"
+                android:text="@string/create_task"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

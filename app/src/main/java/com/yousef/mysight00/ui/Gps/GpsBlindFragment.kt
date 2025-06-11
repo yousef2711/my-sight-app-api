@@ -41,12 +41,12 @@ class GpsBlindFragment : BaseFragment() {
     private var lastLocation: GeoPoint? = null
 
     private val safeZones = listOf(
-        GeoPoint(30.0480, 31.2400),
-        GeoPoint(30.0500, 31.2430)
+        GeoPoint(30.0276, 31.2101),  // Egypt University main campus
+        GeoPoint(30.0285, 31.2115)   // Nearby safe area
     )
 
     private val dangerZones = listOf(
-        GeoPoint(30.0460, 31.2320)
+        GeoPoint(30.0265, 31.2085)   // Nearby unsafe area
     )
 
     override fun onCreateView(

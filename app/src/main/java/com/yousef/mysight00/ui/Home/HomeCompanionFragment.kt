@@ -10,11 +10,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yousef.mysight00.R
+import com.yousef.mysight00.adapter.HomeTaskAdapter
 import com.yousef.mysight00.constant
 import com.yousef.mysight00.databinding.FragmentHomeCompanionBinding
+import com.yousef.mysight00.model.Task
 import com.yousef.mysight00.ui.base.BaseFragment
+import com.yousef.mysight00.ui.tasks.TaskViewModel
 import com.yousef.mysight00.utils.UserPreferences
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallConfig
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallFragment
@@ -24,11 +29,14 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
+import java.util.Calendar
 
 class HomeCompanionFragment : BaseFragment() {
     private var _binding: FragmentHomeCompanionBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreferences: UserPreferences
+    private lateinit var viewModel: TaskViewModel
+    private lateinit var taskAdapter: HomeTaskAdapter
 
     private val PERMISSION_REQUEST_CODE = 1002
 
@@ -45,6 +53,7 @@ class HomeCompanionFragment : BaseFragment() {
     ): View {
         _binding = FragmentHomeCompanionBinding.inflate(inflater, container, false)
         userPreferences = UserPreferences(requireContext())
+        viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         return binding.root
     }
 
@@ -52,6 +61,8 @@ class HomeCompanionFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
         setupMap()
+        setupTasksRecyclerView()
+        loadTodayTasks()
     }
 
     private fun setupClickListeners() {
@@ -83,11 +94,6 @@ class HomeCompanionFragment : BaseFragment() {
             }
             tvSeeAll.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_tasks)
-            }
-            listOf(imageCard1Comp, imageCard2Comp, imageCard3Comp).forEach {
-                it.setOnClickListener {
-                    findNavController().navigate(R.id.action_home_to_tasks)
-                }
             }
         }
     }
@@ -127,6 +133,64 @@ class HomeCompanionFragment : BaseFragment() {
         map.invalidate()
     }
 
+    private fun setupTasksRecyclerView() {
+        binding.recyclerViewTasks.layoutManager = LinearLayoutManager(requireContext())
+        taskAdapter = HomeTaskAdapter()
+        binding.recyclerViewTasks.adapter = taskAdapter
+    }
+
+    private fun loadTodayTasks() {
+        val userType = userPreferences.getUserType() ?: ""
+        val userId = userPreferences.getUserId() ?: ""
+
+        val tasksLiveData = if (userType == "companions") {
+            viewModel.getCompanionTasks(userId)
+        } else {
+            viewModel.getPatientTasks(userId)
+        }
+
+        tasksLiveData.observe(viewLifecycleOwner) { allTasks ->
+            // ترتيب التاسكات: الماضية أولاً، ثم اليوم، ثم المستقبلية
+            val sortedTasks = allTasks.sortedWith(compareBy<Task> { task ->
+                when {
+                    isPastTask(task) -> 0
+                    isTaskForToday(task) -> 1
+                    else -> 2
+                }
+            }.thenBy { it.startTime })
+            taskAdapter.submitList(sortedTasks)
+        }
+    }
+
+    private fun isPastTask(task: Task): Boolean {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val startOfToday = calendar.time
+        return task.startTime.before(startOfToday)
+    }
+
+    private fun isTaskForToday(task: Task): Boolean {
+        val calendar = Calendar.getInstance()
+        
+        // Set calendar to start of today
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val startOfDay = calendar.time
+
+        // Set calendar to end of today
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+        val endOfDay = calendar.time
+
+        return task.startTime.after(startOfDay) && task.startTime.before(endOfDay)
+    }
 
     private fun checkAndRequestPermissions(audioOnly: Boolean): Boolean {
         val requiredPermissions = mutableListOf(Manifest.permission.RECORD_AUDIO)
@@ -145,7 +209,7 @@ class HomeCompanionFragment : BaseFragment() {
     }
 
     private fun startCall(isVideoCall: Boolean) {
-        val userName = userPreferences.getUserName() ?: "user"
+        val userName = userPreferences.getUsername() ?: "user"
         val userId = userPreferences.getUserId() ?: "0"
         val targetUserId = getTargetUserId()
 
@@ -188,8 +252,7 @@ class HomeCompanionFragment : BaseFragment() {
     private fun getTargetUserId(): String {
         val userType = userPreferences.getUserType() ?: "companions"
         return if (userType == "companions") {
-            // إذا كان المستخدم مرافق، نحتاج إلى الحصول على معرف المريض
-            val patientId = userPreferences.getPatientId()
+            val patientId = userPreferences.getPatientName()
             if (patientId.isNullOrEmpty() || patientId == "0") {
                 // إذا لم يكن هناك معرف للمريض، نستخدم معرف المستخدم الحالي
                 userPreferences.getUserId() ?: "UnknownID"

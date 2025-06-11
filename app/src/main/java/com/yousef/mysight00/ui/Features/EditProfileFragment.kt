@@ -60,6 +60,13 @@ class EditProfileFragment : BaseFragment() {
         binding.emailEditProfile.setText(userPreferences.getUserEmail())
         binding.phonePatientForm.setText(userPreferences.getUserPhone())
         binding.relativePatientForm.setText(userPreferences.getUserName())
+        
+        // Load current profile photo
+        val currentAvatar = userPreferences.getUserAvatar()
+        if (currentAvatar != null) {
+            binding.imgProfilePatientForm.setImageResource(currentAvatar)
+            selectedProfilePhoto = currentAvatar.toString()
+        }
     }
 
     private fun showAvatarSelectionDialog() {
@@ -78,6 +85,7 @@ class EditProfileFragment : BaseFragment() {
             dialog.findViewById<View>(id)?.setOnClickListener {
                 binding.imgProfilePatientForm.setImageResource(drawable)
                 selectedProfilePhoto = drawable.toString()
+                userPreferences.saveUserAvatar(drawable)
                 dialog.dismiss()
             }
         }
@@ -115,7 +123,7 @@ class EditProfileFragment : BaseFragment() {
                     if (response.isSuccessful) {
                         val updatedUser = response.body()
                         if (updatedUser != null) {
-                            userPreferences.saveUserName(updatedUser.name)
+                            userPreferences.saveUsername(updatedUser.username)
                             userPreferences.saveUserPhone(updatedUser.phone_number)
 
                             Toast.makeText(requireContext(), "تم تحديث الملف الشخصي بنجاح", Toast.LENGTH_SHORT).show()

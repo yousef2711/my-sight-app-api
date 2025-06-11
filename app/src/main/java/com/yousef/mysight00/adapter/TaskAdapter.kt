@@ -1,8 +1,8 @@
-package com.yousef.mysight00.adapter
+        package com.yousef.mysight00.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,8 +16,21 @@ class TaskAdapter(
     private val onTaskChecked: (Task, Boolean) -> Unit,
     private val onTaskDelete: (Task) -> Unit,
     private val onTaskEdit: (Task) -> Unit,
-    private val onTaskSend: (Task) -> Unit
+    private val isHistoryMode: Boolean = false
 ) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(TaskDiffCallback()) {
+
+    private val selectedTasks = mutableSetOf<Task>()
+    private var isSelectionMode = false
+
+    fun toggleSelectionMode() {
+        isSelectionMode = !isSelectionMode
+        if (!isSelectionMode) {
+            selectedTasks.clear()
+        }
+        notifyDataSetChanged()
+    }
+
+    fun getSelectedTasks(): Set<Task> = selectedTasks.toSet()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ItemTaskBinding.inflate(
@@ -29,7 +42,8 @@ class TaskAdapter(
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val task = getItem(position)
+        holder.bind(task, selectedTasks.contains(task))
     }
 
     inner class TaskViewHolder(
@@ -38,7 +52,7 @@ class TaskAdapter(
 
         private val dateFormat = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
 
-        fun bind(task: Task) {
+        fun bind(task: Task, isSelected: Boolean) {
             binding.apply {
                 textViewTitle.text = task.title
                 textViewDescription.text = task.description
@@ -49,38 +63,43 @@ class TaskAdapter(
                 textViewScheduledTime.text = timeText
                 textViewScheduledTime.visibility = android.view.View.VISIBLE
 
+                // Hide edit button in history mode
+                buttonEdit.visibility = if (isHistoryMode) android.view.View.GONE else android.view.View.VISIBLE
+
+                // Handle selection mode
+                if (isSelectionMode) {
+                    buttonDelete.setColorFilter(
+                        ContextCompat.getColor(
+                            root.context,
+                            if (isSelected) R.color.red else R.color.dark
+                        )
+                    )
+                    root.setOnClickListener {
+                        if (isSelected) {
+                            selectedTasks.remove(task)
+                        } else {
+                            selectedTasks.add(task)
+                        }
+                        notifyItemChanged(adapterPosition)
+                    }
+                } else {
+                    buttonDelete.setColorFilter(
+                        ContextCompat.getColor(root.context, R.color.dark)
+                    )
+                    root.setOnClickListener(null)
+                    buttonDelete.setOnClickListener {
+                        onTaskDelete(task)
+                    }
+                }
+
                 checkBoxTask.setOnCheckedChangeListener { _, isChecked ->
                     onTaskChecked(task, isChecked)
                 }
 
-                buttonDelete.setOnClickListener {
-                    showTaskOptions(task)
+                buttonEdit.setOnClickListener {
+                    onTaskEdit(task)
                 }
             }
-        }
-
-        private fun showTaskOptions(task: Task) {
-            val popup = PopupMenu(binding.root.context, binding.buttonDelete)
-            popup.menuInflater.inflate(R.menu.menu_task_options, popup.menu)
-            
-            popup.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.action_send -> {
-                        onTaskSend(task)
-                        true
-                    }
-                    R.id.action_edit -> {
-                        onTaskEdit(task)
-                        true
-                    }
-                    R.id.action_delete -> {
-                        onTaskDelete(task)
-                        true
-                    }
-                    else -> false
-                }
-            }
-            popup.show()
         }
     }
 

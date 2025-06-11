@@ -111,7 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/notification_and_task"
+                    android:text="@string/tasks"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -135,28 +135,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="16dp"
                 app:layout_constraintTop_toBottomOf="@id/linearLayout3">
 
-                <ImageView
-                    android:id="@+id/image_card1_comp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTasks"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/card0" />
+                    android:layout_height="250dp"
+                    android:nestedScrollingEnabled="true"
+                    android:clipToPadding="false"
+                    android:paddingBottom="8dp" />
 
-                <ImageView
-                    android:id="@+id/image_card2_comp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/card2" />
-
-                <ImageView
-                    android:id="@+id/image_card3_comp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/card2" />
             </LinearLayout>
 
             <LinearLayout

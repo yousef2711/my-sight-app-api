@@ -218,15 +218,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startZegoCallAudioOnly() {
-        val userName = userPreferences.getUserName() ?: "user"
+        val userName = userPreferences.getUsername() ?: "user"
         val userId = userPreferences.getUserId() ?: "0"
 
         val targetUserId = when (userType) {
-            UserType.COMPANION -> userPreferences.getPatientId() ?: run {
+            UserType.COMPANION -> userPreferences.getPatientName() ?: run {
                 Toast.makeText(this, "لم يتم العثور على معرف المريض", Toast.LENGTH_LONG).show()
                 return
             }
-            UserType.BLIND, UserType.ALZHEIMER -> userPreferences.getCompanionId() ?: run {
+            UserType.BLIND, UserType.ALZHEIMER -> userPreferences.getCompanionName() ?: run {
                 Toast.makeText(this, "لم يتم العثور على معرف المرافق", Toast.LENGTH_LONG).show()
                 return
             }

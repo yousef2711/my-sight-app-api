@@ -5,18 +5,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yousef.mysight00.MainActivity
 import com.yousef.mysight00.R
+import com.yousef.mysight00.RetrofitInstance
 import com.yousef.mysight00.databinding.FragmentLoginBinding
+import com.yousef.mysight00.model.loginRequest
 import com.yousef.mysight00.ui.base.BaseFragment
 import com.yousef.mysight00.utils.UserPreferences
 import com.yousef.mysight00.utils.showToast
+import kotlinx.coroutines.launch
+
 
 class LoginFragment : BaseFragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private val availableAvatars = listOf(
+        R.drawable.img_edit_profile,
+        R.drawable.ic_personal_profile,
+        R.drawable.img_personal,
+        R.drawable.img_personal1
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,38 +60,59 @@ class LoginFragment : BaseFragment() {
 
         if (!validateInputs(email, password)) return
 
-        // مؤقتاً، فقط fallback بدون محاولة الاتصال بالسيرفر
-        val fallbackEmail = email.lowercase()
-        val prefs = UserPreferences(requireContext())
-        when (fallbackEmail) {
-            "blind@test.com" -> {
-                prefs.saveUserId("1")
-                prefs.saveUserType("patients")
-                prefs.saveUserName("blind")
-                prefs.saveUsername("blind_user")
-                prefs.saveCompanionId("2")
-                prefs.saveCompanionName("comp_user")
-                navigateToMainActivity()
-            }
-            "alz@test.com" -> {
-                prefs.saveUserId("3")
-                prefs.saveUserType("patients")
-                prefs.saveUserName("alzheimer")
-                prefs.saveUsername("alz_user")
-                prefs.saveCompanionId("4")
-                navigateToMainActivity()
-            }
-            "companion@test.com" -> {
-                prefs.saveUserId("5")
-                prefs.saveUserType("companions")
-                prefs.saveUserName("companion")
-                prefs.saveUsername("comp_user")
-                prefs.savePatientId("1")
-                prefs.savePatientName("blind_user")
-                navigateToMainActivity()
-            }
-            else -> {
-                requireContext().showToast("البريد غير معروف")
+        setLoadingState(isLoading = true)
+
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitInstance.getApi(requireContext())
+                    .loginUser(loginRequest(email, password))
+
+                if (!response.isSuccessful || response.body() == null) {
+                    val errorMsg = response.errorBody()?.string() ?: "Login failed: ${response.code()}"
+                    requireContext().showToast(errorMsg)
+                    return@launch
+                }
+
+                val loginResponse = response.body()!!
+                val prefs = UserPreferences(requireContext())
+
+                loginResponse.access?.let { prefs.saveAccessToken(it) }
+                loginResponse.refresh?.let { prefs.saveRefreshToken(it) }
+
+                loginResponse.user?.let { user ->
+                    prefs.apply {
+                        saveUserId(user.id?.toString() ?: "0")
+                        saveUserName(user.name ?: "")
+                        saveUsername(user.username ?: "")
+                        saveUserEmail(user.email ?: "")
+                        saveUserPhone(user.phone_number ?: "")
+                        saveUserRelationship(user.relationship ?: "")
+                        savePatientName(user.patient_username ?: "")
+                        saveCompanionName(user.linked_companion_name ?: "")
+                        savePatientType(user.linked_patient_type ?: "")
+                        saveUserType(user.account_type?.lowercase() ?: "")
+
+                        // حفظ معرفات المستخدمين المرتبطين
+                        if (user.account_type?.lowercase() == "companions") {
+                            savePatientId(user.patient_username?.toString() ?: user.patient_username ?: "")
+                        } else {
+                            saveCompanionId(user.linked_companion_name?.toString() ?: "")
+                        }
+
+                        // Assign random avatar if user doesn't have one
+                        if (getUserAvatar() == null) {
+                            val randomAvatar = availableAvatars.random()
+                            saveUserAvatar(randomAvatar)
+                        }
+                    }
+
+                    navigateToMainActivity()
+                } ?: requireContext().showToast("Failed to get user data")
+
+            } catch (e: Exception) {
+                requireContext().showToast("An error occurred: ${e.message}")
+            } finally {
+                setLoadingState(isLoading = false)
             }
         }
     }

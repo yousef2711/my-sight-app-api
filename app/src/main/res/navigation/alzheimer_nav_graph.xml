@@ -42,6 +42,15 @@
             app:destination="@id/tasksAlzheimerFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_home_to_edit_task"
+            app:destination="@id/createTaskAlzheimerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left">
+            <argument
+                android:name="taskId"
+                app:argType="long" />
+        </action>
     </fragment>
 
     <!-- شاشة GPS -->

@@ -9,20 +9,28 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yousef.mysight00.R
+import com.yousef.mysight00.adapter.AlzheimerTaskAdapter
 import com.yousef.mysight00.constant
 import com.yousef.mysight00.databinding.FragmentHomeAlzheimerBinding
+import com.yousef.mysight00.model.Task
 import com.yousef.mysight00.ui.base.BaseFragment
+import com.yousef.mysight00.ui.tasks.TaskViewModel
 import com.yousef.mysight00.utils.UserPreferences
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallConfig
 import com.zegocloud.uikit.prebuilt.call.ZegoUIKitPrebuiltCallFragment
+import java.util.Calendar
 
 class HomeAlzheimerFragment : BaseFragment() {
 
     private var _binding: FragmentHomeAlzheimerBinding? = null
     private val binding get() = _binding!!
     private lateinit var userPreferences: UserPreferences
+    private lateinit var viewModel: TaskViewModel
+    private lateinit var taskAdapter: AlzheimerTaskAdapter
 
     private val PERMISSION_REQUEST_CODE = 1001
 
@@ -33,12 +41,15 @@ class HomeAlzheimerFragment : BaseFragment() {
     ): View {
         _binding = FragmentHomeAlzheimerBinding.inflate(inflater, container, false)
         userPreferences = UserPreferences(requireContext())
+        viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        setupTasksRecyclerView()
+        loadTodayTasks()
     }
 
     private fun setupClickListeners() {
@@ -50,13 +61,11 @@ class HomeAlzheimerFragment : BaseFragment() {
                 findNavController().navigate(R.id.action_home_to_profile)
             }
             icCallAlzheimer.setOnClickListener {
-                // تحقق من صلاحيات الصوت وابدأ مكالمة صوتية
                 if (checkAndRequestPermissions(audioOnly = true)) {
                     startCall(isVideoCall = false)
                 }
             }
             icVideoAlzheimer.setOnClickListener {
-                // تحقق من صلاحيات الصوت والكاميرا وابدأ مكالمة فيديو
                 if (checkAndRequestPermissions(audioOnly = false)) {
                     startCall(isVideoCall = true)
                 }
@@ -64,12 +73,77 @@ class HomeAlzheimerFragment : BaseFragment() {
             tvSeeAll.setOnClickListener {
                 findNavController().navigate(R.id.action_home_to_tasks)
             }
-            listOf(imageCard1Alzh, imageCard2Alzh, imageCard3Alzh).forEach {
-                it.setOnClickListener {
-                    findNavController().navigate(R.id.action_home_to_tasks)
-                }
-            }
         }
+    }
+
+    private fun setupTasksRecyclerView() {
+        binding.recyclerViewTasks.layoutManager = LinearLayoutManager(requireContext())
+        taskAdapter = AlzheimerTaskAdapter(
+            onTaskChecked = { task, isChecked ->
+                viewModel.updateTaskCompletion(task.id, isChecked)
+            },
+            onTaskDelete = { task ->
+                viewModel.deleteTask(task)
+            },
+            onTaskEdit = { task ->
+                val action = HomeAlzheimerFragmentDirections.actionHomeToEditTask(task.id)
+                findNavController().navigate(action)
+            }
+        )
+        binding.recyclerViewTasks.adapter = taskAdapter
+    }
+
+    private fun loadTodayTasks() {
+        val userType = userPreferences.getUserType() ?: ""
+        val userId = userPreferences.getUserId() ?: ""
+
+        val tasksLiveData = if (userType == "companions") {
+            viewModel.getCompanionTasks(userId)
+        } else {
+            viewModel.getPatientTasks(userId)
+        }
+
+        tasksLiveData.observe(viewLifecycleOwner) { allTasks ->
+            // ترتيب المهام: الماضية أولاً، ثم اليوم، ثم المستقبلية
+            val sortedTasks = allTasks.sortedWith(compareBy<Task> { task ->
+                when {
+                    isPastTask(task) -> 0
+                    isTaskForToday(task) -> 1
+                    else -> 2
+                }
+            }.thenBy { it.startTime })
+            taskAdapter.submitList(sortedTasks)
+        }
+    }
+
+    private fun isPastTask(task: Task): Boolean {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val startOfToday = calendar.time
+        return task.startTime.before(startOfToday)
+    }
+
+    private fun isTaskForToday(task: Task): Boolean {
+        val calendar = Calendar.getInstance()
+        
+        // تعيين التقويم لبداية اليوم
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val startOfDay = calendar.time
+
+        // تعيين التقويم لنهاية اليوم
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+        val endOfDay = calendar.time
+
+        return task.startTime.after(startOfDay) && task.startTime.before(endOfDay)
     }
 
     private fun checkAndRequestPermissions(audioOnly: Boolean): Boolean {
@@ -91,7 +165,7 @@ class HomeAlzheimerFragment : BaseFragment() {
     }
 
     private fun startCall(isVideoCall: Boolean) {
-        val userName = userPreferences.getUserName() ?: "user"
+        val userName = userPreferences.getUsername() ?: "user"
         val userId = userPreferences.getUserId() ?: "0"
         val targetUserId = getTargetUserId()
 
@@ -134,19 +208,15 @@ class HomeAlzheimerFragment : BaseFragment() {
     private fun getTargetUserId(): String {
         val userType = userPreferences.getUserType() ?: "companions"
         return if (userType == "companions") {
-            // إذا كان المستخدم مرافق، نحتاج إلى الحصول على معرف المريض
-            val patientId = userPreferences.getPatientId()
+            val patientId = userPreferences.getPatientName()
             if (patientId.isNullOrEmpty() || patientId == "0") {
-                // إذا لم يكن هناك معرف للمريض، نستخدم معرف المستخدم الحالي
                 userPreferences.getUserId() ?: "UnknownID"
             } else {
                 patientId
             }
         } else {
-            // إذا كان المستخدم مريض، نحتاج إلى الحصول على معرف المرافق
-            val companionId = userPreferences.getCompanionId()
+            val companionId = userPreferences.getCompanionName()
             if (companionId.isNullOrEmpty() || companionId == "0") {
-                // إذا لم يكن هناك معرف للمرافق، نستخدم معرف المستخدم الحالي
                 userPreferences.getUserId() ?: "UnknownID"
             } else {
                 companionId
@@ -158,22 +228,20 @@ class HomeAlzheimerFragment : BaseFragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    // ** تعامل مع رد صلاحيات المستخدم **
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                // الصلاحيات كلها تم منحها، أعد محاولة بدء المكالمة (يمكن تعديل لتمرير حالة المكالمة)
+                // تم منح الصلاحيات، يمكن إعادة محاولة المكالمة
             } else {
-                // إعلام المستخدم بضرورة السماح بالصلاحيات
                 showToast("يجب منح صلاحيات الميكروفون والكاميرا للاتصال")
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -27,7 +28,7 @@
             android:layout_marginEnd="8dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+            app:layout_constraintEnd_toStartOf="@+id/buttonEdit"
             app:layout_constraintStart_toEndOf="@+id/checkBoxTask"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +39,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+            app:layout_constraintEnd_toStartOf="@+id/buttonEdit"
             app:layout_constraintStart_toEndOf="@+id/checkBoxTask"
             app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
@@ -52,15 +53,25 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
         <ImageButton
+            android:id="@+id/buttonEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Edit task"
+            android:layout_marginTop="8dp"
+            android:src="@android:drawable/ic_menu_edit"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+            app:layout_constraintTop_toTopOf="@+id/checkBoxTask" />
+
+        <ImageButton
             android:id="@+id/buttonDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Delete task"
-            android:padding="8dp"
             android:src="@android:drawable/ic_menu_delete"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/buttonEdit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

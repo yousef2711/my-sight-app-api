@@ -9,9 +9,7 @@ data class EditProfileRequest(
 )
 
 data class EditProfileResponse(
-    val id: Int,
     val username: String,
     val phone_number: String,
-    val name: String,
     val profile_photo: String?
 )
